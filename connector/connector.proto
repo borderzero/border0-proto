@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "github.com/borderzero/border0-proto/connector";
+package connector;
+
+service ConnectorService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+}
+
+message RegisterRequest {
+  string id = 1;
+}
+
+message RegisterResponse {
+  string message = 1;
+}
