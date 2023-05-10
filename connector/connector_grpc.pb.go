@@ -35,7 +35,7 @@ func NewConnectorServiceClient(cc grpc.ClientConnInterface) ConnectorServiceClie
 
 func (c *connectorServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	out := new(RegisterResponse)
-	err := c.cc.Invoke(ctx, "/connector.ConnectorService/Register", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/border0.v1.ConnectorService/Register", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _ConnectorService_Register_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/connector.ConnectorService/Register",
+		FullMethod: "/border0.v1.ConnectorService/Register",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ConnectorServiceServer).Register(ctx, req.(*RegisterRequest))
@@ -92,7 +92,7 @@ func _ConnectorService_Register_Handler(srv interface{}, ctx context.Context, de
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ConnectorService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "connector.ConnectorService",
+	ServiceName: "border0.v1.ConnectorService",
 	HandlerType: (*ConnectorServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

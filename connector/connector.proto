@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option go_package = "github.com/borderzero/border0-proto/connector";
-package connector;
+package border0.v1;
 
 service ConnectorService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
