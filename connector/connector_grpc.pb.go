@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConnectorServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	WachMessages(ctx context.Context, in *WatchMessagesRequest, opts ...grpc.CallOption) (ConnectorService_WachMessagesClient, error)
 }
 
 type connectorServiceClient struct {
@@ -42,11 +43,44 @@ func (c *connectorServiceClient) Register(ctx context.Context, in *RegisterReque
 	return out, nil
 }
 
+func (c *connectorServiceClient) WachMessages(ctx context.Context, in *WatchMessagesRequest, opts ...grpc.CallOption) (ConnectorService_WachMessagesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ConnectorService_ServiceDesc.Streams[0], "/border0.v1.ConnectorService/WachMessages", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &connectorServiceWachMessagesClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type ConnectorService_WachMessagesClient interface {
+	Recv() (*Message, error)
+	grpc.ClientStream
+}
+
+type connectorServiceWachMessagesClient struct {
+	grpc.ClientStream
+}
+
+func (x *connectorServiceWachMessagesClient) Recv() (*Message, error) {
+	m := new(Message)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ConnectorServiceServer is the server API for ConnectorService service.
 // All implementations must embed UnimplementedConnectorServiceServer
 // for forward compatibility
 type ConnectorServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	WachMessages(*WatchMessagesRequest, ConnectorService_WachMessagesServer) error
 	mustEmbedUnimplementedConnectorServiceServer()
 }
 
@@ -56,6 +90,9 @@ type UnimplementedConnectorServiceServer struct {
 
 func (UnimplementedConnectorServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedConnectorServiceServer) WachMessages(*WatchMessagesRequest, ConnectorService_WachMessagesServer) error {
+	return status.Errorf(codes.Unimplemented, "method WachMessages not implemented")
 }
 func (UnimplementedConnectorServiceServer) mustEmbedUnimplementedConnectorServiceServer() {}
 
@@ -88,6 +125,27 @@ func _ConnectorService_Register_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ConnectorService_WachMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(WatchMessagesRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ConnectorServiceServer).WachMessages(m, &connectorServiceWachMessagesServer{stream})
+}
+
+type ConnectorService_WachMessagesServer interface {
+	Send(*Message) error
+	grpc.ServerStream
+}
+
+type connectorServiceWachMessagesServer struct {
+	grpc.ServerStream
+}
+
+func (x *connectorServiceWachMessagesServer) Send(m *Message) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // ConnectorService_ServiceDesc is the grpc.ServiceDesc for ConnectorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -100,6 +158,12 @@ var ConnectorService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ConnectorService_Register_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "WachMessages",
+			Handler:       _ConnectorService_WachMessages_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "connector.proto",
 }
