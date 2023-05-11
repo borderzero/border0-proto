@@ -5,6 +5,7 @@ package border0.v1;
 
 service ConnectorService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc WachMessages(WatchMessagesRequest) returns (stream Message);
 }
 
 message RegisterRequest {
@@ -13,4 +14,12 @@ message RegisterRequest {
 
 message RegisterResponse {
   string message = 1;
+}
+
+message Message {
+  string message = 1;
+}
+
+message WatchMessagesRequest {
+  string id = 1;
 }
