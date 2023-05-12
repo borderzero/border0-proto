@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConnectorServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
-	WachMessages(ctx context.Context, in *WatchMessagesRequest, opts ...grpc.CallOption) (ConnectorService_WachMessagesClient, error)
+	WatchMessages(ctx context.Context, in *WatchMessagesRequest, opts ...grpc.CallOption) (ConnectorService_WatchMessagesClient, error)
 }
 
 type connectorServiceClient struct {
@@ -43,12 +43,12 @@ func (c *connectorServiceClient) Register(ctx context.Context, in *RegisterReque
 	return out, nil
 }
 
-func (c *connectorServiceClient) WachMessages(ctx context.Context, in *WatchMessagesRequest, opts ...grpc.CallOption) (ConnectorService_WachMessagesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ConnectorService_ServiceDesc.Streams[0], "/border0.v1.ConnectorService/WachMessages", opts...)
+func (c *connectorServiceClient) WatchMessages(ctx context.Context, in *WatchMessagesRequest, opts ...grpc.CallOption) (ConnectorService_WatchMessagesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ConnectorService_ServiceDesc.Streams[0], "/border0.v1.ConnectorService/WatchMessages", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &connectorServiceWachMessagesClient{stream}
+	x := &connectorServiceWatchMessagesClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -58,16 +58,16 @@ func (c *connectorServiceClient) WachMessages(ctx context.Context, in *WatchMess
 	return x, nil
 }
 
-type ConnectorService_WachMessagesClient interface {
+type ConnectorService_WatchMessagesClient interface {
 	Recv() (*Message, error)
 	grpc.ClientStream
 }
 
-type connectorServiceWachMessagesClient struct {
+type connectorServiceWatchMessagesClient struct {
 	grpc.ClientStream
 }
 
-func (x *connectorServiceWachMessagesClient) Recv() (*Message, error) {
+func (x *connectorServiceWatchMessagesClient) Recv() (*Message, error) {
 	m := new(Message)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -80,7 +80,7 @@ func (x *connectorServiceWachMessagesClient) Recv() (*Message, error) {
 // for forward compatibility
 type ConnectorServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-	WachMessages(*WatchMessagesRequest, ConnectorService_WachMessagesServer) error
+	WatchMessages(*WatchMessagesRequest, ConnectorService_WatchMessagesServer) error
 	mustEmbedUnimplementedConnectorServiceServer()
 }
 
@@ -91,8 +91,8 @@ type UnimplementedConnectorServiceServer struct {
 func (UnimplementedConnectorServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedConnectorServiceServer) WachMessages(*WatchMessagesRequest, ConnectorService_WachMessagesServer) error {
-	return status.Errorf(codes.Unimplemented, "method WachMessages not implemented")
+func (UnimplementedConnectorServiceServer) WatchMessages(*WatchMessagesRequest, ConnectorService_WatchMessagesServer) error {
+	return status.Errorf(codes.Unimplemented, "method WatchMessages not implemented")
 }
 func (UnimplementedConnectorServiceServer) mustEmbedUnimplementedConnectorServiceServer() {}
 
@@ -125,24 +125,24 @@ func _ConnectorService_Register_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ConnectorService_WachMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _ConnectorService_WatchMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(WatchMessagesRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ConnectorServiceServer).WachMessages(m, &connectorServiceWachMessagesServer{stream})
+	return srv.(ConnectorServiceServer).WatchMessages(m, &connectorServiceWatchMessagesServer{stream})
 }
 
-type ConnectorService_WachMessagesServer interface {
+type ConnectorService_WatchMessagesServer interface {
 	Send(*Message) error
 	grpc.ServerStream
 }
 
-type connectorServiceWachMessagesServer struct {
+type connectorServiceWatchMessagesServer struct {
 	grpc.ServerStream
 }
 
-func (x *connectorServiceWachMessagesServer) Send(m *Message) error {
+func (x *connectorServiceWatchMessagesServer) Send(m *Message) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -160,8 +160,8 @@ var ConnectorService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "WachMessages",
-			Handler:       _ConnectorService_WachMessages_Handler,
+			StreamName:    "WatchMessages",
+			Handler:       _ConnectorService_WatchMessages_Handler,
 			ServerStreams: true,
 		},
 	},
