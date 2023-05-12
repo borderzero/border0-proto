@@ -6,6 +6,8 @@ package border0.v1;
 service ConnectorService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
   rpc WatchMessages(WatchMessagesRequest) returns (stream Message);
+  rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamReponse);
+
 }
 
 message RegisterRequest {
@@ -22,4 +24,13 @@ message Message {
 
 message WatchMessagesRequest {
   string id = 1;
+}
+
+message ControlStreamRequest {
+  string id = 1;
+  string message = 2;
+}
+
+message ControlStreamReponse {
+  string message = 1;
 }

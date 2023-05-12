@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ConnectorServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	WatchMessages(ctx context.Context, in *WatchMessagesRequest, opts ...grpc.CallOption) (ConnectorService_WatchMessagesClient, error)
+	ControlStream(ctx context.Context, opts ...grpc.CallOption) (ConnectorService_ControlStreamClient, error)
 }
 
 type connectorServiceClient struct {
@@ -75,12 +76,44 @@ func (x *connectorServiceWatchMessagesClient) Recv() (*Message, error) {
 	return m, nil
 }
 
+func (c *connectorServiceClient) ControlStream(ctx context.Context, opts ...grpc.CallOption) (ConnectorService_ControlStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ConnectorService_ServiceDesc.Streams[1], "/border0.v1.ConnectorService/ControlStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &connectorServiceControlStreamClient{stream}
+	return x, nil
+}
+
+type ConnectorService_ControlStreamClient interface {
+	Send(*ControlStreamRequest) error
+	Recv() (*ControlStreamReponse, error)
+	grpc.ClientStream
+}
+
+type connectorServiceControlStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *connectorServiceControlStreamClient) Send(m *ControlStreamRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *connectorServiceControlStreamClient) Recv() (*ControlStreamReponse, error) {
+	m := new(ControlStreamReponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ConnectorServiceServer is the server API for ConnectorService service.
 // All implementations must embed UnimplementedConnectorServiceServer
 // for forward compatibility
 type ConnectorServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	WatchMessages(*WatchMessagesRequest, ConnectorService_WatchMessagesServer) error
+	ControlStream(ConnectorService_ControlStreamServer) error
 	mustEmbedUnimplementedConnectorServiceServer()
 }
 
@@ -93,6 +126,9 @@ func (UnimplementedConnectorServiceServer) Register(context.Context, *RegisterRe
 }
 func (UnimplementedConnectorServiceServer) WatchMessages(*WatchMessagesRequest, ConnectorService_WatchMessagesServer) error {
 	return status.Errorf(codes.Unimplemented, "method WatchMessages not implemented")
+}
+func (UnimplementedConnectorServiceServer) ControlStream(ConnectorService_ControlStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method ControlStream not implemented")
 }
 func (UnimplementedConnectorServiceServer) mustEmbedUnimplementedConnectorServiceServer() {}
 
@@ -146,6 +182,32 @@ func (x *connectorServiceWatchMessagesServer) Send(m *Message) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _ConnectorService_ControlStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ConnectorServiceServer).ControlStream(&connectorServiceControlStreamServer{stream})
+}
+
+type ConnectorService_ControlStreamServer interface {
+	Send(*ControlStreamReponse) error
+	Recv() (*ControlStreamRequest, error)
+	grpc.ServerStream
+}
+
+type connectorServiceControlStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *connectorServiceControlStreamServer) Send(m *ControlStreamReponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *connectorServiceControlStreamServer) Recv() (*ControlStreamRequest, error) {
+	m := new(ControlStreamRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ConnectorService_ServiceDesc is the grpc.ServiceDesc for ConnectorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -163,6 +225,12 @@ var ConnectorService_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "WatchMessages",
 			Handler:       _ConnectorService_WatchMessages_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "ControlStream",
+			Handler:       _ConnectorService_ControlStream_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "connector.proto",
