@@ -12,7 +12,7 @@ service ConnectorService {
 
 message ControlStreamRequest {
   oneof RequestType {
-    Register register = 1;
+    RegisterRequest register = 1;
     Config config = 2;
     Heartbeat heartbeat = 3;  
     PluginDiscoveryResults plugin_discovery_results = 4;
@@ -21,19 +21,25 @@ message ControlStreamRequest {
 
 message ControlStreamReponse {
   oneof RequestType {
-  GlobalConfig global_config = 1;
-  SocketConfig socket_config = 2;
-  PluginConfig plugin_config = 3;
-  Discover discover = 4;
-  Stop stop = 5;
+    RegisterResponse register = 1;
+    GlobalConfig global_config = 2;
+    SocketConfig socket_config = 3;
+    PluginConfig plugin_config = 4;
+    Discover discover = 5;
+    Stop stop = 6;
   }
 }
 
-message Register {
+message RegisterRequest {
   string id = 1;
-  string connector_version = 2;
-  string os_family = 7;
-  string os_version = 8;
+  string connector_version = 3;
+  string os_family = 4;
+  string os_version = 5;
+}
+
+message RegisterResponse {
+  string id = 1;
+  bool status = 2;
 }
 
 message Config {
