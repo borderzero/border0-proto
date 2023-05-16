@@ -3,34 +3,121 @@ syntax = "proto3";
 option go_package = "github.com/borderzero/border0-proto/connector";
 package border0.v1;
 
+import "google/protobuf/timestamp.proto";
+
+
 service ConnectorService {
-  rpc Register(RegisterRequest) returns (RegisterResponse) {}
-  rpc WatchMessages(WatchMessagesRequest) returns (stream Message);
   rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamReponse);
-
-}
-
-message RegisterRequest {
-  string id = 1;
-}
-
-message RegisterResponse {
-  string message = 1;
-}
-
-message Message {
-  string message = 1;
-}
-
-message WatchMessagesRequest {
-  string id = 1;
 }
 
 message ControlStreamRequest {
-  string id = 1;
-  string message = 2;
+  oneof RequestType {
+    Register register = 1;
+    Config config = 2;
+    Heartbeat heartbeat = 3;  
+    PluginDiscoveryResults plugin_discovery_results = 4;
+  }
 }
 
 message ControlStreamReponse {
-  string message = 1;
+  oneof RequestType {
+  GlobalConfig global_config = 1;
+  SocketConfig socket_config = 2;
+  PluginConfig plugin_config = 3;
+  Discover discover = 4;
+  Stop stop = 5;
+  }
+}
+
+message Register {
+  string id = 1;
+  string connector_version = 2;
+  string os_family = 7;
+  string os_version = 8;
+}
+
+message Config {
+  bool global = 1;
+  bool sockets = 2;
+  bool plugins = 3;
+}
+
+message Heartbeat {
+  string id = 1;
+}
+
+message PluginDiscoveryResults {
+  string plugin_id = 1;
+  google.protobuf.Timestamp disovery_started = 2;
+  google.protobuf.Timestamp disovery_completed = 3;
+  repeated PluginDiscoveryResult results = 4;
+}
+
+message PluginDiscoveryResult {
+  string request_id = 1;
+  string id = 2;
+  string name = 3;
+  string type = 4;
+  string target = 5;
+  int32 port = 6;
+  string upstream_type = 7;
+  string upstream_address = 8; 
+  repeated Tag tags = 9;
+}
+
+message Tag {
+  string key = 1;
+  string value = 2;
+}
+
+message SocketConfig {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string target = 4;
+  int32 port = 5;
+  string upstream_type = 6;
+  string upstream_address = 7; 
+  string upstream_username = 8;
+  string upstream_password = 9;
+  string upstream_identity_file = 10;
+  string upstream_certificate_file = 11;
+  string upstream_key_file = 12;
+  string upstream_ca_file = 13;
+  bool upstream_tls = 14;
+  bool rds_iam_auth = 15;
+  string aws_region = 16;
+  bool cloudsql_connectior = 17;
+  bool cloudsql_iam_auth = 18;
+  string google_credentials_file = 19;
+  bool ssh_server = 20;
+  UpstreamEcsConfig upstream_ecs_config = 21;
+}
+
+message UpstreamEcsConfig {
+  string cluster_name = 1;
+  string service_filter = 2;
+  string task_filter= 3;
+  string container_filter = 4;
+}
+
+
+message GlobalConfig {
+ string name = 1;
+ int32 heartbeat_interval = 2;
+}
+
+message PluginConfig {
+  string id = 1;
+  string type = 2;
+  bool enabled = 3;
+}
+
+message Discover {
+  string id = 1;
+  string request_id = 2;
+}
+
+message Stop {
+  string id = 1;
 }
