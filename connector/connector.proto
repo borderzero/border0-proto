@@ -32,9 +32,9 @@ message ControlStreamReponse {
 
 message RegisterRequest {
   string id = 1;
-  string connector_version = 3;
-  string os_family = 4;
-  string os_version = 5;
+  string connector_version = 2;
+  string os_family = 3;
+  string os_version = 4;
 }
 
 message RegisterResponse {
