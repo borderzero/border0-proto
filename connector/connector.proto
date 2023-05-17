@@ -12,34 +12,20 @@ service ConnectorService {
 
 message ControlStreamRequest {
   oneof RequestType {
-    RegisterRequest register = 1;
-    Config config = 2;
-    Heartbeat heartbeat = 3;  
-    PluginDiscoveryResults plugin_discovery_results = 4;
+    Config config = 1;
+    Heartbeat heartbeat = 2;
+    PluginDiscoveryResults plugin_discovery_results = 3;
   }
 }
 
 message ControlStreamReponse {
   oneof RequestType {
-    RegisterResponse register = 1;
-    GlobalConfig global_config = 2;
-    SocketConfig socket_config = 3;
-    PluginConfig plugin_config = 4;
-    Discover discover = 5;
-    Stop stop = 6;
+    GlobalConfig global_config = 1;
+    SocketConfig socket_config = 2;
+    PluginConfig plugin_config = 3;
+    Discover discover = 4;
+    Stop stop = 5;
   }
-}
-
-message RegisterRequest {
-  string id = 1;
-  string connector_version = 2;
-  string os_family = 3;
-  string os_version = 4;
-}
-
-message RegisterResponse {
-  string id = 1;
-  bool status = 2;
 }
 
 message Config {
@@ -49,7 +35,6 @@ message Config {
 }
 
 message Heartbeat {
-  string id = 1;
 }
 
 message PluginDiscoveryResults {
@@ -115,8 +100,28 @@ message GlobalConfig {
 
 message PluginConfig {
   string id = 1;
-  string type = 2;
-  bool enabled = 3;
+  string name = 2;
+  string type = 3;
+  bool enabled = 4;
+  PluginSettings config = 5;
+}
+
+message PluginSettings {
+  oneof providerConfig {
+    awsConfig aws_config = 1;
+    gcpConfig gcp_config = 2;
+  }
+}
+
+message awsConfig {
+  string aws_region = 1;
+  string aws_access_key_id = 2;
+  string aws_secret_access_key = 3;
+  string aws_profile = 4;
+}
+
+message gcpConfig {
+  string google_credentials_file = 1;
 }
 
 message Discover {
