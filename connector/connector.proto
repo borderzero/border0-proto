@@ -29,14 +29,11 @@ message ControlStreamReponse {
   }
 }
 
-message Action {
-  enum ActionType {
-    UNKNOWN = 0;
-    CREATE = 1;
-    UPDATE = 2;
-    DELETE = 3;
-    OTHER = 4;
-  }
+enum Action {
+    CREATE = 0;
+    UPDATE = 1;
+    DELETE = 2;
+    OTHER = 3;
 }
 
 message Config {
