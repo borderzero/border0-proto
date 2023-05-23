@@ -19,12 +19,23 @@ message ControlStreamRequest {
 }
 
 message ControlStreamReponse {
+  Action action_type = 1;
   oneof RequestType {
-    GlobalConfig global_config = 1;
-    SocketConfig socket_config = 2;
-    PluginConfig plugin_config = 3;
-    Discover discover = 4;
-    Stop stop = 5;
+    GlobalConfig global_config = 2;
+    SocketConfig socket_config = 3;
+    PluginConfig plugin_config = 4;
+    Discover discover = 5;
+    Stop stop = 6;
+  }
+}
+
+message Action {
+  enum ActionType {
+    UNKNOWN = 0;
+    CREATE = 1;
+    UPDATE = 2;
+    DELETE = 3;
+    OTHER = 4;
   }
 }
 
