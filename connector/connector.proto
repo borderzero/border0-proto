@@ -4,6 +4,7 @@ option go_package = "github.com/borderzero/border0-proto/connector";
 package border0.v1;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 
 
 service ConnectorService {
@@ -21,7 +22,7 @@ message ControlStreamRequest {
 message ControlStreamReponse {
   Action action_type = 1;
   oneof RequestType {
-    GlobalConfig global_config = 2;
+    ConnectorConfig connector_config = 2;
     SocketConfig socket_config = 3;
     PluginConfig plugin_config = 4;
     Discover discover = 5;
@@ -43,6 +44,7 @@ message Config {
 }
 
 message Heartbeat {
+  string version = 1;
 }
 
 message PluginDiscoveryResults {
@@ -101,7 +103,7 @@ message UpstreamEcsConfig {
 }
 
 
-message GlobalConfig {
+message ConnectorConfig {
  string name = 1;
  int32 heartbeat_interval = 2;
 }
@@ -110,26 +112,7 @@ message PluginConfig {
   string id = 1;
   string name = 2;
   string type = 3;
-  bool enabled = 4;
-  PluginSettings config = 5;
-}
-
-message PluginSettings {
-  oneof providerConfig {
-    awsConfig aws_config = 1;
-    gcpConfig gcp_config = 2;
-  }
-}
-
-message awsConfig {
-  string aws_region = 1;
-  string aws_access_key_id = 2;
-  string aws_secret_access_key = 3;
-  string aws_profile = 4;
-}
-
-message gcpConfig {
-  string google_credentials_file = 1;
+  google.protobuf.Struct config = 4;
 }
 
 message Discover {
