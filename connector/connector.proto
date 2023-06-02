@@ -20,13 +20,26 @@ message ControlStreamRequest {
 }
 
 message ControlStreamReponse {
-  Action action_type = 1;
   oneof RequestType {
+    Init init = 1;
     ConnectorConfig connector_config = 2;
-    SocketConfig socket_config = 3;
-    PluginConfig plugin_config = 4;
+    UpdateConfig update_config = 3;
     Discover discover = 5;
     Stop stop = 6;
+  }
+}
+
+message Init {
+  PluginConfig plugin_config = 1;
+  repeated SocketConfig sockets = 2;
+  repeated PluginConfig plugins = 3;
+}
+
+message UpdateConfig {
+  Action action = 1;
+  oneof ConfigType {
+    PluginConfig plugin_config = 2;
+    SocketConfig socket_config = 3;
   }
 }
 
