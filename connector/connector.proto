@@ -38,7 +38,7 @@ enum Action {
 }
 
 message Config {
-  bool global = 1;
+  bool connector = 1;
   bool sockets = 2;
   bool plugins = 3;
 }
