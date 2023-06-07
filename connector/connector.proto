@@ -16,6 +16,8 @@ message ControlStreamRequest {
     Config config = 1;
     Heartbeat heartbeat = 2;
     PluginDiscoveryResults plugin_discovery_results = 3;
+    OrganizationRequest organization = 4;
+    TunnelCertificateSignRequest tunnel_certificate_sign_request = 5;
   }
 }
 
@@ -24,9 +26,32 @@ message ControlStreamReponse {
     Init init = 1;
     ConnectorConfig connector_config = 2;
     UpdateConfig update_config = 3;
-    Discover discover = 5;
-    Stop stop = 6;
+    OrganizationResponse organization = 4;
+    TunnelCertificateSignResponse tunnel_certificate_sign_response = 5;
+    Discover discover = 6;
+    Stop stop = 7;
   }
+}
+
+message OrganizationRequest {}
+
+message OrganizationResponse {
+  string id = 1;
+  string name = 2;
+  string subdomain = 3;
+  google.protobuf.Struct certificates = 4;
+}
+
+message TunnelCertificateSignRequest {
+  string request_id = 1;
+  string socket_id = 2;
+  string public_key = 3;
+}
+
+message TunnelCertificateSignResponse {
+  string request_id = 1;
+  string certificate = 2;
+  string hostkey = 3;
 }
 
 message Init {
