@@ -16,7 +16,6 @@ message ControlStreamRequest {
     Config config = 1;
     Heartbeat heartbeat = 2;
     PluginDiscoveryResults plugin_discovery_results = 3;
-    OrganizationRequest organization = 4;
     TunnelCertificateSignRequest tunnel_certificate_sign_request = 5;
   }
 }
@@ -26,16 +25,13 @@ message ControlStreamReponse {
     Init init = 1;
     ConnectorConfig connector_config = 2;
     UpdateConfig update_config = 3;
-    OrganizationResponse organization = 4;
     TunnelCertificateSignResponse tunnel_certificate_sign_response = 5;
     Discover discover = 6;
     Stop stop = 7;
   }
 }
 
-message OrganizationRequest {}
-
-message OrganizationResponse {
+message Organization {
   string id = 1;
   string name = 2;
   string subdomain = 3;
@@ -144,6 +140,7 @@ message UpstreamEcsConfig {
 message ConnectorConfig {
  string name = 1;
  int32 heartbeat_interval = 2;
+ Organization organization = 3;
 }
 
 message PluginConfig {
