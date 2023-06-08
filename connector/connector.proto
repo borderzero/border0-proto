@@ -144,10 +144,9 @@ message ConnectorConfig {
 }
 
 message PluginConfig {
-  string id = 1;
-  string name = 2;
-  string type = 3;
-  google.protobuf.Struct config = 4;
+  string name = 1;
+  string type = 2;
+  google.protobuf.Struct config = 3;
 }
 
 message Discover {
