@@ -109,33 +109,8 @@ message SocketConfig {
   string id = 1;
   string name = 2;
   string type = 3;
-  string target = 4;
-  int32 port = 5;
-  string upstream_type = 6;
-  string upstream_address = 7; 
-  string upstream_username = 8;
-  string upstream_password = 9;
-  string upstream_identity_file = 10;
-  string upstream_certificate_file = 11;
-  string upstream_key_file = 12;
-  string upstream_ca_file = 13;
-  bool upstream_tls = 14;
-  bool rds_iam_auth = 15;
-  string aws_region = 16;
-  bool cloudsql_connectior = 17;
-  bool cloudsql_iam_auth = 18;
-  string google_credentials_file = 19;
-  bool ssh_server = 20;
-  UpstreamEcsConfig upstream_ecs_config = 21;
+  google.protobuf.Struct config = 4;
 }
-
-message UpstreamEcsConfig {
-  string cluster_name = 1;
-  string service_filter = 2;
-  string task_filter= 3;
-  string container_filter = 4;
-}
-
 
 message ConnectorConfig {
  string name = 1;
