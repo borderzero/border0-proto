@@ -130,5 +130,5 @@ message Discover {
 }
 
 message Stop {
-  string id = 1;
+  string reason = 1;
 }
