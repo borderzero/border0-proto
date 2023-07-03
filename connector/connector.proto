@@ -84,21 +84,16 @@ message HeartbeatResponse {}
 
 message PluginDiscoveryResults {
   string plugin_id = 1;
-  google.protobuf.Timestamp disovery_started = 2;
-  google.protobuf.Timestamp disovery_completed = 3;
-  repeated PluginDiscoveryResult results = 4;
+  string request_id = 2;
+  PluginDiscoveryResultsMetadata metadata = 3;
+  repeated string errors = 4;
+  repeated google.protobuf.Struct resources = 5;
 }
 
-message PluginDiscoveryResult {
-  string request_id = 1;
-  string id = 2;
-  string name = 3;
-  string type = 4;
-  string target = 5;
-  int32 port = 6;
-  string upstream_type = 7;
-  string upstream_address = 8; 
-  repeated Tag tags = 9;
+message PluginDiscoveryResultsMetadata {
+  string discovery_id = 1;
+  google.protobuf.Timestamp started_at = 2;
+  google.protobuf.Timestamp ended_at = 3;
 }
 
 message Tag {
