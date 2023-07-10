@@ -86,8 +86,9 @@ message PluginDiscoveryResults {
   string plugin_id = 1;
   string request_id = 2;
   PluginDiscoveryResultsMetadata metadata = 3;
-  repeated string errors = 4;
-  repeated google.protobuf.Struct resources = 5;
+  repeated google.protobuf.Struct resources = 4;
+  repeated string errors = 5;
+  repeated string warnings = 6;
 }
 
 message PluginDiscoveryResultsMetadata {
