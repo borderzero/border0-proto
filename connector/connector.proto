@@ -17,6 +17,7 @@ message ControlStreamRequest {
     HeartbeatRequest heartbeat = 2;
     PluginDiscoveryResults plugin_discovery_results = 3;
     TunnelCertificateSignRequest tunnel_certificate_sign_request = 5;
+    Log log = 6;
   }
 }
 
@@ -64,6 +65,15 @@ message UpdateConfig {
     PluginConfig plugin_config = 2;
     SocketConfig socket_config = 3;
   }
+}
+
+message Log {
+  string connector_id = 1;
+  string socket_id = 2;
+  string plugin_id = 3;
+  google.protobuf.Timestamp timestamp = 4;
+  string severity = 5;
+  string message = 6;
 }
 
 enum Action {
