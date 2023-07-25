@@ -18,6 +18,7 @@ message ControlStreamRequest {
     PluginDiscoveryResults plugin_discovery_results = 3;
     TunnelCertificateSignRequest tunnel_certificate_sign_request = 5;
     Log log = 6;
+    ConnectorMetadata metadata = 7;
   }
 }
 
@@ -74,6 +75,10 @@ message Log {
   google.protobuf.Timestamp timestamp = 4;
   string severity = 5;
   string message = 6;
+}
+
+message ConnectorMetadata {
+  google.protobuf.Struct data = 1;
 }
 
 enum Action {
