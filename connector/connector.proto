@@ -121,7 +121,8 @@ message SocketConfig {
   string id = 1;
   string name = 2;
   string type = 3;
-  google.protobuf.Struct config = 4;
+  bool connector_authentication_enabled = 4;
+  google.protobuf.Struct config = 5;
 }
 
 message ConnectorConfig {
