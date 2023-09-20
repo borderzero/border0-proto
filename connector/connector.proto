@@ -170,7 +170,6 @@ message infoList {
   repeated string values = 1;
 }
 
-
 message AuthorizeResponse {
   string request_id = 1;
   map<string, actionList> allowed_actions = 2;
@@ -180,7 +179,5 @@ message AuthorizeResponse {
 message SessionUpdateRequest {
   string session_key = 1;
   string socket_id = 2;
-  string result = 3;
-  string authInfo = 4;
-  string data = 5;
+  string user_data = 3;
 }
