@@ -189,10 +189,10 @@ message SshCertifcateSignRequest {
   string socket_id = 2;
   string session_key = 3;
   string user_email = 4;
-  string public_key = 5;
+  bytes public_key = 5;
 }
 
 message SshCertifcateSignResponse {
   string request_id = 1;
-  string certificate = 2;
+  bytes certificate = 2;
 }
