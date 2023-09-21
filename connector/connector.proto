@@ -187,7 +187,7 @@ message SessionUpdateRequest {
 message SshCertifcateSignRequest {
   string request_id = 1;
   string socket_id = 2;
-  string session_id = 3;
+  string session_key = 3;
   string user_email = 4;
   string public_key = 5;
 }
