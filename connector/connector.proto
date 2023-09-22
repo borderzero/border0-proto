@@ -190,6 +190,7 @@ message SshCertifcateSignRequest {
   string session_key = 3;
   string user_email = 4;
   bytes public_key = 5;
+  bytes ticket = 6;
 }
 
 message SshCertifcateSignResponse {
