@@ -11,6 +11,10 @@ service ConnectorService {
   rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamReponse);
 }
 
+service StreamBridgeService {
+  rpc Stream(stream StreamChunck) returns (stream StreamStatus);
+}
+
 message ControlStreamRequest {
   oneof RequestType {
     Config config = 1;
@@ -40,6 +44,7 @@ message ControlStreamReponse {
     AuthorizeResponse authorize = 9;
     SshCertifcateSignResponse ssh_certificate_sign_response = 10;
     CertifcateSignResponse certifcate_sign_response = 11;
+    StreamRequest stream_request = 12;
   }
 }
 
@@ -215,4 +220,20 @@ message CertifcateSignRequest {
 message CertifcateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
+}
+
+message StreamRequest {
+  string socket_id = 1;
+  string session_key = 2;
+  string stream_id = 3; 
+}
+
+message StreamChunck {
+  string stream_id = 1;
+  bytes data = 2;
+}
+
+message StreamStatus {
+  bool success = 1;
+  string message = 2;
 }

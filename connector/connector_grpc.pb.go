@@ -139,3 +139,125 @@ var ConnectorService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Metadata: "connector.proto",
 }
+
+const (
+	StreamBridgeService_Stream_FullMethodName = "/border0.v1.StreamBridgeService/Stream"
+)
+
+// StreamBridgeServiceClient is the client API for StreamBridgeService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type StreamBridgeServiceClient interface {
+	Stream(ctx context.Context, opts ...grpc.CallOption) (StreamBridgeService_StreamClient, error)
+}
+
+type streamBridgeServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewStreamBridgeServiceClient(cc grpc.ClientConnInterface) StreamBridgeServiceClient {
+	return &streamBridgeServiceClient{cc}
+}
+
+func (c *streamBridgeServiceClient) Stream(ctx context.Context, opts ...grpc.CallOption) (StreamBridgeService_StreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StreamBridgeService_ServiceDesc.Streams[0], StreamBridgeService_Stream_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &streamBridgeServiceStreamClient{stream}
+	return x, nil
+}
+
+type StreamBridgeService_StreamClient interface {
+	Send(*StreamChunck) error
+	Recv() (*StreamStatus, error)
+	grpc.ClientStream
+}
+
+type streamBridgeServiceStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *streamBridgeServiceStreamClient) Send(m *StreamChunck) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *streamBridgeServiceStreamClient) Recv() (*StreamStatus, error) {
+	m := new(StreamStatus)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// StreamBridgeServiceServer is the server API for StreamBridgeService service.
+// All implementations must embed UnimplementedStreamBridgeServiceServer
+// for forward compatibility
+type StreamBridgeServiceServer interface {
+	Stream(StreamBridgeService_StreamServer) error
+	mustEmbedUnimplementedStreamBridgeServiceServer()
+}
+
+// UnimplementedStreamBridgeServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedStreamBridgeServiceServer struct {
+}
+
+func (UnimplementedStreamBridgeServiceServer) Stream(StreamBridgeService_StreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method Stream not implemented")
+}
+func (UnimplementedStreamBridgeServiceServer) mustEmbedUnimplementedStreamBridgeServiceServer() {}
+
+// UnsafeStreamBridgeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StreamBridgeServiceServer will
+// result in compilation errors.
+type UnsafeStreamBridgeServiceServer interface {
+	mustEmbedUnimplementedStreamBridgeServiceServer()
+}
+
+func RegisterStreamBridgeServiceServer(s grpc.ServiceRegistrar, srv StreamBridgeServiceServer) {
+	s.RegisterService(&StreamBridgeService_ServiceDesc, srv)
+}
+
+func _StreamBridgeService_Stream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(StreamBridgeServiceServer).Stream(&streamBridgeServiceStreamServer{stream})
+}
+
+type StreamBridgeService_StreamServer interface {
+	Send(*StreamStatus) error
+	Recv() (*StreamChunck, error)
+	grpc.ServerStream
+}
+
+type streamBridgeServiceStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *streamBridgeServiceStreamServer) Send(m *StreamStatus) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *streamBridgeServiceStreamServer) Recv() (*StreamChunck, error) {
+	m := new(StreamChunck)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// StreamBridgeService_ServiceDesc is the grpc.ServiceDesc for StreamBridgeService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var StreamBridgeService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "border0.v1.StreamBridgeService",
+	HandlerType: (*StreamBridgeServiceServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Stream",
+			Handler:       _StreamBridgeService_Stream_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
+	Metadata: "connector.proto",
+}
