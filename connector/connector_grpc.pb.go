@@ -170,7 +170,7 @@ func (c *streamBridgeServiceClient) Stream(ctx context.Context, opts ...grpc.Cal
 
 type StreamBridgeService_StreamClient interface {
 	Send(*StreamChunck) error
-	Recv() (*StreamStatus, error)
+	CloseAndRecv() (*StreamStatus, error)
 	grpc.ClientStream
 }
 
@@ -182,7 +182,10 @@ func (x *streamBridgeServiceStreamClient) Send(m *StreamChunck) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *streamBridgeServiceStreamClient) Recv() (*StreamStatus, error) {
+func (x *streamBridgeServiceStreamClient) CloseAndRecv() (*StreamStatus, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
 	m := new(StreamStatus)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -223,7 +226,7 @@ func _StreamBridgeService_Stream_Handler(srv interface{}, stream grpc.ServerStre
 }
 
 type StreamBridgeService_StreamServer interface {
-	Send(*StreamStatus) error
+	SendAndClose(*StreamStatus) error
 	Recv() (*StreamChunck, error)
 	grpc.ServerStream
 }
@@ -232,7 +235,7 @@ type streamBridgeServiceStreamServer struct {
 	grpc.ServerStream
 }
 
-func (x *streamBridgeServiceStreamServer) Send(m *StreamStatus) error {
+func (x *streamBridgeServiceStreamServer) SendAndClose(m *StreamStatus) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -255,7 +258,6 @@ var StreamBridgeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Stream",
 			Handler:       _StreamBridgeService_Stream_Handler,
-			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},

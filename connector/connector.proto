@@ -12,7 +12,7 @@ service ConnectorService {
 }
 
 service StreamBridgeService {
-  rpc Stream(stream StreamChunck) returns (stream StreamStatus);
+  rpc Stream(stream StreamChunck) returns (StreamStatus);
 }
 
 message ControlStreamRequest {
