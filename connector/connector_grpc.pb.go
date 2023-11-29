@@ -141,7 +141,8 @@ var ConnectorService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	StreamBridgeService_Stream_FullMethodName = "/border0.v1.StreamBridgeService/Stream"
+	StreamBridgeService_Stream_FullMethodName     = "/border0.v1.StreamBridgeService/Stream"
+	StreamBridgeService_UserStream_FullMethodName = "/border0.v1.StreamBridgeService/UserStream"
 )
 
 // StreamBridgeServiceClient is the client API for StreamBridgeService service.
@@ -149,6 +150,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StreamBridgeServiceClient interface {
 	Stream(ctx context.Context, opts ...grpc.CallOption) (StreamBridgeService_StreamClient, error)
+	UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (StreamBridgeService_UserStreamClient, error)
 }
 
 type streamBridgeServiceClient struct {
@@ -193,11 +195,44 @@ func (x *streamBridgeServiceStreamClient) CloseAndRecv() (*StreamStatus, error) 
 	return m, nil
 }
 
+func (c *streamBridgeServiceClient) UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (StreamBridgeService_UserStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StreamBridgeService_ServiceDesc.Streams[1], StreamBridgeService_UserStream_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &streamBridgeServiceUserStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type StreamBridgeService_UserStreamClient interface {
+	Recv() (*StreamChunck, error)
+	grpc.ClientStream
+}
+
+type streamBridgeServiceUserStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *streamBridgeServiceUserStreamClient) Recv() (*StreamChunck, error) {
+	m := new(StreamChunck)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // StreamBridgeServiceServer is the server API for StreamBridgeService service.
 // All implementations must embed UnimplementedStreamBridgeServiceServer
 // for forward compatibility
 type StreamBridgeServiceServer interface {
 	Stream(StreamBridgeService_StreamServer) error
+	UserStream(*UserStreamRequest, StreamBridgeService_UserStreamServer) error
 	mustEmbedUnimplementedStreamBridgeServiceServer()
 }
 
@@ -207,6 +242,9 @@ type UnimplementedStreamBridgeServiceServer struct {
 
 func (UnimplementedStreamBridgeServiceServer) Stream(StreamBridgeService_StreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method Stream not implemented")
+}
+func (UnimplementedStreamBridgeServiceServer) UserStream(*UserStreamRequest, StreamBridgeService_UserStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method UserStream not implemented")
 }
 func (UnimplementedStreamBridgeServiceServer) mustEmbedUnimplementedStreamBridgeServiceServer() {}
 
@@ -247,6 +285,27 @@ func (x *streamBridgeServiceStreamServer) Recv() (*StreamChunck, error) {
 	return m, nil
 }
 
+func _StreamBridgeService_UserStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(UserStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(StreamBridgeServiceServer).UserStream(m, &streamBridgeServiceUserStreamServer{stream})
+}
+
+type StreamBridgeService_UserStreamServer interface {
+	Send(*StreamChunck) error
+	grpc.ServerStream
+}
+
+type streamBridgeServiceUserStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *streamBridgeServiceUserStreamServer) Send(m *StreamChunck) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // StreamBridgeService_ServiceDesc is the grpc.ServiceDesc for StreamBridgeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -259,6 +318,11 @@ var StreamBridgeService_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "Stream",
 			Handler:       _StreamBridgeService_Stream_Handler,
 			ClientStreams: true,
+		},
+		{
+			StreamName:    "UserStream",
+			Handler:       _StreamBridgeService_UserStream_Handler,
+			ServerStreams: true,
 		},
 	},
 	Metadata: "connector.proto",

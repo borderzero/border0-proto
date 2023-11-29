@@ -13,6 +13,7 @@ service ConnectorService {
 
 service StreamBridgeService {
   rpc Stream(stream StreamChunck) returns (StreamStatus);
+  rpc UserStream(UserStreamRequest) returns (stream StreamChunck);
 }
 
 message ControlStreamRequest {
@@ -229,11 +230,15 @@ message StreamRequest {
 }
 
 message StreamChunck {
-  string stream_id = 1;
   bytes data = 2;
 }
 
 message StreamStatus {
   bool success = 1;
   string message = 2;
+}
+
+message UserStreamRequest {
+  string stream_id = 1;
+  bytes ticket = 2;
 }
