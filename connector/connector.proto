@@ -287,4 +287,21 @@ message SSHDockerExecAction {
 message ExtendedAction {
   DatabaseActions database = 1;
   SSHActions ssh = 2;
+  DockerActions docker = 3;
+}
+
+message DockerAllowedActions {
+  string container = 1;
+  repeated string allowed_actions = 2;
+}
+
+message DockerContainerAction {
+  bool allow_list = 1;
+  bool allow_create = 2;
+  repeated DockerAllowedActions allowed_actions = 3;
+}
+
+message DockerActions {
+  DockerContainerAction containers = 1;
+  int32 max_session_duration_seconds = 2;
 }

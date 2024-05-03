@@ -3022,6 +3022,7 @@ type ExtendedAction struct {
 
 	Database *DatabaseActions `protobuf:"bytes,1,opt,name=database,proto3" json:"database,omitempty"`
 	Ssh      *SSHActions      `protobuf:"bytes,2,opt,name=ssh,proto3" json:"ssh,omitempty"`
+	Docker   *DockerActions   `protobuf:"bytes,3,opt,name=docker,proto3" json:"docker,omitempty"`
 }
 
 func (x *ExtendedAction) Reset() {
@@ -3068,6 +3069,186 @@ func (x *ExtendedAction) GetSsh() *SSHActions {
 		return x.Ssh
 	}
 	return nil
+}
+
+func (x *ExtendedAction) GetDocker() *DockerActions {
+	if x != nil {
+		return x.Docker
+	}
+	return nil
+}
+
+type DockerAllowedActions struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Container      string   `protobuf:"bytes,1,opt,name=container,proto3" json:"container,omitempty"`
+	AllowedActions []string `protobuf:"bytes,2,rep,name=allowed_actions,json=allowedActions,proto3" json:"allowed_actions,omitempty"`
+}
+
+func (x *DockerAllowedActions) Reset() {
+	*x = DockerAllowedActions{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_connector_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DockerAllowedActions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DockerAllowedActions) ProtoMessage() {}
+
+func (x *DockerAllowedActions) ProtoReflect() protoreflect.Message {
+	mi := &file_connector_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DockerAllowedActions.ProtoReflect.Descriptor instead.
+func (*DockerAllowedActions) Descriptor() ([]byte, []int) {
+	return file_connector_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *DockerAllowedActions) GetContainer() string {
+	if x != nil {
+		return x.Container
+	}
+	return ""
+}
+
+func (x *DockerAllowedActions) GetAllowedActions() []string {
+	if x != nil {
+		return x.AllowedActions
+	}
+	return nil
+}
+
+type DockerContainerAction struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AllowList      bool                    `protobuf:"varint,1,opt,name=allow_list,json=allowList,proto3" json:"allow_list,omitempty"`
+	AllowCreate    bool                    `protobuf:"varint,2,opt,name=allow_create,json=allowCreate,proto3" json:"allow_create,omitempty"`
+	AllowedActions []*DockerAllowedActions `protobuf:"bytes,3,rep,name=allowed_actions,json=allowedActions,proto3" json:"allowed_actions,omitempty"`
+}
+
+func (x *DockerContainerAction) Reset() {
+	*x = DockerContainerAction{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_connector_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DockerContainerAction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DockerContainerAction) ProtoMessage() {}
+
+func (x *DockerContainerAction) ProtoReflect() protoreflect.Message {
+	mi := &file_connector_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DockerContainerAction.ProtoReflect.Descriptor instead.
+func (*DockerContainerAction) Descriptor() ([]byte, []int) {
+	return file_connector_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *DockerContainerAction) GetAllowList() bool {
+	if x != nil {
+		return x.AllowList
+	}
+	return false
+}
+
+func (x *DockerContainerAction) GetAllowCreate() bool {
+	if x != nil {
+		return x.AllowCreate
+	}
+	return false
+}
+
+func (x *DockerContainerAction) GetAllowedActions() []*DockerAllowedActions {
+	if x != nil {
+		return x.AllowedActions
+	}
+	return nil
+}
+
+type DockerActions struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Containers                *DockerContainerAction `protobuf:"bytes,1,opt,name=containers,proto3" json:"containers,omitempty"`
+	MaxSessionDurationSeconds int32                  `protobuf:"varint,2,opt,name=max_session_duration_seconds,json=maxSessionDurationSeconds,proto3" json:"max_session_duration_seconds,omitempty"`
+}
+
+func (x *DockerActions) Reset() {
+	*x = DockerActions{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_connector_proto_msgTypes[46]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DockerActions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DockerActions) ProtoMessage() {}
+
+func (x *DockerActions) ProtoReflect() protoreflect.Message {
+	mi := &file_connector_proto_msgTypes[46]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DockerActions.ProtoReflect.Descriptor instead.
+func (*DockerActions) Descriptor() ([]byte, []int) {
+	return file_connector_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *DockerActions) GetContainers() *DockerContainerAction {
+	if x != nil {
+		return x.Containers
+	}
+	return nil
+}
+
+func (x *DockerActions) GetMaxSessionDurationSeconds() int32 {
+	if x != nil {
+		return x.MaxSessionDurationSeconds
+	}
+	return 0
 }
 
 var File_connector_proto protoreflect.FileDescriptor
@@ -3542,14 +3723,43 @@ var file_connector_proto_rawDesc = []byte{
 	0x08, 0x52, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x12, 0x2d, 0x0a, 0x12, 0x61, 0x6c,
 	0x6c, 0x6f, 0x77, 0x65, 0x64, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73,
 	0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x11, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x43,
-	0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x22, 0x73, 0x0a, 0x0e, 0x45, 0x78, 0x74,
-	0x65, 0x6e, 0x64, 0x65, 0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x37, 0x0a, 0x08, 0x64,
-	0x61, 0x74, 0x61, 0x62, 0x61, 0x73, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e,
-	0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x61, 0x74, 0x61, 0x62,
-	0x61, 0x73, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x08, 0x64, 0x61, 0x74, 0x61,
-	0x62, 0x61, 0x73, 0x65, 0x12, 0x28, 0x0a, 0x03, 0x73, 0x73, 0x68, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x16, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x53,
-	0x53, 0x48, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x03, 0x73, 0x73, 0x68, 0x2a, 0x37,
+	0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x22, 0xa6, 0x01, 0x0a, 0x0e, 0x45, 0x78,
+	0x74, 0x65, 0x6e, 0x64, 0x65, 0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x37, 0x0a, 0x08,
+	0x64, 0x61, 0x74, 0x61, 0x62, 0x61, 0x73, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b,
+	0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x61, 0x74, 0x61,
+	0x62, 0x61, 0x73, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x08, 0x64, 0x61, 0x74,
+	0x61, 0x62, 0x61, 0x73, 0x65, 0x12, 0x28, 0x0a, 0x03, 0x73, 0x73, 0x68, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x16, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e,
+	0x53, 0x53, 0x48, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x03, 0x73, 0x73, 0x68, 0x12,
+	0x31, 0x0a, 0x06, 0x64, 0x6f, 0x63, 0x6b, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x6f, 0x63,
+	0x6b, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x06, 0x64, 0x6f, 0x63, 0x6b,
+	0x65, 0x72, 0x22, 0x5d, 0x0a, 0x14, 0x44, 0x6f, 0x63, 0x6b, 0x65, 0x72, 0x41, 0x6c, 0x6c, 0x6f,
+	0x77, 0x65, 0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f,
+	0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63,
+	0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x12, 0x27, 0x0a, 0x0f, 0x61, 0x6c, 0x6c, 0x6f,
+	0x77, 0x65, 0x64, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x0e, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x22, 0xa4, 0x01, 0x0a, 0x15, 0x44, 0x6f, 0x63, 0x6b, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x74,
+	0x61, 0x69, 0x6e, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x61,
+	0x6c, 0x6c, 0x6f, 0x77, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x09, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x61, 0x6c,
+	0x6c, 0x6f, 0x77, 0x5f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08,
+	0x52, 0x0b, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x12, 0x49, 0x0a,
+	0x0f, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30,
+	0x2e, 0x76, 0x31, 0x2e, 0x44, 0x6f, 0x63, 0x6b, 0x65, 0x72, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65,
+	0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x0e, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x65,
+	0x64, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x93, 0x01, 0x0a, 0x0d, 0x44, 0x6f, 0x63,
+	0x6b, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x41, 0x0a, 0x0a, 0x63, 0x6f,
+	0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21,
+	0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x6f, 0x63, 0x6b,
+	0x65, 0x72, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x65, 0x72, 0x73, 0x12, 0x3f, 0x0a,
+	0x1c, 0x6d, 0x61, 0x78, 0x5f, 0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x63, 0x6f, 0x6e, 0x64, 0x73, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x19, 0x6d, 0x61, 0x78, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x44,
+	0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x63, 0x6f, 0x6e, 0x64, 0x73, 0x2a, 0x37,
 	0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x52, 0x45, 0x41,
 	0x54, 0x45, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x10, 0x01,
 	0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x02, 0x12, 0x09, 0x0a, 0x05,
@@ -3579,7 +3789,7 @@ func file_connector_proto_rawDescGZIP() []byte {
 }
 
 var file_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 49)
+var file_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 52)
 var file_connector_proto_goTypes = []interface{}{
 	(Action)(0),                            // 0: border0.v1.Action
 	(*ControlStreamRequest)(nil),           // 1: border0.v1.ControlStreamRequest
@@ -3626,13 +3836,16 @@ var file_connector_proto_goTypes = []interface{}{
 	(*KubectlExecNamespace)(nil),           // 42: border0.v1.KubectlExecNamespace
 	(*SSHDockerExecAction)(nil),            // 43: border0.v1.SSHDockerExecAction
 	(*ExtendedAction)(nil),                 // 44: border0.v1.ExtendedAction
-	nil,                                    // 45: border0.v1.AuthorizeResponse.AllowedActionsEntry
-	nil,                                    // 46: border0.v1.AuthorizeResponse.InfoEntry
-	nil,                                    // 47: border0.v1.AuthorizeResponse.AllowedExtendedActionsEntry
-	nil,                                    // 48: border0.v1.SSHKubectlExecAction.PodSelectorEntry
-	nil,                                    // 49: border0.v1.KubectlExecNamespace.PodSelectorEntry
-	(*structpb.Struct)(nil),                // 50: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),          // 51: google.protobuf.Timestamp
+	(*DockerAllowedActions)(nil),           // 45: border0.v1.DockerAllowedActions
+	(*DockerContainerAction)(nil),          // 46: border0.v1.DockerContainerAction
+	(*DockerActions)(nil),                  // 47: border0.v1.DockerActions
+	nil,                                    // 48: border0.v1.AuthorizeResponse.AllowedActionsEntry
+	nil,                                    // 49: border0.v1.AuthorizeResponse.InfoEntry
+	nil,                                    // 50: border0.v1.AuthorizeResponse.AllowedExtendedActionsEntry
+	nil,                                    // 51: border0.v1.SSHKubectlExecAction.PodSelectorEntry
+	nil,                                    // 52: border0.v1.KubectlExecNamespace.PodSelectorEntry
+	(*structpb.Struct)(nil),                // 53: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),          // 54: google.protobuf.Timestamp
 }
 var file_connector_proto_depIdxs = []int32{
 	10, // 0: border0.v1.ControlStreamRequest.config:type_name -> border0.v1.Config
@@ -3657,26 +3870,26 @@ var file_connector_proto_depIdxs = []int32{
 	26, // 19: border0.v1.ControlStreamReponse.authorize:type_name -> border0.v1.AuthorizeResponse
 	29, // 20: border0.v1.ControlStreamReponse.ssh_certificate_sign_response:type_name -> border0.v1.SshCertifcateSignResponse
 	32, // 21: border0.v1.ControlStreamReponse.certifcate_sign_response:type_name -> border0.v1.CertifcateSignResponse
-	50, // 22: border0.v1.Organization.certificates:type_name -> google.protobuf.Struct
+	53, // 22: border0.v1.Organization.certificates:type_name -> google.protobuf.Struct
 	17, // 23: border0.v1.Init.connector_config:type_name -> border0.v1.ConnectorConfig
 	16, // 24: border0.v1.Init.sockets:type_name -> border0.v1.SocketConfig
 	18, // 25: border0.v1.Init.plugins:type_name -> border0.v1.PluginConfig
 	0,  // 26: border0.v1.UpdateConfig.action:type_name -> border0.v1.Action
 	18, // 27: border0.v1.UpdateConfig.plugin_config:type_name -> border0.v1.PluginConfig
 	16, // 28: border0.v1.UpdateConfig.socket_config:type_name -> border0.v1.SocketConfig
-	51, // 29: border0.v1.Log.timestamp:type_name -> google.protobuf.Timestamp
-	50, // 30: border0.v1.ConnectorMetadata.data:type_name -> google.protobuf.Struct
+	54, // 29: border0.v1.Log.timestamp:type_name -> google.protobuf.Timestamp
+	53, // 30: border0.v1.ConnectorMetadata.data:type_name -> google.protobuf.Struct
 	14, // 31: border0.v1.PluginDiscoveryResults.metadata:type_name -> border0.v1.PluginDiscoveryResultsMetadata
-	50, // 32: border0.v1.PluginDiscoveryResults.resources:type_name -> google.protobuf.Struct
-	51, // 33: border0.v1.PluginDiscoveryResultsMetadata.started_at:type_name -> google.protobuf.Timestamp
-	51, // 34: border0.v1.PluginDiscoveryResultsMetadata.ended_at:type_name -> google.protobuf.Timestamp
-	50, // 35: border0.v1.SocketConfig.config:type_name -> google.protobuf.Struct
+	53, // 32: border0.v1.PluginDiscoveryResults.resources:type_name -> google.protobuf.Struct
+	54, // 33: border0.v1.PluginDiscoveryResultsMetadata.started_at:type_name -> google.protobuf.Timestamp
+	54, // 34: border0.v1.PluginDiscoveryResultsMetadata.ended_at:type_name -> google.protobuf.Timestamp
+	53, // 35: border0.v1.SocketConfig.config:type_name -> google.protobuf.Struct
 	3,  // 36: border0.v1.ConnectorConfig.organization:type_name -> border0.v1.Organization
-	50, // 37: border0.v1.PluginConfig.config:type_name -> google.protobuf.Struct
+	53, // 37: border0.v1.PluginConfig.config:type_name -> google.protobuf.Struct
 	44, // 38: border0.v1.extendedActionList.values:type_name -> border0.v1.ExtendedAction
-	45, // 39: border0.v1.AuthorizeResponse.allowed_actions:type_name -> border0.v1.AuthorizeResponse.AllowedActionsEntry
-	46, // 40: border0.v1.AuthorizeResponse.info:type_name -> border0.v1.AuthorizeResponse.InfoEntry
-	47, // 41: border0.v1.AuthorizeResponse.allowed_extended_actions:type_name -> border0.v1.AuthorizeResponse.AllowedExtendedActionsEntry
+	48, // 39: border0.v1.AuthorizeResponse.allowed_actions:type_name -> border0.v1.AuthorizeResponse.AllowedActionsEntry
+	49, // 40: border0.v1.AuthorizeResponse.info:type_name -> border0.v1.AuthorizeResponse.InfoEntry
+	50, // 41: border0.v1.AuthorizeResponse.allowed_extended_actions:type_name -> border0.v1.AuthorizeResponse.AllowedExtendedActionsEntry
 	34, // 42: border0.v1.DatabaseActions.schemas:type_name -> border0.v1.DatabaseSchemaAction
 	36, // 43: border0.v1.SSHActions.shell:type_name -> border0.v1.SSHShellAction
 	37, // 44: border0.v1.SSHActions.exec:type_name -> border0.v1.SSHExecAction
@@ -3686,20 +3899,23 @@ var file_connector_proto_depIdxs = []int32{
 	43, // 48: border0.v1.SSHActions.docker_exec:type_name -> border0.v1.SSHDockerExecAction
 	39, // 49: border0.v1.SSHTcpForwardingAction.allowed_connections:type_name -> border0.v1.SSHTcpForwardingConnection
 	42, // 50: border0.v1.SSHKubectlExecAction.allowed_namespaces:type_name -> border0.v1.KubectlExecNamespace
-	48, // 51: border0.v1.SSHKubectlExecAction.pod_selector:type_name -> border0.v1.SSHKubectlExecAction.PodSelectorEntry
-	49, // 52: border0.v1.KubectlExecNamespace.pod_selector:type_name -> border0.v1.KubectlExecNamespace.PodSelectorEntry
+	51, // 51: border0.v1.SSHKubectlExecAction.pod_selector:type_name -> border0.v1.SSHKubectlExecAction.PodSelectorEntry
+	52, // 52: border0.v1.KubectlExecNamespace.pod_selector:type_name -> border0.v1.KubectlExecNamespace.PodSelectorEntry
 	33, // 53: border0.v1.ExtendedAction.database:type_name -> border0.v1.DatabaseActions
 	35, // 54: border0.v1.ExtendedAction.ssh:type_name -> border0.v1.SSHActions
-	23, // 55: border0.v1.AuthorizeResponse.AllowedActionsEntry.value:type_name -> border0.v1.actionList
-	25, // 56: border0.v1.AuthorizeResponse.InfoEntry.value:type_name -> border0.v1.infoList
-	24, // 57: border0.v1.AuthorizeResponse.AllowedExtendedActionsEntry.value:type_name -> border0.v1.extendedActionList
-	1,  // 58: border0.v1.ConnectorService.ControlStream:input_type -> border0.v1.ControlStreamRequest
-	2,  // 59: border0.v1.ConnectorService.ControlStream:output_type -> border0.v1.ControlStreamReponse
-	59, // [59:60] is the sub-list for method output_type
-	58, // [58:59] is the sub-list for method input_type
-	58, // [58:58] is the sub-list for extension type_name
-	58, // [58:58] is the sub-list for extension extendee
-	0,  // [0:58] is the sub-list for field type_name
+	47, // 55: border0.v1.ExtendedAction.docker:type_name -> border0.v1.DockerActions
+	45, // 56: border0.v1.DockerContainerAction.allowed_actions:type_name -> border0.v1.DockerAllowedActions
+	46, // 57: border0.v1.DockerActions.containers:type_name -> border0.v1.DockerContainerAction
+	23, // 58: border0.v1.AuthorizeResponse.AllowedActionsEntry.value:type_name -> border0.v1.actionList
+	25, // 59: border0.v1.AuthorizeResponse.InfoEntry.value:type_name -> border0.v1.infoList
+	24, // 60: border0.v1.AuthorizeResponse.AllowedExtendedActionsEntry.value:type_name -> border0.v1.extendedActionList
+	1,  // 61: border0.v1.ConnectorService.ControlStream:input_type -> border0.v1.ControlStreamRequest
+	2,  // 62: border0.v1.ConnectorService.ControlStream:output_type -> border0.v1.ControlStreamReponse
+	62, // [62:63] is the sub-list for method output_type
+	61, // [61:62] is the sub-list for method input_type
+	61, // [61:61] is the sub-list for extension type_name
+	61, // [61:61] is the sub-list for extension extendee
+	0,  // [0:61] is the sub-list for field type_name
 }
 
 func init() { file_connector_proto_init() }
@@ -4236,6 +4452,42 @@ func file_connector_proto_init() {
 				return nil
 			}
 		}
+		file_connector_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DockerAllowedActions); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_connector_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DockerContainerAction); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_connector_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DockerActions); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_connector_proto_msgTypes[0].OneofWrappers = []interface{}{
 		(*ControlStreamRequest_Config)(nil),
@@ -4273,7 +4525,7 @@ func file_connector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_connector_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   49,
+			NumMessages:   52,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
