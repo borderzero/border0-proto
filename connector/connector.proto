@@ -23,6 +23,7 @@ message ControlStreamRequest {
     SshCertifcateSignRequest ssh_certificate_sign_request = 10;
     UploadRecording upload_recording = 11;
     CertifcateSignRequest certifcate_sign_request = 12;
+    SessionEvent session_event = 13;
   }
 }
 
@@ -189,6 +190,14 @@ message SessionUpdateRequest {
   string session_key = 1;
   string socket_id = 2;
   string user_data = 3;
+}
+
+message SessionEvent {
+  string session_key = 1;
+  string socket_id = 2;
+  string type = 3;
+  string status = 4;
+  string metadata = 5;
 }
 
 message SshCertifcateSignRequest {
