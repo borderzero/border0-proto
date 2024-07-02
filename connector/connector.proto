@@ -217,9 +217,10 @@ message SshCertifcateSignResponse {
 }
 
 message UploadRecording {
-  string session_key = 1;
-  string recording_id = 2;
-  bytes recording = 3;
+  string session_key = 1;    // session identifier (unique globally)
+  string recording_id = 2;   // recording identifier (unique per-session)
+  bytes recording = 3;       // actual recording bytes
+  string recording_type = 4; // type of the recording e.g. asciinema, log, etc...
 }
 
 message CertifcateSignRequest {
