@@ -1,10 +1,10 @@
 NAME:=$(shell basename `git rev-parse --show-toplevel`)
 
 # track versions in https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go?tab=versions
-PROTOC_GEN_GO_VERSION:=v1.31.0
+PROTOC_GEN_GO_VERSION:=v1.34.2
 
 # track versions in https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc?tab=versions
-PROTOC_GEN_GO_GRPC_VERSION:=v1.3.0
+PROTOC_GEN_GO_GRPC_VERSION:=v1.4.0
 
 component ?= connector
 
