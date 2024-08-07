@@ -1,0 +1,52 @@
+// sets the .proto file syntax version
+syntax = "proto3";
+
+// sets the output golang package name
+option go_package = "github.com/borderzero/border0-proto/peer";
+
+// sets the protobuf package name (i.e. definitions namespace)
+package border0.peer.v1;
+
+service PeerService {
+  rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamResponse);
+}
+
+message ControlStreamRequest {
+  oneof RequestType {
+    AuthChallengeRequest authChallenge = 1;
+    HeartbeatRequest heartbeat = 2;
+    PeersRequest peers = 3;
+  }
+}
+
+message ControlStreamResponse {
+  oneof RequestType {
+    AuthChallengeResponse authChallenge = 1;
+    HeartbeatResponse heartbeat = 2;
+    PeersResponse peers = 3;
+  }
+}
+
+message AuthChallengeRequest {
+  string solveMe = 1;
+}
+
+message AuthChallengeResponse {
+  string solved = 1;
+}
+
+message HeartbeatRequest {}
+message HeartbeatResponse {}
+
+message PeersRequest {}
+
+message PeersResponse {
+  repeated WireGuardPeer peers = 1;
+}
+
+message WireGuardPeer {
+  string public_key = 1;           // the public key of the peer, used for identification and encryption
+  string endpoint = 2;             // the endpoint (IP + port) to send packets to for the peer
+  repeated string allowed_ips = 3; // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
+  uint32 persistent_keepalive = 4; // the interval (seconds) for sending keepalive packets (0 means disabled)
+}

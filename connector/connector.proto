@@ -1,6 +1,10 @@
+// sets the .proto file syntax version
 syntax = "proto3";
 
+// sets the output golang package name
 option go_package = "github.com/borderzero/border0-proto/connector";
+
+// sets the protobuf package name (i.e. definitions namespace)
 package border0.v1;
 
 import "google/protobuf/timestamp.proto";
