@@ -2,18 +2,18 @@
 syntax = "proto3";
 
 // sets the output golang package name
-option go_package = "github.com/borderzero/border0-proto/peer";
+option go_package = "github.com/borderzero/border0-proto/device";
 
 // sets the protobuf package name (i.e. definitions namespace)
-package border0.peer.v1;
+package border0.device.v1;
 
-// the stream (rpc) service for the Border0 api to manage peers/devices
-service PeerService {
-  rpc ControlStream(stream ClientToServerMessage) returns (stream ServerToClientMessage);
+// the stream (rpc) service for the Border0 api to manage devices
+service DeviceManagementService {
+  rpc ControlStream(stream DeviceToServerMessage) returns (stream ServerToDeviceMessage);
 }
 
-// messages from clients to the server (api)
-message ClientToServerMessage {
+// messages from devices to the server (api)
+message DeviceToServerMessage {
   oneof Message {
     AuthChallengeSolution authChallenge = 1;
     GetPeersRequest peers = 2;
@@ -21,8 +21,8 @@ message ClientToServerMessage {
   }
 }
 
-// messages from the server (api) to clients
-message ServerToClientMessage {
+// messages from the server (api) to devices
+message ServerToDeviceMessage {
   oneof Message {
     AuthChallenge authChallenge = 1;
     GetPeersResponse peers = 2;
@@ -31,12 +31,14 @@ message ServerToClientMessage {
 }
 
 message AuthChallenge {
-  string challenge = 1;
-  string serverPublicKey = 2;
+  string serverPublicKey = 1;
+  bytes challenge = 2;
+  bytes challengeNonce = 3;
 }
 
 message AuthChallengeSolution {
-  string solved = 1;
+  bytes solved = 1;
+  bytes solvedNonce = 2;
 }
 
 message HeartbeatRequest {}
