@@ -7,40 +7,44 @@ option go_package = "github.com/borderzero/border0-proto/peer";
 // sets the protobuf package name (i.e. definitions namespace)
 package border0.peer.v1;
 
+// the stream (rpc) service for the Border0 api to manage peers/devices
 service PeerService {
-  rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamResponse);
+  rpc ControlStream(stream ClientToServerMessage) returns (stream ServerToClientMessage);
 }
 
-message ControlStreamRequest {
-  oneof RequestType {
-    AuthChallengeRequest authChallenge = 1;
-    HeartbeatRequest heartbeat = 2;
-    PeersRequest peers = 3;
+// messages from clients to the server (api)
+message ClientToServerMessage {
+  oneof Message {
+    AuthChallengeSolution authChallenge = 1;
+    GetPeersRequest peers = 2;
+    HeartbeatRequest heartbeat = 3;
   }
 }
 
-message ControlStreamResponse {
-  oneof RequestType {
-    AuthChallengeResponse authChallenge = 1;
-    HeartbeatResponse heartbeat = 2;
-    PeersResponse peers = 3;
+// messages from the server (api) to clients
+message ServerToClientMessage {
+  oneof Message {
+    AuthChallenge authChallenge = 1;
+    GetPeersResponse peers = 2;
+    HeartbeatResponse heartbeat = 3;
   }
 }
 
-message AuthChallengeRequest {
-  string solveMe = 1;
+message AuthChallenge {
+  string challenge = 1;
+  string serverPublicKey = 2;
 }
 
-message AuthChallengeResponse {
+message AuthChallengeSolution {
   string solved = 1;
 }
 
 message HeartbeatRequest {}
 message HeartbeatResponse {}
 
-message PeersRequest {}
+message GetPeersRequest {}
 
-message PeersResponse {
+message GetPeersResponse {
   repeated WireGuardPeer peers = 1;
 }
 

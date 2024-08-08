@@ -29,8 +29,10 @@ const (
 // PeerServiceClient is the client API for PeerService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// the stream (rpc) service for the Border0 api to manage peers/devices
 type PeerServiceClient interface {
-	ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamResponse], error)
+	ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ClientToServerMessage, ServerToClientMessage], error)
 }
 
 type peerServiceClient struct {
@@ -41,24 +43,26 @@ func NewPeerServiceClient(cc grpc.ClientConnInterface) PeerServiceClient {
 	return &peerServiceClient{cc}
 }
 
-func (c *peerServiceClient) ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamResponse], error) {
+func (c *peerServiceClient) ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ClientToServerMessage, ServerToClientMessage], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &PeerService_ServiceDesc.Streams[0], PeerService_ControlStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ControlStreamRequest, ControlStreamResponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[ClientToServerMessage, ServerToClientMessage]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type PeerService_ControlStreamClient = grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamResponse]
+type PeerService_ControlStreamClient = grpc.BidiStreamingClient[ClientToServerMessage, ServerToClientMessage]
 
 // PeerServiceServer is the server API for PeerService service.
 // All implementations must embed UnimplementedPeerServiceServer
 // for forward compatibility.
+//
+// the stream (rpc) service for the Border0 api to manage peers/devices
 type PeerServiceServer interface {
-	ControlStream(grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamResponse]) error
+	ControlStream(grpc.BidiStreamingServer[ClientToServerMessage, ServerToClientMessage]) error
 	mustEmbedUnimplementedPeerServiceServer()
 }
 
@@ -69,7 +73,7 @@ type PeerServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPeerServiceServer struct{}
 
-func (UnimplementedPeerServiceServer) ControlStream(grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamResponse]) error {
+func (UnimplementedPeerServiceServer) ControlStream(grpc.BidiStreamingServer[ClientToServerMessage, ServerToClientMessage]) error {
 	return status.Errorf(codes.Unimplemented, "method ControlStream not implemented")
 }
 func (UnimplementedPeerServiceServer) mustEmbedUnimplementedPeerServiceServer() {}
@@ -94,11 +98,11 @@ func RegisterPeerServiceServer(s grpc.ServiceRegistrar, srv PeerServiceServer) {
 }
 
 func _PeerService_ControlStream_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PeerServiceServer).ControlStream(&grpc.GenericServerStream[ControlStreamRequest, ControlStreamResponse]{ServerStream: stream})
+	return srv.(PeerServiceServer).ControlStream(&grpc.GenericServerStream[ClientToServerMessage, ServerToClientMessage]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type PeerService_ControlStreamServer = grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamResponse]
+type PeerService_ControlStreamServer = grpc.BidiStreamingServer[ClientToServerMessage, ServerToClientMessage]
 
 // PeerService_ServiceDesc is the grpc.ServiceDesc for PeerService service.
 // It's only intended for direct use with grpc.RegisterService,
