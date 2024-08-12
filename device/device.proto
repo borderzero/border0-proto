@@ -16,8 +16,9 @@ service DeviceManagementService {
 message DeviceToServerMessage {
   oneof Message {
     AuthChallengeSolution authChallenge = 1;
-    GetPeersRequest peers = 2;
-    HeartbeatRequest heartbeat = 3;
+    EndpointUpdate endpointUpdate = 2;
+    GetPeersRequest peers = 3;
+    HeartbeatRequest heartbeat = 4;
   }
 }
 
@@ -39,6 +40,10 @@ message AuthChallenge {
 message AuthChallengeSolution {
   bytes solved = 1;
   bytes solvedNonce = 2;
+}
+
+message EndpointUpdate {
+  string endpoint = 1;             // the endpoint (IP + port) to send packets to for the peer
 }
 
 message HeartbeatRequest {}
