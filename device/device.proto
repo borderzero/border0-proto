@@ -15,43 +15,39 @@ service DeviceManagementService {
 // messages from devices to the server (api)
 message DeviceToServerMessage {
   oneof Message {
-    AuthChallengeSolution authChallenge = 1;
-    EndpointUpdate endpointUpdate = 2;
-    GetPeersRequest peers = 3;
-    HeartbeatRequest heartbeat = 4;
+    AuthChallengeSolutionMessage authChallengeSolutionMessage = 1;
+    EndpointUpdateMessage endpointUpdateMessage = 2;
+    HeartbeatMessage heartbeatMessage = 3;
   }
 }
 
 // messages from the server (api) to devices
 message ServerToDeviceMessage {
   oneof Message {
-    AuthChallenge authChallenge = 1;
-    GetPeersResponse peers = 2;
-    HeartbeatResponse heartbeat = 3;
+    AuthChallengeMessage authChallengeMessage = 1;
+    PeersMessage peersMessage = 2;
+    HeartbeatMessage heartbeatMessage = 3;
   }
 }
 
-message AuthChallenge {
+message AuthChallengeMessage {
   string serverPublicKey = 1;
   bytes challenge = 2;
   bytes challengeNonce = 3;
 }
 
-message AuthChallengeSolution {
+message AuthChallengeSolutionMessage {
   bytes solved = 1;
   bytes solvedNonce = 2;
 }
 
-message EndpointUpdate {
+message EndpointUpdateMessage {
   string endpoint = 1;             // the endpoint (IP + port) to send packets to for the peer
 }
 
-message HeartbeatRequest {}
-message HeartbeatResponse {}
+message HeartbeatMessage {}
 
-message GetPeersRequest {}
-
-message GetPeersResponse {
+message PeersMessage {
   repeated WireGuardPeer peers = 1;
 }
 
