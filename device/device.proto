@@ -48,9 +48,12 @@ message EndpointUpdateMessage {
 message HeartbeatMessage {}
 
 message NetworkStateMessage {
-  string cidrv4 = 1;
-  string cidrv6 = 2;
-  repeated WireGuardPeer peers = 3;
+  string networkID = 1;
+  string networkCIDRV4 = 2;
+  string networkCIDRV6 = 3;
+  string selfIPv4 = 4;
+  string selfIPv6 = 5;
+  repeated WireGuardPeer peers = 6;
 }
 
 message WireGuardPeer {
