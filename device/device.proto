@@ -25,7 +25,7 @@ message DeviceToServerMessage {
 message ServerToDeviceMessage {
   oneof Message {
     AuthChallengeMessage authChallengeMessage = 1;
-    PeersMessage peersMessage = 2;
+    NetworkStateMessage networkStateMessage = 2;
     HeartbeatMessage heartbeatMessage = 3;
   }
 }
@@ -47,8 +47,10 @@ message EndpointUpdateMessage {
 
 message HeartbeatMessage {}
 
-message PeersMessage {
-  repeated WireGuardPeer peers = 1;
+message NetworkStateMessage {
+  string cidrv4 = 1;
+  string cidrv6 = 2;
+  repeated WireGuardPeer peers = 3;
 }
 
 message WireGuardPeer {
