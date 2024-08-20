@@ -28,6 +28,8 @@ message ServerToDeviceMessage {
     HeartbeatMessage heartbeatMessage = 2;
     NetworkStateMessage networkStateMessage = 3;
     PeerOnlineMessage peerOnlineMessage = 4;
+    PeerOfflineMessage peerOfflineMessage = 5;
+    DisconnectMessage disconnectMessage = 6;
   }
 }
 
@@ -54,6 +56,11 @@ message PeerOnlineMessage {
   WireGuardPeer peer = 2;
 }
 
+message PeerOfflineMessage {
+  string networkID = 1;
+  string peer_public_key = 2;
+}
+
 message NetworkStateMessage {
   string networkID = 1;
   string networkCIDRV4 = 2;
@@ -70,4 +77,13 @@ message WireGuardPeer {
   repeated string allowed_ips = 4;                  // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
   uint32 persistent_keepalive_interval_seconds = 5; // the interval for sending keepalive packets (0 means disabled)
   string endpoint_public_udp4 = 6;                  // endpoint for the peer for udp over ipv4 using the peer's public IPv4 (as seen from the Internet)
+}
+
+enum DisconnectionReason {
+  UNKNOWN = 0;
+  SERVER_SHUTDOWN = 1;
+}
+
+message DisconnectMessage {
+  DisconnectionReason reason = 1;
 }
