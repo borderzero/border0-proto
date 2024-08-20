@@ -16,7 +16,7 @@ service DeviceManagementService {
 message DeviceToServerMessage {
   oneof Message {
     AuthChallengeSolutionMessage authChallengeSolutionMessage = 1;
-    EndpointUpdateMessage endpointUpdateMessage = 2;
+    DiscoveryDetailsMessage discoveryDetailsMessage = 2;
     HeartbeatMessage heartbeatMessage = 3;
   }
 }
@@ -42,8 +42,9 @@ message AuthChallengeSolutionMessage {
   bytes solvedNonce = 2;
 }
 
-message EndpointUpdateMessage {
-  string endpoint = 1;             // the endpoint (IP + port) to send packets to for the peer
+message DiscoveryDetailsMessage {
+  bool discoverable = 1;           // whether the peer should be returned along with the networks its in
+  string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
 }
 
 message HeartbeatMessage {}
@@ -63,8 +64,10 @@ message NetworkStateMessage {
 }
 
 message WireGuardPeer {
-  string public_key = 1;           // the public key of the peer, used for identification and encryption
-  string endpoint = 2;             // the endpoint (IP + port) to send packets to for the peer
-  repeated string allowed_ips = 3; // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
-  uint32 persistent_keepalive = 4; // the interval (seconds) for sending keepalive packets (0 means disabled)
+  string public_key = 1;                            // the public key of the peer, used for identification and encryption
+  string IPv4 = 2;                                  // the peer's (private) IPv4 address in the wireguard network
+  string IPv6 = 3;                                  // the peer's (private) IPv6 address in the wireguard network
+  repeated string allowed_ips = 4;                  // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
+  uint32 persistent_keepalive_interval_seconds = 5; // the interval for sending keepalive packets (0 means disabled)
+  string endpoint_public_udp4 = 6;                  // endpoint for the peer for udp over ipv4 using the peer's public IPv4 (as seen from the Internet)
 }
