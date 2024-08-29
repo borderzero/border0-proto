@@ -47,6 +47,7 @@ message AuthChallengeSolutionMessage {
 message DiscoveryDetailsMessage {
   bool discoverable = 1;           // whether the peer should be returned along with the networks its in
   string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
+  string endpoint_public_udp6 = 3; // the endpoint (IPv6 + port) to send packets to for the peer
 }
 
 message HeartbeatMessage {}
