@@ -12,7 +12,7 @@ COMPONENTS:=connector device
 all: docker-run
 
 docker-run: docker-build
-	$(foreach component, $(COMPONENTS),	docker run -v $(PWD)/$(component):/app/proto $(NAME)-builder;)
+	$(foreach component, $(COMPONENTS),	docker run -v $(PWD):/app/protos -v $(PWD)/$(component):/app/proto $(NAME)-builder;)
 
 docker-build:
 	docker build --build-arg PROTOC_GEN_GO_VERSION=$(PROTOC_GEN_GO_VERSION) --build-arg PROTOC_GEN_GO_GRPC_VERSION=$(PROTOC_GEN_GO_GRPC_VERSION) -t $(NAME)-builder .

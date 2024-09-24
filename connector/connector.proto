@@ -9,6 +9,7 @@ package border0.v1;
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
+import "device/device.proto";
 
 service ConnectorService {
   rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamReponse);
@@ -28,6 +29,7 @@ message ControlStreamRequest {
     UploadRecording upload_recording = 11;
     CertifcateSignRequest certifcate_sign_request = 12;
     SessionEvent session_event = 13;
+    DiscoveryDetailsMessage discoveryDetailsMessage = 14;
   }
 }
 
@@ -44,6 +46,10 @@ message ControlStreamReponse {
     AuthorizeResponse authorize = 9;
     SshCertifcateSignResponse ssh_certificate_sign_response = 10;
     CertifcateSignResponse certifcate_sign_response = 11;
+    border0.device.v1.NetworkStateMessage network_state_message = 12;
+    border0.device.v1.PeerOnlineMessage peerOnlineMessage = 13;
+    border0.device.v1.PeerOfflineMessage peerOfflineMessage = 14;
+    border0.device.v1.DisconnectMessage disconnectMessage = 15;
   }
 }
 
@@ -140,6 +146,7 @@ message ConnectorConfig {
  string name = 1;
  int32 heartbeat_interval = 2;
  Organization organization = 3;
+ bool private_network_enabled = 4;
 }
 
 message PluginConfig {
@@ -235,4 +242,11 @@ message CertifcateSignRequest {
 message CertifcateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
+}
+
+message DiscoveryDetailsMessage {
+  bool discoverable = 1;           // whether the peer should be returned along with the networks its in
+  string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
+  string endpoint_public_udp6 = 3; // the endpoint (IPv6 + port) to send packets to for the peer
+  string public_key = 4;           // the public key of the peer
 }
