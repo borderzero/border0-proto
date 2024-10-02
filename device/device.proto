@@ -4,6 +4,8 @@ syntax = "proto3";
 // sets the output golang package name
 option go_package = "github.com/borderzero/border0-proto/device";
 
+import "google/protobuf/struct.proto";
+
 // sets the protobuf package name (i.e. definitions namespace)
 package border0.device.v1;
 
@@ -18,6 +20,7 @@ message DeviceToServerMessage {
     AuthChallengeSolutionMessage authChallengeSolutionMessage = 1;
     DiscoveryDetailsMessage discoveryDetailsMessage = 2;
     HeartbeatMessage heartbeatMessage = 3;
+    DeviceMetadataMessage deviceMetadataMessage = 4;
   }
 }
 
@@ -88,4 +91,11 @@ enum DisconnectionReason {
 
 message DisconnectMessage {
   DisconnectionReason reason = 1;
+}
+
+message DeviceMetadataMessage {
+  DeviceMetadata metadata = 1;
+}
+message DeviceMetadata {
+  google.protobuf.Struct data = 1;
 }
