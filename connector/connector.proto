@@ -25,9 +25,9 @@ message ControlStreamRequest {
     ConnectorMetadata metadata = 7;
     AuthorizeRequest authorize = 8;
     SessionUpdateRequest session_update = 9;
-    SshCertifcateSignRequest ssh_certificate_sign_request = 10;
+    SshCertificateSignRequest ssh_certificate_sign_request = 10;
     UploadRecording upload_recording = 11;
-    CertifcateSignRequest certifcate_sign_request = 12;
+    CertificateSignRequest Certificate_sign_request = 12;
     SessionEvent session_event = 13;
     border0.common.v1.DiscoveryDetailsMessage discovery_details = 14;
   }
@@ -44,8 +44,8 @@ message ControlStreamResponse {
     Stop stop = 7;
     Disconnect disconnect = 8;
     AuthorizeResponse authorize = 9;
-    SshCertifcateSignResponse ssh_certificate_sign_response = 10;
-    CertifcateSignResponse certifcate_sign_response = 11;
+    SshCertificateSignResponse ssh_certificate_sign_response = 10;
+    CertificateSignResponse Certificate_sign_response = 11;
     border0.common.v1.NetworkStateMessage network_state = 12;
     border0.common.v1.PeerOnlineMessage peer_online = 13;
     border0.common.v1.PeerOfflineMessage peer_offline = 14;
@@ -209,7 +209,7 @@ message SessionEvent {
   string metadata = 5;
 }
 
-message SshCertifcateSignRequest {
+message SshCertificateSignRequest {
   string request_id = 1;
   string socket_id = 2;
   string session_key = 3;
@@ -218,7 +218,7 @@ message SshCertifcateSignRequest {
   bytes ticket = 6;
 }
 
-message SshCertifcateSignResponse {
+message SshCertificateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
 }
@@ -230,12 +230,12 @@ message UploadRecording {
   string recording_type = 4; // type of the recording e.g. asciinema, log, etc...
 }
 
-message CertifcateSignRequest {
+message CertificateSignRequest {
   string request_id = 1;
   bytes certificate_signing_request = 2;
 }
 
-message CertifcateSignResponse {
+message CertificateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
 }
