@@ -1,0 +1,55 @@
+// sets the .proto file syntax version
+syntax = "proto3";
+
+// sets the output golang package name
+option go_package = "github.com/borderzero/border0-proto/common";
+
+// sets the protobuf package name (i.e. definitions namespace)
+package border0.common.v1;
+
+message DiscoveryDetailsMessage {
+  bool discoverable = 1;           // whether the peer should be returned along with the networks its in
+  string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
+  string endpoint_public_udp6 = 3; // the endpoint (IPv6 + port) to send packets to for the peer
+  string public_key = 4;           // the public key of the peer, only used in connector
+}
+
+message HeartbeatMessage {}
+
+message PeerOnlineMessage {
+  string network_id = 1;
+  WireGuardPeer peer = 2;
+}
+
+message PeerOfflineMessage {
+  string network_id = 1;
+  string peer_public_key = 2;
+}
+
+message NetworkStateMessage {
+  string network_id = 1;
+  string network_cidr_v4 = 2;
+  string network_cidr_v6 = 3;
+  string self_ipv4 = 4;
+  string self_ipv6 = 5;
+  repeated WireGuardPeer online_peers = 6;
+}
+
+message WireGuardPeer {
+  string public_key = 1;                            // the public key of the peer, used for identification and encryption
+  string ipv4 = 2;                                  // the peer's (private) IPv4 address in the wireguard network
+  string ipv6 = 3;                                  // the peer's (private) IPv6 address in the wireguard network
+  repeated string allowed_ips = 4;                  // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
+  uint32 persistent_keepalive_interval_seconds = 5; // the interval for sending keepalive packets (0 means disabled)
+  string public_udp4_endpoint = 6;                  // endpoint for udp peer-to-peer communication over ipv4 (public IPv4 + port as seen from the Internet)
+  string public_udp6_endpoint = 7;                  // endpoint for udp peer-to-peer communication over ipv6 (public IPv6 + port as seen from the Internet)
+}
+
+enum DisconnectionReason {
+  UNKNOWN = 0;
+  SERVER_SHUTDOWN = 1;
+}
+
+message DisconnectMessage {
+  DisconnectionReason reason = 1;
+}

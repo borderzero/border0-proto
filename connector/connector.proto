@@ -12,7 +12,7 @@ import "google/protobuf/struct.proto";
 import "common/messages.proto";
 
 service ConnectorService {
-  rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamReponse);
+  rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamResponse);
 }
 
 message ControlStreamRequest {
@@ -33,7 +33,7 @@ message ControlStreamRequest {
   }
 }
 
-message ControlStreamReponse {
+message ControlStreamResponse {
   oneof RequestType {
     Init init = 1;
     ConnectorConfig connector_config = 2;
