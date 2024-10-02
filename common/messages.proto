@@ -8,7 +8,7 @@ option go_package = "github.com/borderzero/border0-proto/common";
 package border0.common.v1;
 
 message DiscoveryDetailsMessage {
-  bool discoverable = 1;           // whether the peer should be returned along with the networks its in
+  bool discoverable = 1;           // whether the peer should be returned along with the networks it's in
   string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
   string endpoint_public_udp6 = 3; // the endpoint (IPv6 + port) to send packets to for the peer
   string public_key = 4;           // the public key of the peer, only used in connector
@@ -37,12 +37,12 @@ message NetworkStateMessage {
 
 message WireGuardPeer {
   string public_key = 1;                            // the public key of the peer, used for identification and encryption
-  string ipv4 = 2;                                  // the peer's (private) IPv4 address in the wireguard network
-  string ipv6 = 3;                                  // the peer's (private) IPv6 address in the wireguard network
+  string ipv4 = 2;                                  // the peer's (private) IPv4 address in the WireGuard network
+  string ipv6 = 3;                                  // the peer's (private) IPv6 address in the WireGuard network
   repeated string allowed_ips = 4;                  // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
   uint32 persistent_keepalive_interval_seconds = 5; // the interval for sending keepalive packets (0 means disabled)
-  string public_udp4_endpoint = 6;                  // endpoint for udp peer-to-peer communication over ipv4 (public IPv4 + port as seen from the Internet)
-  string public_udp6_endpoint = 7;                  // endpoint for udp peer-to-peer communication over ipv6 (public IPv6 + port as seen from the Internet)
+  string public_udp4_endpoint = 6;                  // endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
+  string public_udp6_endpoint = 7;                  // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
 }
 
 enum DisconnectionReason {
