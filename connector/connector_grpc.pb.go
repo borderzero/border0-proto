@@ -30,7 +30,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConnectorServiceClient interface {
-	ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamReponse], error)
+	ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamResponse], error)
 }
 
 type connectorServiceClient struct {
@@ -41,24 +41,24 @@ func NewConnectorServiceClient(cc grpc.ClientConnInterface) ConnectorServiceClie
 	return &connectorServiceClient{cc}
 }
 
-func (c *connectorServiceClient) ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamReponse], error) {
+func (c *connectorServiceClient) ControlStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &ConnectorService_ServiceDesc.Streams[0], ConnectorService_ControlStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ControlStreamRequest, ControlStreamReponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[ControlStreamRequest, ControlStreamResponse]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ConnectorService_ControlStreamClient = grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamReponse]
+type ConnectorService_ControlStreamClient = grpc.BidiStreamingClient[ControlStreamRequest, ControlStreamResponse]
 
 // ConnectorServiceServer is the server API for ConnectorService service.
 // All implementations must embed UnimplementedConnectorServiceServer
 // for forward compatibility.
 type ConnectorServiceServer interface {
-	ControlStream(grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamReponse]) error
+	ControlStream(grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamResponse]) error
 	mustEmbedUnimplementedConnectorServiceServer()
 }
 
@@ -69,7 +69,7 @@ type ConnectorServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedConnectorServiceServer struct{}
 
-func (UnimplementedConnectorServiceServer) ControlStream(grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamReponse]) error {
+func (UnimplementedConnectorServiceServer) ControlStream(grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method ControlStream not implemented")
 }
 func (UnimplementedConnectorServiceServer) mustEmbedUnimplementedConnectorServiceServer() {}
@@ -94,11 +94,11 @@ func RegisterConnectorServiceServer(s grpc.ServiceRegistrar, srv ConnectorServic
 }
 
 func _ConnectorService_ControlStream_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ConnectorServiceServer).ControlStream(&grpc.GenericServerStream[ControlStreamRequest, ControlStreamReponse]{ServerStream: stream})
+	return srv.(ConnectorServiceServer).ControlStream(&grpc.GenericServerStream[ControlStreamRequest, ControlStreamResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ConnectorService_ControlStreamServer = grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamReponse]
+type ConnectorService_ControlStreamServer = grpc.BidiStreamingServer[ControlStreamRequest, ControlStreamResponse]
 
 // ConnectorService_ServiceDesc is the grpc.ServiceDesc for ConnectorService service.
 // It's only intended for direct use with grpc.RegisterService,

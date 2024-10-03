@@ -9,44 +9,49 @@ package border0.v1;
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
+import "common/messages.proto";
 
 service ConnectorService {
-  rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamReponse);
+  rpc ControlStream(stream ControlStreamRequest) returns (stream ControlStreamResponse);
 }
 
 message ControlStreamRequest {
   oneof RequestType {
     Config config = 1;
-    HeartbeatRequest heartbeat = 2;
+    border0.common.v1.HeartbeatMessage heartbeat = 2;
     PluginDiscoveryResults plugin_discovery_results = 3;
     TunnelCertificateSignRequest tunnel_certificate_sign_request = 5;
     Log log = 6;
     ConnectorMetadata metadata = 7;
     AuthorizeRequest authorize = 8;
     SessionUpdateRequest session_update = 9;
-    SshCertifcateSignRequest ssh_certificate_sign_request = 10;
+    SshCertificateSignRequest ssh_certificate_sign_request = 10;
     UploadRecording upload_recording = 11;
-    CertifcateSignRequest certifcate_sign_request = 12;
+    CertificateSignRequest Certificate_sign_request = 12;
     SessionEvent session_event = 13;
+    border0.common.v1.DiscoveryDetailsMessage discovery_details = 14;
   }
 }
 
-message ControlStreamReponse {
+message ControlStreamResponse {
   oneof RequestType {
     Init init = 1;
     ConnectorConfig connector_config = 2;
     UpdateConfig update_config = 3;
-    HeartbeatResponse heartbeat = 4;
+    border0.common.v1.HeartbeatMessage heartbeat = 4;
     TunnelCertificateSignResponse tunnel_certificate_sign_response = 5;
     Discover discover = 6;
     Stop stop = 7;
     Disconnect disconnect = 8;
     AuthorizeResponse authorize = 9;
-    SshCertifcateSignResponse ssh_certificate_sign_response = 10;
-    CertifcateSignResponse certifcate_sign_response = 11;
+    SshCertificateSignResponse ssh_certificate_sign_response = 10;
+    CertificateSignResponse Certificate_sign_response = 11;
+    border0.common.v1.NetworkStateMessage network_state = 12;
+    border0.common.v1.PeerOnlineMessage peer_online = 13;
+    border0.common.v1.PeerOfflineMessage peer_offline = 14;
   }
 }
-
+  
 message Organization {
   string id = 1;
   string name = 2;
@@ -106,9 +111,6 @@ message Config {
   bool plugins = 3;
 }
 
-message HeartbeatRequest {}
-message HeartbeatResponse {}
-
 message PluginDiscoveryResults {
   string plugin_id = 1;
   string request_id = 2;
@@ -140,6 +142,7 @@ message ConnectorConfig {
  string name = 1;
  int32 heartbeat_interval = 2;
  Organization organization = 3;
+ bool private_network_enabled = 4;
 }
 
 message PluginConfig {
@@ -206,7 +209,7 @@ message SessionEvent {
   string metadata = 5;
 }
 
-message SshCertifcateSignRequest {
+message SshCertificateSignRequest {
   string request_id = 1;
   string socket_id = 2;
   string session_key = 3;
@@ -215,7 +218,7 @@ message SshCertifcateSignRequest {
   bytes ticket = 6;
 }
 
-message SshCertifcateSignResponse {
+message SshCertificateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
 }
@@ -227,12 +230,12 @@ message UploadRecording {
   string recording_type = 4; // type of the recording e.g. asciinema, log, etc...
 }
 
-message CertifcateSignRequest {
+message CertificateSignRequest {
   string request_id = 1;
   bytes certificate_signing_request = 2;
 }
 
-message CertifcateSignResponse {
+message CertificateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
 }

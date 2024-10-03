@@ -7,12 +7,12 @@ PROTOC_GEN_GO_VERSION:=v1.34.2
 PROTOC_GEN_GO_GRPC_VERSION:=v1.5.1
 
 # add any components here after their directory has been created with .proto files
-COMPONENTS:=connector device 
+COMPONENTS:=common connector device 
 
 all: docker-run
 
 docker-run: docker-build
-	$(foreach component, $(COMPONENTS),	docker run -v $(PWD)/$(component):/app/proto $(NAME)-builder;)
+	$(foreach component, $(COMPONENTS),	docker run -v $(PWD)/common:/app/shared/common -v $(PWD)/$(component):/app/proto $(NAME)-builder;)
 
 docker-build:
 	docker build --build-arg PROTOC_GEN_GO_VERSION=$(PROTOC_GEN_GO_VERSION) --build-arg PROTOC_GEN_GO_GRPC_VERSION=$(PROTOC_GEN_GO_GRPC_VERSION) -t $(NAME)-builder .

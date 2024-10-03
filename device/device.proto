@@ -7,6 +7,8 @@ option go_package = "github.com/borderzero/border0-proto/device";
 // sets the protobuf package name (i.e. definitions namespace)
 package border0.device.v1;
 
+import "common/messages.proto";
+
 // the stream (rpc) service for the Border0 api to manage devices
 service DeviceManagementService {
   rpc ControlStream(stream DeviceToServerMessage) returns (stream ServerToDeviceMessage);
@@ -15,21 +17,21 @@ service DeviceManagementService {
 // messages from devices to the server (api)
 message DeviceToServerMessage {
   oneof Message {
-    AuthChallengeSolutionMessage authChallengeSolutionMessage = 1;
-    DiscoveryDetailsMessage discoveryDetailsMessage = 2;
-    HeartbeatMessage heartbeatMessage = 3;
+    AuthChallengeSolutionMessage auth_challenge_solution = 1;
+    border0.common.v1.DiscoveryDetailsMessage discovery_details = 2;
+    border0.common.v1.HeartbeatMessage heartbeat = 3;
   }
 }
 
 // messages from the server (api) to devices
 message ServerToDeviceMessage {
   oneof Message {
-    AuthChallengeMessage authChallengeMessage = 1;
-    HeartbeatMessage heartbeatMessage = 2;
-    NetworkStateMessage networkStateMessage = 3;
-    PeerOnlineMessage peerOnlineMessage = 4;
-    PeerOfflineMessage peerOfflineMessage = 5;
-    DisconnectMessage disconnectMessage = 6;
+    AuthChallengeMessage auth_challenge = 1;
+    border0.common.v1.HeartbeatMessage heartbeat = 2;
+    border0.common.v1.NetworkStateMessage network_state = 3;
+    border0.common.v1.PeerOnlineMessage peer_online = 4;
+    border0.common.v1.PeerOfflineMessage peer_offline = 5;
+    border0.common.v1.DisconnectMessage disconnect = 6;
   }
 }
 
@@ -42,43 +44,6 @@ message AuthChallengeMessage {
 message AuthChallengeSolutionMessage {
   bytes solved = 1;
   bytes solvedNonce = 2;
-}
-
-message DiscoveryDetailsMessage {
-  bool discoverable = 1;           // whether the peer should be returned along with the networks its in
-  string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
-  string endpoint_public_udp6 = 3; // the endpoint (IPv6 + port) to send packets to for the peer
-}
-
-message HeartbeatMessage {}
-
-message PeerOnlineMessage {
-  string networkID = 1;
-  WireGuardPeer peer = 2;
-}
-
-message PeerOfflineMessage {
-  string networkID = 1;
-  string peer_public_key = 2;
-}
-
-message NetworkStateMessage {
-  string networkID = 1;
-  string networkCIDRV4 = 2;
-  string networkCIDRV6 = 3;
-  string selfIPv4 = 4;
-  string selfIPv6 = 5;
-  repeated WireGuardPeer onlinePeers = 6;
-}
-
-message WireGuardPeer {
-  string public_key = 1;                            // the public key of the peer, used for identification and encryption
-  string IPv4 = 2;                                  // the peer's (private) IPv4 address in the wireguard network
-  string IPv6 = 3;                                  // the peer's (private) IPv6 address in the wireguard network
-  repeated string allowed_ips = 4;                  // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
-  uint32 persistent_keepalive_interval_seconds = 5; // the interval for sending keepalive packets (0 means disabled)
-  string endpoint_public_udp4 = 6;                  // endpoint for udp peer-to-peer communication over ipv4 (public IPv4 + port as seen from the Internet)
-  string endpoint_public_udp6 = 7;                  // endpoint for udp peer-to-peer communication over ipv6 (public IPv6 + port as seen from the Internet)
 }
 
 enum DisconnectionReason {
