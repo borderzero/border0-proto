@@ -75,7 +75,7 @@ type DiscoveryDetailsMessage struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Discoverable       bool   `protobuf:"varint,1,opt,name=discoverable,proto3" json:"discoverable,omitempty"`                                        // whether the peer should be returned along with the networks its in
+	Discoverable       bool   `protobuf:"varint,1,opt,name=discoverable,proto3" json:"discoverable,omitempty"`                                        // whether the peer should be returned along with the networks it's in
 	EndpointPublicUdp4 string `protobuf:"bytes,2,opt,name=endpoint_public_udp4,json=endpointPublicUdp4,proto3" json:"endpoint_public_udp4,omitempty"` // the endpoint (IPv4 + port) to send packets to for the peer
 	EndpointPublicUdp6 string `protobuf:"bytes,3,opt,name=endpoint_public_udp6,json=endpointPublicUdp6,proto3" json:"endpoint_public_udp6,omitempty"` // the endpoint (IPv6 + port) to send packets to for the peer
 	PublicKey          string `protobuf:"bytes,4,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`                              // the public key of the peer, only used in connector
@@ -382,12 +382,12 @@ type WireGuardPeer struct {
 	unknownFields protoimpl.UnknownFields
 
 	PublicKey                          string   `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`                                                                                 // the public key of the peer, used for identification and encryption
-	Ipv4                               string   `protobuf:"bytes,2,opt,name=ipv4,proto3" json:"ipv4,omitempty"`                                                                                                            // the peer's (private) IPv4 address in the wireguard network
-	Ipv6                               string   `protobuf:"bytes,3,opt,name=ipv6,proto3" json:"ipv6,omitempty"`                                                                                                            // the peer's (private) IPv6 address in the wireguard network
+	Ipv4                               string   `protobuf:"bytes,2,opt,name=ipv4,proto3" json:"ipv4,omitempty"`                                                                                                            // the peer's (private) IPv4 address in the WireGuard network
+	Ipv6                               string   `protobuf:"bytes,3,opt,name=ipv6,proto3" json:"ipv6,omitempty"`                                                                                                            // the peer's (private) IPv6 address in the WireGuard network
 	AllowedIps                         []string `protobuf:"bytes,4,rep,name=allowed_ips,json=allowedIps,proto3" json:"allowed_ips,omitempty"`                                                                              // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
 	PersistentKeepaliveIntervalSeconds uint32   `protobuf:"varint,5,opt,name=persistent_keepalive_interval_seconds,json=persistentKeepaliveIntervalSeconds,proto3" json:"persistent_keepalive_interval_seconds,omitempty"` // the interval for sending keepalive packets (0 means disabled)
-	PublicUdp4Endpoint                 string   `protobuf:"bytes,6,opt,name=public_udp4_endpoint,json=publicUdp4Endpoint,proto3" json:"public_udp4_endpoint,omitempty"`                                                    // endpoint for udp peer-to-peer communication over ipv4 (public IPv4 + port as seen from the Internet)
-	PublicUdp6Endpoint                 string   `protobuf:"bytes,7,opt,name=public_udp6_endpoint,json=publicUdp6Endpoint,proto3" json:"public_udp6_endpoint,omitempty"`                                                    // endpoint for udp peer-to-peer communication over ipv6 (public IPv6 + port as seen from the Internet)
+	PublicUdp4Endpoint                 string   `protobuf:"bytes,6,opt,name=public_udp4_endpoint,json=publicUdp4Endpoint,proto3" json:"public_udp4_endpoint,omitempty"`                                                    // endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
+	PublicUdp6Endpoint                 string   `protobuf:"bytes,7,opt,name=public_udp6_endpoint,json=publicUdp6Endpoint,proto3" json:"public_udp6_endpoint,omitempty"`                                                    // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
 }
 
 func (x *WireGuardPeer) Reset() {
