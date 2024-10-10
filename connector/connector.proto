@@ -30,6 +30,7 @@ message ControlStreamRequest {
     CertificateSignRequest Certificate_sign_request = 12;
     SessionEvent session_event = 13;
     border0.common.v1.DiscoveryDetailsMessage discovery_details = 14;
+    AuthorizePeerRequest authorize_peer = 15;
   }
 }
 
@@ -172,6 +173,16 @@ message AuthorizeRequest {
   string ip_address = 4;
   string session_key = 5;
   string socket_id = 6;
+}
+
+
+message AuthorizePeerRequest {
+  string request_id = 1;
+  string protocol = 2;
+  string public_key = 3;
+  string ip_address = 4;
+  string socket_id = 5;
+  string session_key = 6; // optional
 }
 
 message actionList {

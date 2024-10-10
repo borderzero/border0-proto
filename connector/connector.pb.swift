@@ -176,6 +176,14 @@ struct Border0_V1_ControlStreamRequest: Sendable {
     set {requestType = .discoveryDetails(newValue)}
   }
 
+  var authorizePeer: Border0_V1_AuthorizePeerRequest {
+    get {
+      if case .authorizePeer(let v)? = requestType {return v}
+      return Border0_V1_AuthorizePeerRequest()
+    }
+    set {requestType = .authorizePeer(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_RequestType: Equatable, Sendable {
@@ -192,6 +200,7 @@ struct Border0_V1_ControlStreamRequest: Sendable {
     case certificateSignRequest(Border0_V1_CertificateSignRequest)
     case sessionEvent(Border0_V1_SessionEvent)
     case discoveryDetails(Border0_Common_V1_DiscoveryDetailsMessage)
+    case authorizePeer(Border0_V1_AuthorizePeerRequest)
 
   }
 
@@ -747,6 +756,29 @@ struct Border0_V1_AuthorizeRequest: Sendable {
   init() {}
 }
 
+struct Border0_V1_AuthorizePeerRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var requestID: String = String()
+
+  var `protocol`: String = String()
+
+  var publicKey: String = String()
+
+  var ipAddress: String = String()
+
+  var socketID: String = String()
+
+  /// optional
+  var sessionKey: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct Border0_V1_actionList: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -956,6 +988,7 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
     12: .standard(proto: "Certificate_sign_request"),
     13: .standard(proto: "session_event"),
     14: .standard(proto: "discovery_details"),
+    15: .standard(proto: "authorize_peer"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1133,6 +1166,19 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
           self.requestType = .discoveryDetails(v)
         }
       }()
+      case 15: try {
+        var v: Border0_V1_AuthorizePeerRequest?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .authorizePeer(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .authorizePeer(v)
+        }
+      }()
       default: break
       }
     }
@@ -1195,6 +1241,10 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
     case .discoveryDetails?: try {
       guard case .discoveryDetails(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+    }()
+    case .authorizePeer?: try {
+      guard case .authorizePeer(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
     }()
     case nil: break
     }
@@ -2379,6 +2429,68 @@ extension Border0_V1_AuthorizeRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.ipAddress != rhs.ipAddress {return false}
     if lhs.sessionKey != rhs.sessionKey {return false}
     if lhs.socketID != rhs.socketID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AuthorizePeerRequest"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "request_id"),
+    2: .same(proto: "protocol"),
+    3: .standard(proto: "public_key"),
+    4: .standard(proto: "ip_address"),
+    5: .standard(proto: "socket_id"),
+    6: .standard(proto: "session_key"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.`protocol`) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.publicKey) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.ipAddress) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.socketID) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.sessionKey) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if !self.`protocol`.isEmpty {
+      try visitor.visitSingularStringField(value: self.`protocol`, fieldNumber: 2)
+    }
+    if !self.publicKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.publicKey, fieldNumber: 3)
+    }
+    if !self.ipAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipAddress, fieldNumber: 4)
+    }
+    if !self.socketID.isEmpty {
+      try visitor.visitSingularStringField(value: self.socketID, fieldNumber: 5)
+    }
+    if !self.sessionKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionKey, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_AuthorizePeerRequest, rhs: Border0_V1_AuthorizePeerRequest) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.`protocol` != rhs.`protocol` {return false}
+    if lhs.publicKey != rhs.publicKey {return false}
+    if lhs.ipAddress != rhs.ipAddress {return false}
+    if lhs.socketID != rhs.socketID {return false}
+    if lhs.sessionKey != rhs.sessionKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
