@@ -335,14 +335,6 @@ struct Border0_V1_ControlStreamResponse: Sendable {
     set {requestType = .peerOffline(newValue)}
   }
 
-  var authorizePeer: Border0_V1_AuthorizePeerResponse {
-    get {
-      if case .authorizePeer(let v)? = requestType {return v}
-      return Border0_V1_AuthorizePeerResponse()
-    }
-    set {requestType = .authorizePeer(newValue)}
-  }
-
   var session: Border0_V1_SessionResponse {
     get {
       if case .session(let v)? = requestType {return v}
@@ -368,7 +360,6 @@ struct Border0_V1_ControlStreamResponse: Sendable {
     case networkState(Border0_Common_V1_NetworkStateMessage)
     case peerOnline(Border0_Common_V1_PeerOnlineMessage)
     case peerOffline(Border0_Common_V1_PeerOfflineMessage)
-    case authorizePeer(Border0_V1_AuthorizePeerResponse)
     case session(Border0_V1_SessionResponse)
 
   }
@@ -840,24 +831,6 @@ struct Border0_V1_infoList: Sendable {
 }
 
 struct Border0_V1_AuthorizeResponse: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var requestID: String = String()
-
-  var allowedActions: Dictionary<String,Border0_V1_actionList> = [:]
-
-  var info: Dictionary<String,Border0_V1_infoList> = [:]
-
-  var permissions: Dictionary<String,Border0_V1_Permissions> = [:]
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct Border0_V1_AuthorizePeerResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1452,7 +1425,6 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
     12: .standard(proto: "network_state"),
     13: .standard(proto: "peer_online"),
     14: .standard(proto: "peer_offline"),
-    15: .standard(proto: "authorize_peer"),
     16: .same(proto: "session"),
   ]
 
@@ -1644,19 +1616,6 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
           self.requestType = .peerOffline(v)
         }
       }()
-      case 15: try {
-        var v: Border0_V1_AuthorizePeerResponse?
-        var hadOneofValue = false
-        if let current = self.requestType {
-          hadOneofValue = true
-          if case .authorizePeer(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.requestType = .authorizePeer(v)
-        }
-      }()
       case 16: try {
         var v: Border0_V1_SessionResponse?
         var hadOneofValue = false
@@ -1736,10 +1695,6 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
     case .peerOffline?: try {
       guard case .peerOffline(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
-    }()
-    case .authorizePeer?: try {
-      guard case .authorizePeer(let v)? = self.requestType else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
     }()
     case .session?: try {
       guard case .session(let v)? = self.requestType else { preconditionFailure() }
@@ -2806,6 +2761,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     2: .standard(proto: "allowed_actions"),
     3: .same(proto: "info"),
     5: .same(proto: "permissions"),
+    6: .same(proto: "email"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2818,6 +2774,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_actionList>.self, value: &self.allowedActions) }()
       case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_infoList>.self, value: &self.info) }()
       case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_Permissions>.self, value: &self.permissions) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.email) }()
       default: break
       }
     }
@@ -2836,65 +2793,13 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.permissions.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_Permissions>.self, value: self.permissions, fieldNumber: 5)
     }
+    if !self.email.isEmpty {
+      try visitor.visitSingularStringField(value: self.email, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Border0_V1_AuthorizeResponse, rhs: Border0_V1_AuthorizeResponse) -> Bool {
-    if lhs.requestID != rhs.requestID {return false}
-    if lhs.allowedActions != rhs.allowedActions {return false}
-    if lhs.info != rhs.info {return false}
-    if lhs.permissions != rhs.permissions {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Border0_V1_AuthorizePeerResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".AuthorizePeerResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "allowed_actions"),
-    3: .same(proto: "info"),
-    4: .same(proto: "permissions"),
-    5: .same(proto: "email"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
-      case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_actionList>.self, value: &self.allowedActions) }()
-      case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_infoList>.self, value: &self.info) }()
-      case 4: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_Permissions>.self, value: &self.permissions) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.email) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.requestID.isEmpty {
-      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
-    }
-    if !self.allowedActions.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_actionList>.self, value: self.allowedActions, fieldNumber: 2)
-    }
-    if !self.info.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_infoList>.self, value: self.info, fieldNumber: 3)
-    }
-    if !self.permissions.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_Permissions>.self, value: self.permissions, fieldNumber: 4)
-    }
-    if !self.email.isEmpty {
-      try visitor.visitSingularStringField(value: self.email, fieldNumber: 5)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: Border0_V1_AuthorizePeerResponse, rhs: Border0_V1_AuthorizePeerResponse) -> Bool {
     if lhs.requestID != rhs.requestID {return false}
     if lhs.allowedActions != rhs.allowedActions {return false}
     if lhs.info != rhs.info {return false}
