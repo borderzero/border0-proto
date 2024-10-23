@@ -444,6 +444,17 @@ struct Border0_V1_Init: Sendable {
 
   var plugins: [Border0_V1_PluginConfig] = []
 
+  /// used only for connectors in "device mode"
+  var networkID: String = String()
+
+  var networkCidrV4: String = String()
+
+  var networkCidrV6: String = String()
+
+  var selfIpv4: String = String()
+
+  var selfIpv6: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1860,6 +1871,11 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     1: .standard(proto: "connector_config"),
     2: .same(proto: "sockets"),
     3: .same(proto: "plugins"),
+    4: .standard(proto: "network_id"),
+    5: .standard(proto: "network_cidr_v4"),
+    6: .standard(proto: "network_cidr_v6"),
+    7: .standard(proto: "self_ipv4"),
+    8: .standard(proto: "self_ipv6"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1871,6 +1887,11 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       case 1: try { try decoder.decodeSingularMessageField(value: &self._connectorConfig) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.sockets) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.plugins) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.networkID) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.networkCidrV4) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.networkCidrV6) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.selfIpv4) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.selfIpv6) }()
       default: break
       }
     }
@@ -1890,6 +1911,21 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if !self.plugins.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.plugins, fieldNumber: 3)
     }
+    if !self.networkID.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkID, fieldNumber: 4)
+    }
+    if !self.networkCidrV4.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkCidrV4, fieldNumber: 5)
+    }
+    if !self.networkCidrV6.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkCidrV6, fieldNumber: 6)
+    }
+    if !self.selfIpv4.isEmpty {
+      try visitor.visitSingularStringField(value: self.selfIpv4, fieldNumber: 7)
+    }
+    if !self.selfIpv6.isEmpty {
+      try visitor.visitSingularStringField(value: self.selfIpv6, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1897,6 +1933,11 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if lhs._connectorConfig != rhs._connectorConfig {return false}
     if lhs.sockets != rhs.sockets {return false}
     if lhs.plugins != rhs.plugins {return false}
+    if lhs.networkID != rhs.networkID {return false}
+    if lhs.networkCidrV4 != rhs.networkCidrV4 {return false}
+    if lhs.networkCidrV6 != rhs.networkCidrV6 {return false}
+    if lhs.selfIpv4 != rhs.selfIpv4 {return false}
+    if lhs.selfIpv6 != rhs.selfIpv6 {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
