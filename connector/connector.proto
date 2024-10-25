@@ -85,6 +85,8 @@ message Init {
   string network_cidr_v6 = 6;
   string self_ipv4 = 7;
   string self_ipv6 = 8;
+  string network_resources_cidr_v4 = 9;
+  string network_resources_cidr_v6 = 10;
 }
 
 message UpdateConfig {
