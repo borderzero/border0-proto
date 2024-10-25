@@ -33,6 +33,8 @@ message NetworkStateMessage {
   string self_ipv4 = 4;
   string self_ipv6 = 5;
   repeated WireGuardPeer online_peers = 6;
+  string network_resources_cidr_v4 = 7;
+  string network_resources_cidr_v6 = 8;
 }
 
 message WireGuardPeer {

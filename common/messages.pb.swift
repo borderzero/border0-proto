@@ -142,6 +142,10 @@ struct Border0_Common_V1_NetworkStateMessage: Sendable {
 
   var onlinePeers: [Border0_Common_V1_WireGuardPeer] = []
 
+  var networkResourcesCidrV4: String = String()
+
+  var networkResourcesCidrV6: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -359,6 +363,8 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
     4: .standard(proto: "self_ipv4"),
     5: .standard(proto: "self_ipv6"),
     6: .standard(proto: "online_peers"),
+    7: .standard(proto: "network_resources_cidr_v4"),
+    8: .standard(proto: "network_resources_cidr_v6"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -373,6 +379,8 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
       case 4: try { try decoder.decodeSingularStringField(value: &self.selfIpv4) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.selfIpv6) }()
       case 6: try { try decoder.decodeRepeatedMessageField(value: &self.onlinePeers) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV4) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV6) }()
       default: break
       }
     }
@@ -397,6 +405,12 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
     if !self.onlinePeers.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.onlinePeers, fieldNumber: 6)
     }
+    if !self.networkResourcesCidrV4.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkResourcesCidrV4, fieldNumber: 7)
+    }
+    if !self.networkResourcesCidrV6.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkResourcesCidrV6, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -407,6 +421,8 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
     if lhs.selfIpv4 != rhs.selfIpv4 {return false}
     if lhs.selfIpv6 != rhs.selfIpv6 {return false}
     if lhs.onlinePeers != rhs.onlinePeers {return false}
+    if lhs.networkResourcesCidrV4 != rhs.networkResourcesCidrV4 {return false}
+    if lhs.networkResourcesCidrV6 != rhs.networkResourcesCidrV6 {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

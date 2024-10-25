@@ -455,6 +455,10 @@ struct Border0_V1_Init: Sendable {
 
   var selfIpv6: String = String()
 
+  var networkResourcesCidrV4: String = String()
+
+  var networkResourcesCidrV6: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1876,6 +1880,8 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     6: .standard(proto: "network_cidr_v6"),
     7: .standard(proto: "self_ipv4"),
     8: .standard(proto: "self_ipv6"),
+    9: .standard(proto: "network_resources_cidr_v4"),
+    10: .standard(proto: "network_resources_cidr_v6"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1892,6 +1898,8 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       case 6: try { try decoder.decodeSingularStringField(value: &self.networkCidrV6) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.selfIpv4) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.selfIpv6) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV4) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV6) }()
       default: break
       }
     }
@@ -1926,6 +1934,12 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if !self.selfIpv6.isEmpty {
       try visitor.visitSingularStringField(value: self.selfIpv6, fieldNumber: 8)
     }
+    if !self.networkResourcesCidrV4.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkResourcesCidrV4, fieldNumber: 9)
+    }
+    if !self.networkResourcesCidrV6.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkResourcesCidrV6, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1938,6 +1952,8 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     if lhs.networkCidrV6 != rhs.networkCidrV6 {return false}
     if lhs.selfIpv4 != rhs.selfIpv4 {return false}
     if lhs.selfIpv6 != rhs.selfIpv6 {return false}
+    if lhs.networkResourcesCidrV4 != rhs.networkResourcesCidrV4 {return false}
+    if lhs.networkResourcesCidrV6 != rhs.networkResourcesCidrV6 {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
