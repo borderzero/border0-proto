@@ -60,68 +60,6 @@ enum Border0_Common_V1_PeerType: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-enum Border0_Common_V1_ServiceType: SwiftProtobuf.Enum, Swift.CaseIterable {
-  typealias RawValue = Int
-  case unknown // = 0
-  case http // = 1
-  case ssh // = 2
-  case database // = 3
-  case tls // = 4
-  case vnc // = 5
-  case rdp // = 6
-  case kubernetes // = 7
-  case subnetRoutes // = 8
-  case UNRECOGNIZED(Int)
-
-  init() {
-    self = .unknown
-  }
-
-  init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .unknown
-    case 1: self = .http
-    case 2: self = .ssh
-    case 3: self = .database
-    case 4: self = .tls
-    case 5: self = .vnc
-    case 6: self = .rdp
-    case 7: self = .kubernetes
-    case 8: self = .subnetRoutes
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  var rawValue: Int {
-    switch self {
-    case .unknown: return 0
-    case .http: return 1
-    case .ssh: return 2
-    case .database: return 3
-    case .tls: return 4
-    case .vnc: return 5
-    case .rdp: return 6
-    case .kubernetes: return 7
-    case .subnetRoutes: return 8
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static let allCases: [Border0_Common_V1_ServiceType] = [
-    .unknown,
-    .http,
-    .ssh,
-    .database,
-    .tls,
-    .vnc,
-    .rdp,
-    .kubernetes,
-    .subnetRoutes,
-  ]
-
-}
-
 enum Border0_Common_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unknown // = 0
@@ -282,57 +220,11 @@ struct Border0_Common_V1_WireGuardPeer: Sendable {
   /// client or connector
   var type: Border0_Common_V1_PeerType = .unknown
 
-  /// details about the wireguard peer's underlying device
-  var deviceDetails: Border0_Common_V1_DeviceDetails {
-    get {return _deviceDetails ?? Border0_Common_V1_DeviceDetails()}
-    set {_deviceDetails = newValue}
-  }
-  /// Returns true if `deviceDetails` has been explicitly set.
-  var hasDeviceDetails: Bool {return self._deviceDetails != nil}
-  /// Clears the value of `deviceDetails`. Subsequent reads from it will return its default value.
-  mutating func clearDeviceDetails() {self._deviceDetails = nil}
+  var deviceName: String = String()
+
+  var deviceUuid: String = String()
 
   /// applicable only when PeerType == PEER_TYPE_CONNECTOR
-  var connectorDetails: Border0_Common_V1_ConnectorDetails {
-    get {return _connectorDetails ?? Border0_Common_V1_ConnectorDetails()}
-    set {_connectorDetails = newValue}
-  }
-  /// Returns true if `connectorDetails` has been explicitly set.
-  var hasConnectorDetails: Bool {return self._connectorDetails != nil}
-  /// Clears the value of `connectorDetails`. Subsequent reads from it will return its default value.
-  mutating func clearConnectorDetails() {self._connectorDetails = nil}
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-
-  fileprivate var _deviceDetails: Border0_Common_V1_DeviceDetails? = nil
-  fileprivate var _connectorDetails: Border0_Common_V1_ConnectorDetails? = nil
-}
-
-struct Border0_Common_V1_DeviceDetails: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var name: String = String()
-
-  var uuid: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct Border0_Common_V1_ConnectorDetails: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var name: String = String()
-
-  var uuid: String = String()
-
   var services: [Border0_Common_V1_Service] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -347,7 +239,7 @@ struct Border0_Common_V1_Service: Sendable {
 
   var name: String = String()
 
-  var type: Border0_Common_V1_ServiceType = .unknown
+  var type: String = String()
 
   var ipv4: String = String()
 
@@ -382,20 +274,6 @@ extension Border0_Common_V1_PeerType: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "PEER_TYPE_UNKNOWN"),
     1: .same(proto: "PEER_TYPE_DEVICE"),
     2: .same(proto: "PEER_TYPE_CONNECTOR"),
-  ]
-}
-
-extension Border0_Common_V1_ServiceType: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "SERVICE_TYPE_UNKNOWN"),
-    1: .same(proto: "SERVICE_TYPE_HTTP"),
-    2: .same(proto: "SERVICE_TYPE_SSH"),
-    3: .same(proto: "SERVICE_TYPE_DATABASE"),
-    4: .same(proto: "SERVICE_TYPE_TLS"),
-    5: .same(proto: "SERVICE_TYPE_VNC"),
-    6: .same(proto: "SERVICE_TYPE_RDP"),
-    7: .same(proto: "SERVICE_TYPE_KUBERNETES"),
-    8: .same(proto: "SERVICE_TYPE_SUBNET_ROUTES"),
   ]
 }
 
@@ -640,8 +518,9 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     6: .standard(proto: "public_udp4_endpoint"),
     7: .standard(proto: "public_udp6_endpoint"),
     8: .same(proto: "type"),
-    9: .standard(proto: "device_details"),
-    10: .standard(proto: "connector_details"),
+    9: .standard(proto: "device_name"),
+    10: .standard(proto: "device_uuid"),
+    11: .same(proto: "services"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -658,18 +537,15 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
       case 6: try { try decoder.decodeSingularStringField(value: &self.publicUdp4Endpoint) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.publicUdp6Endpoint) }()
       case 8: try { try decoder.decodeSingularEnumField(value: &self.type) }()
-      case 9: try { try decoder.decodeSingularMessageField(value: &self._deviceDetails) }()
-      case 10: try { try decoder.decodeSingularMessageField(value: &self._connectorDetails) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.deviceName) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.deviceUuid) }()
+      case 11: try { try decoder.decodeRepeatedMessageField(value: &self.services) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.publicKey.isEmpty {
       try visitor.visitSingularStringField(value: self.publicKey, fieldNumber: 1)
     }
@@ -694,12 +570,15 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if self.type != .unknown {
       try visitor.visitSingularEnumField(value: self.type, fieldNumber: 8)
     }
-    try { if let v = self._deviceDetails {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-    } }()
-    try { if let v = self._connectorDetails {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    } }()
+    if !self.deviceName.isEmpty {
+      try visitor.visitSingularStringField(value: self.deviceName, fieldNumber: 9)
+    }
+    if !self.deviceUuid.isEmpty {
+      try visitor.visitSingularStringField(value: self.deviceUuid, fieldNumber: 10)
+    }
+    if !self.services.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.services, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -712,89 +591,8 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.publicUdp4Endpoint != rhs.publicUdp4Endpoint {return false}
     if lhs.publicUdp6Endpoint != rhs.publicUdp6Endpoint {return false}
     if lhs.type != rhs.type {return false}
-    if lhs._deviceDetails != rhs._deviceDetails {return false}
-    if lhs._connectorDetails != rhs._connectorDetails {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Border0_Common_V1_DeviceDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".DeviceDetails"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "uuid"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.uuid) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
-    }
-    if !self.uuid.isEmpty {
-      try visitor.visitSingularStringField(value: self.uuid, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: Border0_Common_V1_DeviceDetails, rhs: Border0_Common_V1_DeviceDetails) -> Bool {
-    if lhs.name != rhs.name {return false}
-    if lhs.uuid != rhs.uuid {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Border0_Common_V1_ConnectorDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".ConnectorDetails"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "uuid"),
-    3: .same(proto: "services"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.uuid) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.services) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
-    }
-    if !self.uuid.isEmpty {
-      try visitor.visitSingularStringField(value: self.uuid, fieldNumber: 2)
-    }
-    if !self.services.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.services, fieldNumber: 3)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: Border0_Common_V1_ConnectorDetails, rhs: Border0_Common_V1_ConnectorDetails) -> Bool {
-    if lhs.name != rhs.name {return false}
-    if lhs.uuid != rhs.uuid {return false}
+    if lhs.deviceName != rhs.deviceName {return false}
+    if lhs.deviceUuid != rhs.deviceUuid {return false}
     if lhs.services != rhs.services {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -818,7 +616,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.type) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.ipv4) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.ipv6) }()
       case 5: try { try decoder.decodeRepeatedStringField(value: &self.subnetRoutes) }()
@@ -831,8 +629,8 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.name.isEmpty {
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
     }
-    if self.type != .unknown {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 2)
     }
     if !self.ipv4.isEmpty {
       try visitor.visitSingularStringField(value: self.ipv4, fieldNumber: 3)

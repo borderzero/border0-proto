@@ -46,24 +46,14 @@ message WireGuardPeer {
   string public_udp4_endpoint = 6;                     // endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
   string public_udp6_endpoint = 7;                     // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
   PeerType type = 8;                                   // client or connector
-  DeviceDetails device_details = 9;                    // details about the wireguard peer's underlying device
-  ConnectorDetails connector_details = 10;             // applicable only when PeerType == PEER_TYPE_CONNECTOR
-}
-
-message DeviceDetails {
-  string name = 1;
-  string uuid = 2;
-}
-
-message ConnectorDetails {
-  string name = 1;
-  string uuid = 2;
-  repeated Service services = 3;
+  string device_name = 9;
+  string device_uuid = 10;
+  repeated Service services = 11;                       // applicable only when PeerType == PEER_TYPE_CONNECTOR
 }
 
 message Service {
   string name = 1;
-  ServiceType type = 2;
+  string type = 2;
   string ipv4 = 3;
   string ipv6 = 4;
   repeated string subnet_routes = 5; // applicable only to services of type SUBNET_ROUTES
@@ -73,18 +63,6 @@ enum PeerType {
   PEER_TYPE_UNKNOWN = 0;
   PEER_TYPE_DEVICE = 1;
   PEER_TYPE_CONNECTOR = 2;
-}
-
-enum ServiceType {
-  SERVICE_TYPE_UNKNOWN = 0;
-  SERVICE_TYPE_HTTP = 1;
-  SERVICE_TYPE_SSH = 2;
-  SERVICE_TYPE_DATABASE = 3;
-  SERVICE_TYPE_TLS = 4;
-  SERVICE_TYPE_VNC = 5;
-  SERVICE_TYPE_RDP = 6;
-  SERVICE_TYPE_KUBERNETES = 7;
-  SERVICE_TYPE_SUBNET_ROUTES = 8;
 }
 
 enum DisconnectionReason {
