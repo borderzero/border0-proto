@@ -38,13 +38,29 @@ message NetworkStateMessage {
 }
 
 message WireGuardPeer {
-  string public_key = 1;                            // the public key of the peer, used for identification and encryption
-  string ipv4 = 2;                                  // the peer's (private) IPv4 address in the WireGuard network
-  string ipv6 = 3;                                  // the peer's (private) IPv6 address in the WireGuard network
-  repeated string allowed_ips = 4;                  // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
-  uint32 persistent_keepalive_interval_seconds = 5; // the interval for sending keepalive packets (0 means disabled)
-  string public_udp4_endpoint = 6;                  // endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
-  string public_udp6_endpoint = 7;                  // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
+  string public_key = 1;                               // the public key of the peer, used for identification and encryption
+  string ipv4 = 2;                                     // the peer's (private) IPv4 address in the WireGuard network
+  string ipv6 = 3;                                     // the peer's (private) IPv6 address in the WireGuard network
+  repeated string allowed_ips = 4 [deprecated = true]; // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
+  uint32 persistent_keepalive_interval_seconds = 5;    // the interval for sending keepalive packets (0 means disabled)
+  string public_udp4_endpoint = 6;                     // endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
+  string public_udp6_endpoint = 7;                     // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
+  PeerType type = 8;                                   // client or connector
+  repeated Service services = 9;                       // applicable only when PeerType == PEER_TYPE_CONNECTOR
+}
+
+message Service {
+  string name = 1;
+  string type = 2;
+  string ipv4 = 3;
+  string ipv6 = 4;
+  repeated string subnet_routes = 5; // applicable only to services of type SUBNET_ROUTES
+}
+
+enum PeerType {
+  PEER_TYPE_UNKNOWN = 0;
+  PEER_TYPE_DEVICE = 1;
+  PEER_TYPE_CONNECTOR = 2;
 }
 
 enum DisconnectionReason {

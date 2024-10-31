@@ -22,6 +22,44 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum Border0_Common_V1_PeerType: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case unknown // = 0
+  case device // = 1
+  case connector // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .device
+    case 2: self = .connector
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .device: return 1
+    case .connector: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [Border0_Common_V1_PeerType] = [
+    .unknown,
+    .device,
+    .connector,
+  ]
+
+}
+
 enum Border0_Common_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unknown // = 0
@@ -165,7 +203,9 @@ struct Border0_Common_V1_WireGuardPeer: Sendable {
   /// the peer's (private) IPv6 address in the WireGuard network
   var ipv6: String = String()
 
-  /// list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32)
+  /// list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
+  ///
+  /// NOTE: This field was marked as deprecated in the .proto file.
   var allowedIps: [String] = []
 
   /// the interval for sending keepalive packets (0 means disabled)
@@ -176,6 +216,33 @@ struct Border0_Common_V1_WireGuardPeer: Sendable {
 
   /// endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
   var publicUdp6Endpoint: String = String()
+
+  /// client or connector
+  var type: Border0_Common_V1_PeerType = .unknown
+
+  /// applicable only when PeerType == PEER_TYPE_CONNECTOR
+  var services: [Border0_Common_V1_Service] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Border0_Common_V1_Service: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var name: String = String()
+
+  var type: String = String()
+
+  var ipv4: String = String()
+
+  var ipv6: String = String()
+
+  /// applicable only to services of type SUBNET_ROUTES
+  var subnetRoutes: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -197,6 +264,14 @@ struct Border0_Common_V1_DisconnectMessage: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "border0.common.v1"
+
+extension Border0_Common_V1_PeerType: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PEER_TYPE_UNKNOWN"),
+    1: .same(proto: "PEER_TYPE_DEVICE"),
+    2: .same(proto: "PEER_TYPE_CONNECTOR"),
+  ]
+}
 
 extension Border0_Common_V1_DisconnectionReason: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -438,6 +513,8 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     5: .standard(proto: "persistent_keepalive_interval_seconds"),
     6: .standard(proto: "public_udp4_endpoint"),
     7: .standard(proto: "public_udp6_endpoint"),
+    8: .same(proto: "type"),
+    9: .same(proto: "services"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -453,6 +530,8 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
       case 5: try { try decoder.decodeSingularUInt32Field(value: &self.persistentKeepaliveIntervalSeconds) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.publicUdp4Endpoint) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.publicUdp6Endpoint) }()
+      case 8: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 9: try { try decoder.decodeRepeatedMessageField(value: &self.services) }()
       default: break
       }
     }
@@ -480,6 +559,12 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.publicUdp6Endpoint.isEmpty {
       try visitor.visitSingularStringField(value: self.publicUdp6Endpoint, fieldNumber: 7)
     }
+    if self.type != .unknown {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 8)
+    }
+    if !self.services.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.services, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -491,6 +576,64 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.persistentKeepaliveIntervalSeconds != rhs.persistentKeepaliveIntervalSeconds {return false}
     if lhs.publicUdp4Endpoint != rhs.publicUdp4Endpoint {return false}
     if lhs.publicUdp6Endpoint != rhs.publicUdp6Endpoint {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs.services != rhs.services {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Service"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "type"),
+    3: .same(proto: "ipv4"),
+    4: .same(proto: "ipv6"),
+    5: .standard(proto: "subnet_routes"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.ipv4) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.ipv6) }()
+      case 5: try { try decoder.decodeRepeatedStringField(value: &self.subnetRoutes) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 2)
+    }
+    if !self.ipv4.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipv4, fieldNumber: 3)
+    }
+    if !self.ipv6.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipv6, fieldNumber: 4)
+    }
+    if !self.subnetRoutes.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.subnetRoutes, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Common_V1_Service, rhs: Border0_Common_V1_Service) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs.ipv4 != rhs.ipv4 {return false}
+    if lhs.ipv6 != rhs.ipv6 {return false}
+    if lhs.subnetRoutes != rhs.subnetRoutes {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
