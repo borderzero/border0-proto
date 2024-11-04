@@ -977,6 +977,11 @@ struct Border0_V1_SessionRequest: @unchecked Sendable {
     set {_uniqueStorage()._authInfo = newValue}
   }
 
+  var metadata: Data {
+    get {return _storage._metadata}
+    set {_uniqueStorage()._metadata = newValue}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2941,6 +2946,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     13: .standard(proto: "session_key"),
     14: .same(proto: "result"),
     15: .standard(proto: "auth_info"),
+    16: .same(proto: "metadata"),
   ]
 
   fileprivate class _StorageClass {
@@ -2959,6 +2965,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _sessionKey: String = String()
     var _result: String = String()
     var _authInfo: String = String()
+    var _metadata: Data = Data()
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2988,6 +2995,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
       _sessionKey = source._sessionKey
       _result = source._result
       _authInfo = source._authInfo
+      _metadata = source._metadata
     }
   }
 
@@ -3021,6 +3029,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
         case 13: try { try decoder.decodeSingularStringField(value: &_storage._sessionKey) }()
         case 14: try { try decoder.decodeSingularStringField(value: &_storage._result) }()
         case 15: try { try decoder.decodeSingularStringField(value: &_storage._authInfo) }()
+        case 16: try { try decoder.decodeSingularBytesField(value: &_storage._metadata) }()
         default: break
         }
       }
@@ -3078,6 +3087,9 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
       if !_storage._authInfo.isEmpty {
         try visitor.visitSingularStringField(value: _storage._authInfo, fieldNumber: 15)
       }
+      if !_storage._metadata.isEmpty {
+        try visitor.visitSingularBytesField(value: _storage._metadata, fieldNumber: 16)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3102,6 +3114,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
         if _storage._sessionKey != rhs_storage._sessionKey {return false}
         if _storage._result != rhs_storage._result {return false}
         if _storage._authInfo != rhs_storage._authInfo {return false}
+        if _storage._metadata != rhs_storage._metadata {return false}
         return true
       }
       if !storagesAreEqual {return false}
