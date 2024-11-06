@@ -47,6 +47,7 @@ message WireGuardPeer {
   string public_udp6_endpoint = 7;                     // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
   PeerType type = 8;                                   // client or connector
   repeated Service services = 9;                       // applicable only when PeerType == PEER_TYPE_CONNECTOR
+  string name = 10;                                   // device (client or connector) name
 }
 
 message Service {
