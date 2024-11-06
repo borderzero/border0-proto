@@ -223,6 +223,9 @@ struct Border0_Common_V1_WireGuardPeer: Sendable {
   /// applicable only when PeerType == PEER_TYPE_CONNECTOR
   var services: [Border0_Common_V1_Service] = []
 
+  /// device (client or connector) name
+  var name: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -515,6 +518,7 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     7: .standard(proto: "public_udp6_endpoint"),
     8: .same(proto: "type"),
     9: .same(proto: "services"),
+    10: .same(proto: "name"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -532,6 +536,7 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
       case 7: try { try decoder.decodeSingularStringField(value: &self.publicUdp6Endpoint) }()
       case 8: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       case 9: try { try decoder.decodeRepeatedMessageField(value: &self.services) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.name) }()
       default: break
       }
     }
@@ -565,6 +570,9 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.services.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.services, fieldNumber: 9)
     }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -578,6 +586,7 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.publicUdp6Endpoint != rhs.publicUdp6Endpoint {return false}
     if lhs.type != rhs.type {return false}
     if lhs.services != rhs.services {return false}
+    if lhs.name != rhs.name {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
