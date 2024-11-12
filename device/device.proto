@@ -32,6 +32,7 @@ message ServerToDeviceMessage {
     border0.common.v1.PeerOnlineMessage peer_online = 4;
     border0.common.v1.PeerOfflineMessage peer_offline = 5;
     border0.common.v1.DisconnectMessage disconnect = 6;
+    Service service = 7;
   }
 }
 
@@ -44,4 +45,14 @@ message AuthChallengeMessage {
 message AuthChallengeSolutionMessage {
   bytes solved = 1;
   bytes solvedNonce = 2;
+}
+
+message Service {
+  string network_id = 1;
+  string name = 2;
+  string type = 3;
+  string ipv4 = 4;
+  string ipv6 = 5;
+  repeated string subnet_routes = 6;
+  repeated string peer_public_key = 7;
 }

@@ -123,6 +123,14 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     set {message = .disconnect(newValue)}
   }
 
+  var service: Border0_Device_V1_Service {
+    get {
+      if case .service(let v)? = message {return v}
+      return Border0_Device_V1_Service()
+    }
+    set {message = .service(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Message: Equatable, Sendable {
@@ -132,6 +140,7 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     case peerOnline(Border0_Common_V1_PeerOnlineMessage)
     case peerOffline(Border0_Common_V1_PeerOfflineMessage)
     case disconnect(Border0_Common_V1_DisconnectMessage)
+    case service(Border0_Device_V1_Service)
 
   }
 
@@ -162,6 +171,30 @@ struct Border0_Device_V1_AuthChallengeSolutionMessage: @unchecked Sendable {
   var solved: Data = Data()
 
   var solvedNonce: Data = Data()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Border0_Device_V1_Service: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var networkID: String = String()
+
+  var name: String = String()
+
+  var type: String = String()
+
+  var ipv4: String = String()
+
+  var ipv6: String = String()
+
+  var subnetRoutes: [String] = []
+
+  var peerPublicKey: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -269,6 +302,7 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
     4: .standard(proto: "peer_online"),
     5: .standard(proto: "peer_offline"),
     6: .same(proto: "disconnect"),
+    7: .same(proto: "service"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -355,6 +389,19 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
           self.message = .disconnect(v)
         }
       }()
+      case 7: try {
+        var v: Border0_Device_V1_Service?
+        var hadOneofValue = false
+        if let current = self.message {
+          hadOneofValue = true
+          if case .service(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.message = .service(v)
+        }
+      }()
       default: break
       }
     }
@@ -389,6 +436,10 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
     case .disconnect?: try {
       guard case .disconnect(let v)? = self.message else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
+    case .service?: try {
+      guard case .service(let v)? = self.message else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
     case nil: break
     }
@@ -479,6 +530,74 @@ extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message,
   static func ==(lhs: Border0_Device_V1_AuthChallengeSolutionMessage, rhs: Border0_Device_V1_AuthChallengeSolutionMessage) -> Bool {
     if lhs.solved != rhs.solved {return false}
     if lhs.solvedNonce != rhs.solvedNonce {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Service"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "network_id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "type"),
+    4: .same(proto: "ipv4"),
+    5: .same(proto: "ipv6"),
+    6: .standard(proto: "subnet_routes"),
+    7: .standard(proto: "peer_public_key"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.networkID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.ipv4) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.ipv6) }()
+      case 6: try { try decoder.decodeRepeatedStringField(value: &self.subnetRoutes) }()
+      case 7: try { try decoder.decodeRepeatedStringField(value: &self.peerPublicKey) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.networkID.isEmpty {
+      try visitor.visitSingularStringField(value: self.networkID, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 3)
+    }
+    if !self.ipv4.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipv4, fieldNumber: 4)
+    }
+    if !self.ipv6.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipv6, fieldNumber: 5)
+    }
+    if !self.subnetRoutes.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.subnetRoutes, fieldNumber: 6)
+    }
+    if !self.peerPublicKey.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.peerPublicKey, fieldNumber: 7)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Device_V1_Service, rhs: Border0_Device_V1_Service) -> Bool {
+    if lhs.networkID != rhs.networkID {return false}
+    if lhs.name != rhs.name {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs.ipv4 != rhs.ipv4 {return false}
+    if lhs.ipv6 != rhs.ipv6 {return false}
+    if lhs.subnetRoutes != rhs.subnetRoutes {return false}
+    if lhs.peerPublicKey != rhs.peerPublicKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
