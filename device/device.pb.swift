@@ -27,6 +27,7 @@ enum Border0_Device_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterab
   typealias RawValue = Int
   case unknown // = 0
   case serverShutdown // = 1
+  case newerConnection // = 2
   case UNRECOGNIZED(Int)
 
   init() {
@@ -37,6 +38,7 @@ enum Border0_Device_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterab
     switch rawValue {
     case 0: self = .unknown
     case 1: self = .serverShutdown
+    case 2: self = .newerConnection
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -45,6 +47,7 @@ enum Border0_Device_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterab
     switch self {
     case .unknown: return 0
     case .serverShutdown: return 1
+    case .newerConnection: return 2
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -53,6 +56,7 @@ enum Border0_Device_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterab
   static let allCases: [Border0_Device_V1_DisconnectionReason] = [
     .unknown,
     .serverShutdown,
+    .newerConnection,
   ]
 
 }
@@ -222,6 +226,7 @@ extension Border0_Device_V1_DisconnectionReason: SwiftProtobuf._ProtoNameProvidi
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "UNKNOWN"),
     1: .same(proto: "SERVER_SHUTDOWN"),
+    2: .same(proto: "NEWER_CONNECTION"),
   ]
 }
 
