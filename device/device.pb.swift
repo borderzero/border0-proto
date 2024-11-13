@@ -23,44 +23,6 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-enum Border0_Device_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterable {
-  typealias RawValue = Int
-  case unknown // = 0
-  case serverShutdown // = 1
-  case newerConnection // = 2
-  case UNRECOGNIZED(Int)
-
-  init() {
-    self = .unknown
-  }
-
-  init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .unknown
-    case 1: self = .serverShutdown
-    case 2: self = .newerConnection
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  var rawValue: Int {
-    switch self {
-    case .unknown: return 0
-    case .serverShutdown: return 1
-    case .newerConnection: return 2
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static let allCases: [Border0_Device_V1_DisconnectionReason] = [
-    .unknown,
-    .serverShutdown,
-    .newerConnection,
-  ]
-
-}
-
 /// messages from devices to the server (api)
 struct Border0_Device_V1_DeviceToServerMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -206,29 +168,9 @@ struct Border0_Device_V1_AuthChallengeSolutionMessage: @unchecked Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_DisconnectMessage: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var reason: Border0_Device_V1_DisconnectionReason = .unknown
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "border0.device.v1"
-
-extension Border0_Device_V1_DisconnectionReason: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "UNKNOWN"),
-    1: .same(proto: "SERVER_SHUTDOWN"),
-    2: .same(proto: "NEWER_CONNECTION"),
-  ]
-}
 
 extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DeviceToServerMessage"
@@ -537,38 +479,6 @@ extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message,
   static func ==(lhs: Border0_Device_V1_AuthChallengeSolutionMessage, rhs: Border0_Device_V1_AuthChallengeSolutionMessage) -> Bool {
     if lhs.solved != rhs.solved {return false}
     if lhs.solvedNonce != rhs.solvedNonce {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Border0_Device_V1_DisconnectMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".DisconnectMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "reason"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.reason) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.reason != .unknown {
-      try visitor.visitSingularEnumField(value: self.reason, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: Border0_Device_V1_DisconnectMessage, rhs: Border0_Device_V1_DisconnectMessage) -> Bool {
-    if lhs.reason != rhs.reason {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -45,13 +45,3 @@ message AuthChallengeSolutionMessage {
   bytes solved = 1;
   bytes solvedNonce = 2;
 }
-
-enum DisconnectionReason {
-  UNKNOWN = 0;
-  SERVER_SHUTDOWN = 1;
-  NEWER_CONNECTION = 2;
-}
-
-message DisconnectMessage {
-  DisconnectionReason reason = 1;
-}
