@@ -49,6 +49,7 @@ message AuthChallengeSolutionMessage {
 enum DisconnectionReason {
   UNKNOWN = 0;
   SERVER_SHUTDOWN = 1;
+  NEWER_CONNECTION = 2;
 }
 
 message DisconnectMessage {
