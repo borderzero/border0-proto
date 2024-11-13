@@ -25,55 +25,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type DisconnectionReason int32
-
-const (
-	DisconnectionReason_UNKNOWN          DisconnectionReason = 0
-	DisconnectionReason_SERVER_SHUTDOWN  DisconnectionReason = 1
-	DisconnectionReason_NEWER_CONNECTION DisconnectionReason = 2
-)
-
-// Enum value maps for DisconnectionReason.
-var (
-	DisconnectionReason_name = map[int32]string{
-		0: "UNKNOWN",
-		1: "SERVER_SHUTDOWN",
-		2: "NEWER_CONNECTION",
-	}
-	DisconnectionReason_value = map[string]int32{
-		"UNKNOWN":          0,
-		"SERVER_SHUTDOWN":  1,
-		"NEWER_CONNECTION": 2,
-	}
-)
-
-func (x DisconnectionReason) Enum() *DisconnectionReason {
-	p := new(DisconnectionReason)
-	*p = x
-	return p
-}
-
-func (x DisconnectionReason) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DisconnectionReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_device_proto_enumTypes[0].Descriptor()
-}
-
-func (DisconnectionReason) Type() protoreflect.EnumType {
-	return &file_device_proto_enumTypes[0]
-}
-
-func (x DisconnectionReason) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DisconnectionReason.Descriptor instead.
-func (DisconnectionReason) EnumDescriptor() ([]byte, []int) {
-	return file_device_proto_rawDescGZIP(), []int{0}
-}
-
 // messages from devices to the server (api)
 type DeviceToServerMessage struct {
 	state         protoimpl.MessageState
@@ -426,53 +377,6 @@ func (x *AuthChallengeSolutionMessage) GetSolvedNonce() []byte {
 	return nil
 }
 
-type DisconnectMessage struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Reason DisconnectionReason `protobuf:"varint,1,opt,name=reason,proto3,enum=border0.device.v1.DisconnectionReason" json:"reason,omitempty"`
-}
-
-func (x *DisconnectMessage) Reset() {
-	*x = DisconnectMessage{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_device_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *DisconnectMessage) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DisconnectMessage) ProtoMessage() {}
-
-func (x *DisconnectMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_device_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DisconnectMessage.ProtoReflect.Descriptor instead.
-func (*DisconnectMessage) Descriptor() ([]byte, []int) {
-	return file_device_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *DisconnectMessage) GetReason() DisconnectionReason {
-	if x != nil {
-		return x.Reason
-	}
-	return DisconnectionReason_UNKNOWN
-}
-
 var File_device_proto protoreflect.FileDescriptor
 
 var file_device_proto_rawDesc = []byte{
@@ -543,29 +447,18 @@ var file_device_proto_rawDesc = []byte{
 	0x76, 0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x06, 0x73, 0x6f, 0x6c, 0x76, 0x65,
 	0x64, 0x12, 0x20, 0x0a, 0x0b, 0x73, 0x6f, 0x6c, 0x76, 0x65, 0x64, 0x4e, 0x6f, 0x6e, 0x63, 0x65,
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0b, 0x73, 0x6f, 0x6c, 0x76, 0x65, 0x64, 0x4e, 0x6f,
-	0x6e, 0x63, 0x65, 0x22, 0x53, 0x0a, 0x11, 0x44, 0x69, 0x73, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
-	0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x3e, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73,
-	0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x26, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65,
-	0x72, 0x30, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x69, 0x73,
-	0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x61, 0x73, 0x6f, 0x6e,
-	0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x2a, 0x4d, 0x0a, 0x13, 0x44, 0x69, 0x73, 0x63,
-	0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x12,
-	0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x13, 0x0a, 0x0f,
-	0x53, 0x45, 0x52, 0x56, 0x45, 0x52, 0x5f, 0x53, 0x48, 0x55, 0x54, 0x44, 0x4f, 0x57, 0x4e, 0x10,
-	0x01, 0x12, 0x14, 0x0a, 0x10, 0x4e, 0x45, 0x57, 0x45, 0x52, 0x5f, 0x43, 0x4f, 0x4e, 0x4e, 0x45,
-	0x43, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x02, 0x32, 0x82, 0x01, 0x0a, 0x17, 0x44, 0x65, 0x76, 0x69,
-	0x63, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x12, 0x67, 0x0a, 0x0d, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x53, 0x74,
-	0x72, 0x65, 0x61, 0x6d, 0x12, 0x28, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x64,
-	0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x54,
-	0x6f, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x1a, 0x28,
-	0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e,
-	0x76, 0x31, 0x2e, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x54, 0x6f, 0x44, 0x65, 0x76, 0x69, 0x63,
-	0x65, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x28, 0x01, 0x30, 0x01, 0x42, 0x2c, 0x5a, 0x2a,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x62, 0x6f, 0x72, 0x64, 0x65,
-	0x72, 0x7a, 0x65, 0x72, 0x6f, 0x2f, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2d, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x2f, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x6e, 0x63, 0x65, 0x32, 0x82, 0x01, 0x0a, 0x17, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4d, 0x61,
+	0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12,
+	0x67, 0x0a, 0x0d, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d,
+	0x12, 0x28, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63,
+	0x65, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x54, 0x6f, 0x53, 0x65, 0x72,
+	0x76, 0x65, 0x72, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x1a, 0x28, 0x2e, 0x62, 0x6f, 0x72,
+	0x64, 0x65, 0x72, 0x30, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x53,
+	0x65, 0x72, 0x76, 0x65, 0x72, 0x54, 0x6f, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4d, 0x65, 0x73,
+	0x73, 0x61, 0x67, 0x65, 0x28, 0x01, 0x30, 0x01, 0x42, 0x2c, 0x5a, 0x2a, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x7a, 0x65, 0x72,
+	0x6f, 0x2f, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f,
+	0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -580,40 +473,36 @@ func file_device_proto_rawDescGZIP() []byte {
 	return file_device_proto_rawDescData
 }
 
-var file_device_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_device_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_device_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_device_proto_goTypes = []any{
-	(DisconnectionReason)(0),               // 0: border0.device.v1.DisconnectionReason
-	(*DeviceToServerMessage)(nil),          // 1: border0.device.v1.DeviceToServerMessage
-	(*ServerToDeviceMessage)(nil),          // 2: border0.device.v1.ServerToDeviceMessage
-	(*AuthChallengeMessage)(nil),           // 3: border0.device.v1.AuthChallengeMessage
-	(*AuthChallengeSolutionMessage)(nil),   // 4: border0.device.v1.AuthChallengeSolutionMessage
-	(*DisconnectMessage)(nil),              // 5: border0.device.v1.DisconnectMessage
-	(*common.DiscoveryDetailsMessage)(nil), // 6: border0.common.v1.DiscoveryDetailsMessage
-	(*common.HeartbeatMessage)(nil),        // 7: border0.common.v1.HeartbeatMessage
-	(*common.NetworkStateMessage)(nil),     // 8: border0.common.v1.NetworkStateMessage
-	(*common.PeerOnlineMessage)(nil),       // 9: border0.common.v1.PeerOnlineMessage
-	(*common.PeerOfflineMessage)(nil),      // 10: border0.common.v1.PeerOfflineMessage
-	(*common.DisconnectMessage)(nil),       // 11: border0.common.v1.DisconnectMessage
+	(*DeviceToServerMessage)(nil),          // 0: border0.device.v1.DeviceToServerMessage
+	(*ServerToDeviceMessage)(nil),          // 1: border0.device.v1.ServerToDeviceMessage
+	(*AuthChallengeMessage)(nil),           // 2: border0.device.v1.AuthChallengeMessage
+	(*AuthChallengeSolutionMessage)(nil),   // 3: border0.device.v1.AuthChallengeSolutionMessage
+	(*common.DiscoveryDetailsMessage)(nil), // 4: border0.common.v1.DiscoveryDetailsMessage
+	(*common.HeartbeatMessage)(nil),        // 5: border0.common.v1.HeartbeatMessage
+	(*common.NetworkStateMessage)(nil),     // 6: border0.common.v1.NetworkStateMessage
+	(*common.PeerOnlineMessage)(nil),       // 7: border0.common.v1.PeerOnlineMessage
+	(*common.PeerOfflineMessage)(nil),      // 8: border0.common.v1.PeerOfflineMessage
+	(*common.DisconnectMessage)(nil),       // 9: border0.common.v1.DisconnectMessage
 }
 var file_device_proto_depIdxs = []int32{
-	4,  // 0: border0.device.v1.DeviceToServerMessage.auth_challenge_solution:type_name -> border0.device.v1.AuthChallengeSolutionMessage
-	6,  // 1: border0.device.v1.DeviceToServerMessage.discovery_details:type_name -> border0.common.v1.DiscoveryDetailsMessage
-	7,  // 2: border0.device.v1.DeviceToServerMessage.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
-	3,  // 3: border0.device.v1.ServerToDeviceMessage.auth_challenge:type_name -> border0.device.v1.AuthChallengeMessage
-	7,  // 4: border0.device.v1.ServerToDeviceMessage.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
-	8,  // 5: border0.device.v1.ServerToDeviceMessage.network_state:type_name -> border0.common.v1.NetworkStateMessage
-	9,  // 6: border0.device.v1.ServerToDeviceMessage.peer_online:type_name -> border0.common.v1.PeerOnlineMessage
-	10, // 7: border0.device.v1.ServerToDeviceMessage.peer_offline:type_name -> border0.common.v1.PeerOfflineMessage
-	11, // 8: border0.device.v1.ServerToDeviceMessage.disconnect:type_name -> border0.common.v1.DisconnectMessage
-	0,  // 9: border0.device.v1.DisconnectMessage.reason:type_name -> border0.device.v1.DisconnectionReason
-	1,  // 10: border0.device.v1.DeviceManagementService.ControlStream:input_type -> border0.device.v1.DeviceToServerMessage
-	2,  // 11: border0.device.v1.DeviceManagementService.ControlStream:output_type -> border0.device.v1.ServerToDeviceMessage
-	11, // [11:12] is the sub-list for method output_type
-	10, // [10:11] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	3,  // 0: border0.device.v1.DeviceToServerMessage.auth_challenge_solution:type_name -> border0.device.v1.AuthChallengeSolutionMessage
+	4,  // 1: border0.device.v1.DeviceToServerMessage.discovery_details:type_name -> border0.common.v1.DiscoveryDetailsMessage
+	5,  // 2: border0.device.v1.DeviceToServerMessage.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
+	2,  // 3: border0.device.v1.ServerToDeviceMessage.auth_challenge:type_name -> border0.device.v1.AuthChallengeMessage
+	5,  // 4: border0.device.v1.ServerToDeviceMessage.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
+	6,  // 5: border0.device.v1.ServerToDeviceMessage.network_state:type_name -> border0.common.v1.NetworkStateMessage
+	7,  // 6: border0.device.v1.ServerToDeviceMessage.peer_online:type_name -> border0.common.v1.PeerOnlineMessage
+	8,  // 7: border0.device.v1.ServerToDeviceMessage.peer_offline:type_name -> border0.common.v1.PeerOfflineMessage
+	9,  // 8: border0.device.v1.ServerToDeviceMessage.disconnect:type_name -> border0.common.v1.DisconnectMessage
+	0,  // 9: border0.device.v1.DeviceManagementService.ControlStream:input_type -> border0.device.v1.DeviceToServerMessage
+	1,  // 10: border0.device.v1.DeviceManagementService.ControlStream:output_type -> border0.device.v1.ServerToDeviceMessage
+	10, // [10:11] is the sub-list for method output_type
+	9,  // [9:10] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_device_proto_init() }
@@ -670,18 +559,6 @@ func file_device_proto_init() {
 				return nil
 			}
 		}
-		file_device_proto_msgTypes[4].Exporter = func(v any, i int) any {
-			switch v := v.(*DisconnectMessage); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
 	file_device_proto_msgTypes[0].OneofWrappers = []any{
 		(*DeviceToServerMessage_AuthChallengeSolution)(nil),
@@ -701,14 +578,13 @@ func file_device_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_device_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   5,
+			NumEnums:      0,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_device_proto_goTypes,
 		DependencyIndexes: file_device_proto_depIdxs,
-		EnumInfos:         file_device_proto_enumTypes,
 		MessageInfos:      file_device_proto_msgTypes,
 	}.Build()
 	File_device_proto = out.File
