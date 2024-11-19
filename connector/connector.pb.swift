@@ -2960,7 +2960,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     14: .same(proto: "result"),
     15: .standard(proto: "auth_info"),
     16: .same(proto: "metadata"),
-    17: .same(proto: "entityUUID"),
+    17: .standard(proto: "entity_uuid"),
   ]
 
   fileprivate class _StorageClass {
