@@ -860,6 +860,8 @@ struct Border0_V1_AuthorizeResponse: Sendable {
 
   var email: String = String()
 
+  var entittyUuid: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -980,6 +982,11 @@ struct Border0_V1_SessionRequest: @unchecked Sendable {
   var metadata: Data {
     get {return _storage._metadata}
     set {_uniqueStorage()._metadata = newValue}
+  }
+
+  var entityUuid: String {
+    get {return _storage._entityUuid}
+    set {_uniqueStorage()._entityUuid = newValue}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -2824,6 +2831,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     3: .same(proto: "info"),
     5: .same(proto: "permissions"),
     6: .same(proto: "email"),
+    7: .standard(proto: "entitty_uuid"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2837,6 +2845,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_infoList>.self, value: &self.info) }()
       case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_Permissions>.self, value: &self.permissions) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.email) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.entittyUuid) }()
       default: break
       }
     }
@@ -2858,6 +2867,9 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.email.isEmpty {
       try visitor.visitSingularStringField(value: self.email, fieldNumber: 6)
     }
+    if !self.entittyUuid.isEmpty {
+      try visitor.visitSingularStringField(value: self.entittyUuid, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2867,6 +2879,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.info != rhs.info {return false}
     if lhs.permissions != rhs.permissions {return false}
     if lhs.email != rhs.email {return false}
+    if lhs.entittyUuid != rhs.entittyUuid {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2947,6 +2960,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     14: .same(proto: "result"),
     15: .standard(proto: "auth_info"),
     16: .same(proto: "metadata"),
+    17: .same(proto: "entityUUID"),
   ]
 
   fileprivate class _StorageClass {
@@ -2966,6 +2980,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _result: String = String()
     var _authInfo: String = String()
     var _metadata: Data = Data()
+    var _entityUuid: String = String()
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2996,6 +3011,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
       _result = source._result
       _authInfo = source._authInfo
       _metadata = source._metadata
+      _entityUuid = source._entityUuid
     }
   }
 
@@ -3030,6 +3046,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
         case 14: try { try decoder.decodeSingularStringField(value: &_storage._result) }()
         case 15: try { try decoder.decodeSingularStringField(value: &_storage._authInfo) }()
         case 16: try { try decoder.decodeSingularBytesField(value: &_storage._metadata) }()
+        case 17: try { try decoder.decodeSingularStringField(value: &_storage._entityUuid) }()
         default: break
         }
       }
@@ -3090,6 +3107,9 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
       if !_storage._metadata.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._metadata, fieldNumber: 16)
       }
+      if !_storage._entityUuid.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._entityUuid, fieldNumber: 17)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3115,6 +3135,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
         if _storage._result != rhs_storage._result {return false}
         if _storage._authInfo != rhs_storage._authInfo {return false}
         if _storage._metadata != rhs_storage._metadata {return false}
+        if _storage._entityUuid != rhs_storage._entityUuid {return false}
         return true
       }
       if !storagesAreEqual {return false}
