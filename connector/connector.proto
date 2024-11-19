@@ -213,6 +213,7 @@ message AuthorizeResponse {
   map<string, infoList> info = 3;
   map<string, Permissions> permissions = 5;
   string email = 6;
+  string entitty_uuid = 7;
 }
 
 message SessionUpdateRequest {
