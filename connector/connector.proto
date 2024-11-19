@@ -54,7 +54,7 @@ message ControlStreamResponse {
     SessionResponse session = 16;
   }
 }
-  
+
 message Organization {
   string id = 1;
   string name = 2;
@@ -213,6 +213,7 @@ message AuthorizeResponse {
   map<string, infoList> info = 3;
   map<string, Permissions> permissions = 5;
   string email = 6;
+  string entity_uuid = 7;
 }
 
 message SessionUpdateRequest {
@@ -240,6 +241,7 @@ message SessionRequest {
   string result = 14;
   string auth_info = 15;
   bytes metadata = 16;
+  string entity_uuid = 17;
 }
 
 message SessionResponse {
