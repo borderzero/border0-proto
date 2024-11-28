@@ -32,6 +32,7 @@ message ControlStreamRequest {
     border0.common.v1.DiscoveryDetailsMessage discovery_details = 14;
     AuthorizePeerRequest authorize_peer = 15;
     SessionRequest session = 16;
+    border0.common.v1.StatsMessage stats = 17;
   }
 }
 
@@ -52,7 +53,6 @@ message ControlStreamResponse {
     border0.common.v1.PeerOnlineMessage peer_online = 13;
     border0.common.v1.PeerOfflineMessage peer_offline = 14;
     SessionResponse session = 16;
-    border0.common.v1.StatsMessage stats = 17;
   }
 }
 
