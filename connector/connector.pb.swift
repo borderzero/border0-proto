@@ -192,6 +192,14 @@ struct Border0_V1_ControlStreamRequest: Sendable {
     set {requestType = .session(newValue)}
   }
 
+  var stats: Border0_Common_V1_StatsMessage {
+    get {
+      if case .stats(let v)? = requestType {return v}
+      return Border0_Common_V1_StatsMessage()
+    }
+    set {requestType = .stats(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_RequestType: Equatable, Sendable {
@@ -210,6 +218,7 @@ struct Border0_V1_ControlStreamRequest: Sendable {
     case discoveryDetails(Border0_Common_V1_DiscoveryDetailsMessage)
     case authorizePeer(Border0_V1_AuthorizePeerRequest)
     case session(Border0_V1_SessionRequest)
+    case stats(Border0_Common_V1_StatsMessage)
 
   }
 
@@ -343,14 +352,6 @@ struct Border0_V1_ControlStreamResponse: Sendable {
     set {requestType = .session(newValue)}
   }
 
-  var stats: Border0_Common_V1_StatsMessage {
-    get {
-      if case .stats(let v)? = requestType {return v}
-      return Border0_Common_V1_StatsMessage()
-    }
-    set {requestType = .stats(newValue)}
-  }
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_RequestType: Equatable, Sendable {
@@ -369,7 +370,6 @@ struct Border0_V1_ControlStreamResponse: Sendable {
     case peerOnline(Border0_Common_V1_PeerOnlineMessage)
     case peerOffline(Border0_Common_V1_PeerOfflineMessage)
     case session(Border0_V1_SessionResponse)
-    case stats(Border0_Common_V1_StatsMessage)
 
   }
 
@@ -1158,6 +1158,7 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
     14: .standard(proto: "discovery_details"),
     15: .standard(proto: "authorize_peer"),
     16: .same(proto: "session"),
+    17: .same(proto: "stats"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1361,6 +1362,19 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
           self.requestType = .session(v)
         }
       }()
+      case 17: try {
+        var v: Border0_Common_V1_StatsMessage?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .stats(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .stats(v)
+        }
+      }()
       default: break
       }
     }
@@ -1432,6 +1446,10 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
       guard case .session(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
     }()
+    case .stats?: try {
+      guard case .stats(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1462,7 +1480,6 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
     13: .standard(proto: "peer_online"),
     14: .standard(proto: "peer_offline"),
     16: .same(proto: "session"),
-    17: .same(proto: "stats"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1666,19 +1683,6 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
           self.requestType = .session(v)
         }
       }()
-      case 17: try {
-        var v: Border0_Common_V1_StatsMessage?
-        var hadOneofValue = false
-        if let current = self.requestType {
-          hadOneofValue = true
-          if case .stats(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.requestType = .stats(v)
-        }
-      }()
       default: break
       }
     }
@@ -1749,10 +1753,6 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
     case .session?: try {
       guard case .session(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-    }()
-    case .stats?: try {
-      guard case .stats(let v)? = self.requestType else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
     }()
     case nil: break
     }
