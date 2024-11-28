@@ -55,12 +55,21 @@ struct Border0_Device_V1_DeviceToServerMessage: Sendable {
     set {message = .heartbeat(newValue)}
   }
 
+  var stats: Border0_Common_V1_StatsMessage {
+    get {
+      if case .stats(let v)? = message {return v}
+      return Border0_Common_V1_StatsMessage()
+    }
+    set {message = .stats(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Message: Equatable, Sendable {
     case authChallengeSolution(Border0_Device_V1_AuthChallengeSolutionMessage)
     case discoveryDetails(Border0_Common_V1_DiscoveryDetailsMessage)
     case heartbeat(Border0_Common_V1_HeartbeatMessage)
+    case stats(Border0_Common_V1_StatsMessage)
 
   }
 
@@ -211,6 +220,7 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
     1: .standard(proto: "auth_challenge_solution"),
     2: .standard(proto: "discovery_details"),
     3: .same(proto: "heartbeat"),
+    4: .same(proto: "stats"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -258,6 +268,19 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
           self.message = .heartbeat(v)
         }
       }()
+      case 4: try {
+        var v: Border0_Common_V1_StatsMessage?
+        var hadOneofValue = false
+        if let current = self.message {
+          hadOneofValue = true
+          if case .stats(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.message = .stats(v)
+        }
+      }()
       default: break
       }
     }
@@ -280,6 +303,10 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
     case .heartbeat?: try {
       guard case .heartbeat(let v)? = self.message else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .stats?: try {
+      guard case .stats(let v)? = self.message else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case nil: break
     }

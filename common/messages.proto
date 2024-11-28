@@ -7,6 +7,8 @@ option go_package = "github.com/borderzero/border0-proto/common";
 // sets the protobuf package name (i.e. definitions namespace)
 package border0.common.v1;
 
+import "google/protobuf/timestamp.proto";
+
 message DiscoveryDetailsMessage {
   bool discoverable = 1;           // whether the peer should be returned along with the networks it's in
   string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
@@ -15,6 +17,20 @@ message DiscoveryDetailsMessage {
 }
 
 message HeartbeatMessage {}
+
+message StatsMessage {
+    oneof Message {
+        NetworkDeviceStatsMessage network_device_stats = 1;
+    }
+}
+
+message NetworkDeviceStatsMessage {
+    google.protobuf.Timestamp timestamp = 1;
+    int64 bytes_in = 2;
+    int64 bytes_out = 3;
+    int64 packets_in = 4;
+    int64 packets_out = 5;
+}
 
 message PeerOnlineMessage {
   string network_id = 1;

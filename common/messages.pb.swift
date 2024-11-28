@@ -130,6 +130,60 @@ struct Border0_Common_V1_HeartbeatMessage: Sendable {
   init() {}
 }
 
+struct Border0_Common_V1_StatsMessage: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var message: Border0_Common_V1_StatsMessage.OneOf_Message? = nil
+
+  var networkDeviceStats: Border0_Common_V1_NetworkDeviceStatsMessage {
+    get {
+      if case .networkDeviceStats(let v)? = message {return v}
+      return Border0_Common_V1_NetworkDeviceStatsMessage()
+    }
+    set {message = .networkDeviceStats(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Message: Equatable, Sendable {
+    case networkDeviceStats(Border0_Common_V1_NetworkDeviceStatsMessage)
+
+  }
+
+  init() {}
+}
+
+struct Border0_Common_V1_NetworkDeviceStatsMessage: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_timestamp = newValue}
+  }
+  /// Returns true if `timestamp` has been explicitly set.
+  var hasTimestamp: Bool {return self._timestamp != nil}
+  /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
+  mutating func clearTimestamp() {self._timestamp = nil}
+
+  var bytesIn: Int64 = 0
+
+  var bytesOut: Int64 = 0
+
+  var packetsIn: Int64 = 0
+
+  var packetsOut: Int64 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
 struct Border0_Common_V1_PeerOnlineMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -352,6 +406,114 @@ extension Border0_Common_V1_HeartbeatMessage: SwiftProtobuf.Message, SwiftProtob
   }
 
   static func ==(lhs: Border0_Common_V1_HeartbeatMessage, rhs: Border0_Common_V1_HeartbeatMessage) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".StatsMessage"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "network_device_stats"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: Border0_Common_V1_NetworkDeviceStatsMessage?
+        var hadOneofValue = false
+        if let current = self.message {
+          hadOneofValue = true
+          if case .networkDeviceStats(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.message = .networkDeviceStats(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if case .networkDeviceStats(let v)? = self.message {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Common_V1_StatsMessage, rhs: Border0_Common_V1_StatsMessage) -> Bool {
+    if lhs.message != rhs.message {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".NetworkDeviceStatsMessage"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "timestamp"),
+    2: .standard(proto: "bytes_in"),
+    3: .standard(proto: "bytes_out"),
+    4: .standard(proto: "packets_in"),
+    5: .standard(proto: "packets_out"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
+      case 2: try { try decoder.decodeSingularInt64Field(value: &self.bytesIn) }()
+      case 3: try { try decoder.decodeSingularInt64Field(value: &self.bytesOut) }()
+      case 4: try { try decoder.decodeSingularInt64Field(value: &self.packetsIn) }()
+      case 5: try { try decoder.decodeSingularInt64Field(value: &self.packetsOut) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._timestamp {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.bytesIn != 0 {
+      try visitor.visitSingularInt64Field(value: self.bytesIn, fieldNumber: 2)
+    }
+    if self.bytesOut != 0 {
+      try visitor.visitSingularInt64Field(value: self.bytesOut, fieldNumber: 3)
+    }
+    if self.packetsIn != 0 {
+      try visitor.visitSingularInt64Field(value: self.packetsIn, fieldNumber: 4)
+    }
+    if self.packetsOut != 0 {
+      try visitor.visitSingularInt64Field(value: self.packetsOut, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Common_V1_NetworkDeviceStatsMessage, rhs: Border0_Common_V1_NetworkDeviceStatsMessage) -> Bool {
+    if lhs._timestamp != rhs._timestamp {return false}
+    if lhs.bytesIn != rhs.bytesIn {return false}
+    if lhs.bytesOut != rhs.bytesOut {return false}
+    if lhs.packetsIn != rhs.packetsIn {return false}
+    if lhs.packetsOut != rhs.packetsOut {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
