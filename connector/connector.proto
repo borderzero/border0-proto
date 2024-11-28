@@ -52,6 +52,7 @@ message ControlStreamResponse {
     border0.common.v1.PeerOnlineMessage peer_online = 13;
     border0.common.v1.PeerOfflineMessage peer_offline = 14;
     SessionResponse session = 16;
+    border0.common.v1.StatsMessage stats = 17;
   }
 }
 

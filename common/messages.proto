@@ -19,17 +19,17 @@ message DiscoveryDetailsMessage {
 message HeartbeatMessage {}
 
 message StatsMessage {
-    oneof Message {
+    oneof StatsMessageType {
         NetworkDeviceStatsMessage network_device_stats = 1;
     }
 }
 
 message NetworkDeviceStatsMessage {
     google.protobuf.Timestamp timestamp = 1;
-    int64 bytes_in = 2;
-    int64 bytes_out = 3;
-    int64 packets_in = 4;
-    int64 packets_out = 5;
+    uint64 bytes_in = 2;
+    uint64 bytes_out = 3;
+    uint64 packets_in = 4;
+    uint64 packets_out = 5;
 }
 
 message PeerOnlineMessage {
