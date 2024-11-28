@@ -135,19 +135,19 @@ struct Border0_Common_V1_StatsMessage: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var message: Border0_Common_V1_StatsMessage.OneOf_Message? = nil
+  var statsMessageType: Border0_Common_V1_StatsMessage.OneOf_StatsMessageType? = nil
 
   var networkDeviceStats: Border0_Common_V1_NetworkDeviceStatsMessage {
     get {
-      if case .networkDeviceStats(let v)? = message {return v}
+      if case .networkDeviceStats(let v)? = statsMessageType {return v}
       return Border0_Common_V1_NetworkDeviceStatsMessage()
     }
-    set {message = .networkDeviceStats(newValue)}
+    set {statsMessageType = .networkDeviceStats(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Message: Equatable, Sendable {
+  enum OneOf_StatsMessageType: Equatable, Sendable {
     case networkDeviceStats(Border0_Common_V1_NetworkDeviceStatsMessage)
 
   }
@@ -169,13 +169,13 @@ struct Border0_Common_V1_NetworkDeviceStatsMessage: Sendable {
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   mutating func clearTimestamp() {self._timestamp = nil}
 
-  var bytesIn: Int64 = 0
+  var bytesIn: UInt64 = 0
 
-  var bytesOut: Int64 = 0
+  var bytesOut: UInt64 = 0
 
-  var packetsIn: Int64 = 0
+  var packetsIn: UInt64 = 0
 
-  var packetsOut: Int64 = 0
+  var packetsOut: UInt64 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -426,14 +426,14 @@ extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._
       case 1: try {
         var v: Border0_Common_V1_NetworkDeviceStatsMessage?
         var hadOneofValue = false
-        if let current = self.message {
+        if let current = self.statsMessageType {
           hadOneofValue = true
           if case .networkDeviceStats(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.message = .networkDeviceStats(v)
+          self.statsMessageType = .networkDeviceStats(v)
         }
       }()
       default: break
@@ -446,14 +446,14 @@ extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .networkDeviceStats(let v)? = self.message {
+    try { if case .networkDeviceStats(let v)? = self.statsMessageType {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Border0_Common_V1_StatsMessage, rhs: Border0_Common_V1_StatsMessage) -> Bool {
-    if lhs.message != rhs.message {return false}
+    if lhs.statsMessageType != rhs.statsMessageType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -476,10 +476,10 @@ extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, Sw
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
-      case 2: try { try decoder.decodeSingularInt64Field(value: &self.bytesIn) }()
-      case 3: try { try decoder.decodeSingularInt64Field(value: &self.bytesOut) }()
-      case 4: try { try decoder.decodeSingularInt64Field(value: &self.packetsIn) }()
-      case 5: try { try decoder.decodeSingularInt64Field(value: &self.packetsOut) }()
+      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.bytesIn) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.bytesOut) }()
+      case 4: try { try decoder.decodeSingularUInt64Field(value: &self.packetsIn) }()
+      case 5: try { try decoder.decodeSingularUInt64Field(value: &self.packetsOut) }()
       default: break
       }
     }
@@ -494,16 +494,16 @@ extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, Sw
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     if self.bytesIn != 0 {
-      try visitor.visitSingularInt64Field(value: self.bytesIn, fieldNumber: 2)
+      try visitor.visitSingularUInt64Field(value: self.bytesIn, fieldNumber: 2)
     }
     if self.bytesOut != 0 {
-      try visitor.visitSingularInt64Field(value: self.bytesOut, fieldNumber: 3)
+      try visitor.visitSingularUInt64Field(value: self.bytesOut, fieldNumber: 3)
     }
     if self.packetsIn != 0 {
-      try visitor.visitSingularInt64Field(value: self.packetsIn, fieldNumber: 4)
+      try visitor.visitSingularUInt64Field(value: self.packetsIn, fieldNumber: 4)
     }
     if self.packetsOut != 0 {
-      try visitor.visitSingularInt64Field(value: self.packetsOut, fieldNumber: 5)
+      try visitor.visitSingularUInt64Field(value: self.packetsOut, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
