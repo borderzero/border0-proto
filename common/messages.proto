@@ -72,6 +72,8 @@ message Service {
   string ipv4 = 3;
   string ipv6 = 4;
   repeated string subnet_routes = 5; // applicable only to services of type SUBNET_ROUTES
+  string dns_name = 6;
+  string upstream_type = 7;
 }
 
 enum PeerType {
