@@ -305,6 +305,10 @@ struct Border0_Common_V1_Service: Sendable {
   /// applicable only to services of type SUBNET_ROUTES
   var subnetRoutes: [String] = []
 
+  var dnsName: String = String()
+
+  var upstreamType: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -767,6 +771,8 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     3: .same(proto: "ipv4"),
     4: .same(proto: "ipv6"),
     5: .standard(proto: "subnet_routes"),
+    6: .standard(proto: "dns_name"),
+    7: .standard(proto: "upstream_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -780,6 +786,8 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 3: try { try decoder.decodeSingularStringField(value: &self.ipv4) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.ipv6) }()
       case 5: try { try decoder.decodeRepeatedStringField(value: &self.subnetRoutes) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.dnsName) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.upstreamType) }()
       default: break
       }
     }
@@ -801,6 +809,12 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.subnetRoutes.isEmpty {
       try visitor.visitRepeatedStringField(value: self.subnetRoutes, fieldNumber: 5)
     }
+    if !self.dnsName.isEmpty {
+      try visitor.visitSingularStringField(value: self.dnsName, fieldNumber: 6)
+    }
+    if !self.upstreamType.isEmpty {
+      try visitor.visitSingularStringField(value: self.upstreamType, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -810,6 +824,8 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.ipv4 != rhs.ipv4 {return false}
     if lhs.ipv6 != rhs.ipv6 {return false}
     if lhs.subnetRoutes != rhs.subnetRoutes {return false}
+    if lhs.dnsName != rhs.dnsName {return false}
+    if lhs.upstreamType != rhs.upstreamType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

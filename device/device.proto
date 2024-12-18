@@ -56,4 +56,6 @@ message Service {
   string ipv6 = 5;
   repeated string subnet_routes = 6;
   repeated string peer_public_key = 7;
+  string dns_name = 8;
+  string upstream_type = 9;
 }
