@@ -89,6 +89,10 @@ message Service {
   repeated string subnet_routes = 5; // applicable only to services of type SUBNET_ROUTES
   string dns_name = 6;
   string upstream_type = 7;
+  uint32 upstream_port = 8;
+  bool has_upstream_username = 9;
+  string upstream_ssh_type = 10;
+  map<string, string> tags = 11;
 }
 
 enum PeerType {
