@@ -40,12 +40,16 @@ RUN git clone https://github.com/protocolbuffers/protobuf.git && \
     cp -r protobuf/src/* /usr/include/ && \
     rm -rf protobuf
 
-VOLUME /app/proto
+VOLUME /app/gen
 
-ENTRYPOINT protoc \
+# NOTE(@adrianosela): Using shell form instead of exec form because we rely on
+# the shell expanding the wildcard character '*' to find all .proto files in
+# the given directory. This is discouraged and produces a warning. See for more
+# info: https://docs.docker.com/reference/dockerfile/#shell-and-exec-form
+ENTRYPOINT mkdir -p /app/gen/swift && protoc \
     -I/app/proto \
     -I/app/shared \
-    --swift_out=/app/proto \
-    --grpc-swift_out=/app/proto \
+    --swift_out=/app/gen/swift \
+    --grpc-swift_out=/app/gen/swift \
     /app/proto/*.proto
 

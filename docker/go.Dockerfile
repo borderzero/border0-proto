@@ -22,6 +22,10 @@ RUN git clone https://github.com/protocolbuffers/protobuf.git && \
 
 VOLUME /app/proto
 
+# NOTE(@adrianosela): Using shell form instead of exec form because we rely on
+# the shell expanding the wildcard character '*' to find all .proto files in
+# the given directory. This is discouraged and produces a warning. See for more
+# info: https://docs.docker.com/reference/dockerfile/#shell-and-exec-form
 ENTRYPOINT protoc \
     -I/app/proto \
     -I/app/shared \
