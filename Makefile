@@ -18,7 +18,13 @@ kotlin:
 	make docker-run lang=kotlin
 
 docker-run: docker-build
-	$(foreach component, $(COMPONENTS), docker run -v $(PWD)/common:/app/shared/common -v $(PWD)/$(component):/app/proto -v $(PWD)/gen:/app/gen $(NAME)-builder-$(lang);)
+	@for component in $(COMPONENTS); do \
+		docker run \
+			-v $(PWD)/common:/app/shared/common \
+			-v $(PWD)/$$component:/app/proto \
+			-v $(PWD)/gen:/app/gen \
+			$(NAME)-builder-$(lang); \
+	done
 
 docker-build:
-	docker build -f Dockerfile.$(lang) -t $(NAME)-builder-$(lang) .
+	docker build -f docker/$(lang).Dockerfile -t $(NAME)-builder-$(lang) .
