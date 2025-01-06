@@ -6,7 +6,7 @@ lang?=go
 # add any components here after their directory has been created with .proto files
 COMPONENTS:=common connector device 
 
-all: go swift
+all: go swift kotlin
 
 go:
 	make docker-run lang=go
@@ -14,8 +14,11 @@ go:
 swift:
 	make docker-run lang=swift
 
+kotlin:
+	make docker-run lang=kotlin
+
 docker-run: docker-build
-	$(foreach component, $(COMPONENTS), docker run -v $(PWD)/common:/app/shared/common -v $(PWD)/$(component):/app/proto $(NAME)-builder-$(lang);)
+	$(foreach component, $(COMPONENTS), docker run -v $(PWD)/common:/app/shared/common -v $(PWD)/$(component):/app/proto -v $(PWD)/gen:/app/gen $(NAME)-builder-$(lang);)
 
 docker-build:
 	docker build -f Dockerfile.$(lang) -t $(NAME)-builder-$(lang) .
