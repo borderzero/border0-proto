@@ -21,6 +21,7 @@ message HeartbeatMessage {}
 message StatsMessage {
     oneof StatsMessageType {
         NetworkDeviceStatsMessage network_device_stats = 1;
+        SocketsStatsMessage sockets_stats = 2;
     }
 }
 
@@ -30,6 +31,20 @@ message NetworkDeviceStatsMessage {
     uint64 bytes_out = 3;
     uint64 packets_in = 4;
     uint64 packets_out = 5;
+}
+
+message SocketStatsMessage {
+  google.protobuf.Timestamp timestamp = 1;
+  uint64 bytes_in = 2;
+  uint64 bytes_out = 3;
+  uint64 packets_in = 4;
+  uint64 packets_out = 5;
+  string socket_id = 6;
+}
+
+
+message SocketsStatsMessage {
+    repeated SocketStatsMessage socket_stats = 1;
 }
 
 message PeerOnlineMessage {

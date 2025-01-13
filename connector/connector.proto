@@ -302,3 +302,4 @@ message AllowedNetworksSocketConfig {
 message AllowedNetworksSubnets {
   repeated string subnets = 1;
 }
+
