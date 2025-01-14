@@ -352,6 +352,14 @@ struct Border0_V1_ControlStreamResponse: Sendable {
     set {requestType = .session(newValue)}
   }
 
+  var allowedNetworks: Border0_V1_AllowedNetworks {
+    get {
+      if case .allowedNetworks(let v)? = requestType {return v}
+      return Border0_V1_AllowedNetworks()
+    }
+    set {requestType = .allowedNetworks(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_RequestType: Equatable, Sendable {
@@ -370,6 +378,7 @@ struct Border0_V1_ControlStreamResponse: Sendable {
     case peerOnline(Border0_Common_V1_PeerOnlineMessage)
     case peerOffline(Border0_Common_V1_PeerOfflineMessage)
     case session(Border0_V1_SessionResponse)
+    case allowedNetworks(Border0_V1_AllowedNetworks)
 
   }
 
@@ -1127,6 +1136,42 @@ struct Border0_V1_CertificateSignResponse: @unchecked Sendable {
   init() {}
 }
 
+struct Border0_V1_AllowedNetworks: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var devices: Dictionary<String,Border0_V1_AllowedNetworksSocketConfig> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Border0_V1_AllowedNetworksSocketConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var sockets: Dictionary<String,Border0_V1_AllowedNetworksSubnets> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Border0_V1_AllowedNetworksSubnets: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var subnets: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "border0.v1"
@@ -1480,6 +1525,7 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
     13: .standard(proto: "peer_online"),
     14: .standard(proto: "peer_offline"),
     16: .same(proto: "session"),
+    17: .standard(proto: "allowed_networks"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1683,6 +1729,19 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
           self.requestType = .session(v)
         }
       }()
+      case 17: try {
+        var v: Border0_V1_AllowedNetworks?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .allowedNetworks(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .allowedNetworks(v)
+        }
+      }()
       default: break
       }
     }
@@ -1753,6 +1812,10 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
     case .session?: try {
       guard case .session(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+    }()
+    case .allowedNetworks?: try {
+      guard case .allowedNetworks(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
     }()
     case nil: break
     }
@@ -3493,6 +3556,102 @@ extension Border0_V1_CertificateSignResponse: SwiftProtobuf.Message, SwiftProtob
   static func ==(lhs: Border0_V1_CertificateSignResponse, rhs: Border0_V1_CertificateSignResponse) -> Bool {
     if lhs.requestID != rhs.requestID {return false}
     if lhs.certificate != rhs.certificate {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_V1_AllowedNetworks: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AllowedNetworks"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "devices"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksSocketConfig>.self, value: &self.devices) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.devices.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksSocketConfig>.self, value: self.devices, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_AllowedNetworks, rhs: Border0_V1_AllowedNetworks) -> Bool {
+    if lhs.devices != rhs.devices {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AllowedNetworksSocketConfig"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "sockets"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksSubnets>.self, value: &self.sockets) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.sockets.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksSubnets>.self, value: self.sockets, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_AllowedNetworksSocketConfig, rhs: Border0_V1_AllowedNetworksSocketConfig) -> Bool {
+    if lhs.sockets != rhs.sockets {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_V1_AllowedNetworksSubnets: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AllowedNetworksSubnets"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "subnets"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.subnets) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.subnets.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.subnets, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_AllowedNetworksSubnets, rhs: Border0_V1_AllowedNetworksSubnets) -> Bool {
+    if lhs.subnets != rhs.subnets {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

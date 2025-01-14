@@ -45,6 +45,30 @@ public object StatsMessageKt {
     public fun hasNetworkDeviceStats(): kotlin.Boolean {
       return _builder.hasNetworkDeviceStats()
     }
+
+    /**
+     * <code>.border0.common.v1.SocketsStatsMessage sockets_stats = 2;</code>
+     */
+    public var socketsStats: border0.common.v1.Messages.SocketsStatsMessage
+      @JvmName("getSocketsStats")
+      get() = _builder.getSocketsStats()
+      @JvmName("setSocketsStats")
+      set(value) {
+        _builder.setSocketsStats(value)
+      }
+    /**
+     * <code>.border0.common.v1.SocketsStatsMessage sockets_stats = 2;</code>
+     */
+    public fun clearSocketsStats() {
+      _builder.clearSocketsStats()
+    }
+    /**
+     * <code>.border0.common.v1.SocketsStatsMessage sockets_stats = 2;</code>
+     * @return Whether the socketsStats field is set.
+     */
+    public fun hasSocketsStats(): kotlin.Boolean {
+      return _builder.hasSocketsStats()
+    }
     public val statsMessageTypeCase: border0.common.v1.Messages.StatsMessage.StatsMessageTypeCase
       @JvmName("getStatsMessageTypeCase")
       get() = _builder.getStatsMessageTypeCase()
@@ -60,4 +84,7 @@ public inline fun border0.common.v1.Messages.StatsMessage.copy(block: border0.co
 
 public val border0.common.v1.Messages.StatsMessageOrBuilder.networkDeviceStatsOrNull: border0.common.v1.Messages.NetworkDeviceStatsMessage?
   get() = if (hasNetworkDeviceStats()) getNetworkDeviceStats() else null
+
+public val border0.common.v1.Messages.StatsMessageOrBuilder.socketsStatsOrNull: border0.common.v1.Messages.SocketsStatsMessage?
+  get() = if (hasSocketsStats()) getSocketsStats() else null
 

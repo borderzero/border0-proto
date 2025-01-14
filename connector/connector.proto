@@ -53,6 +53,7 @@ message ControlStreamResponse {
     border0.common.v1.PeerOnlineMessage peer_online = 13;
     border0.common.v1.PeerOfflineMessage peer_offline = 14;
     SessionResponse session = 16;
+    AllowedNetworks allowed_networks = 17;
   }
 }
 
@@ -289,3 +290,16 @@ message CertificateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
 }
+
+message AllowedNetworks {
+  map<string, AllowedNetworksSocketConfig> devices = 1;
+}
+
+message AllowedNetworksSocketConfig {
+  map<string, AllowedNetworksSubnets> sockets = 1;
+}
+
+message AllowedNetworksSubnets {
+  repeated string subnets = 1;
+}
+

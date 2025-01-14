@@ -381,6 +381,30 @@ public object ControlStreamResponseKt {
     public fun hasSession(): kotlin.Boolean {
       return _builder.hasSession()
     }
+
+    /**
+     * <code>.border0.v1.AllowedNetworks allowed_networks = 17;</code>
+     */
+    public var allowedNetworks: border0.v1.Connector.AllowedNetworks
+      @JvmName("getAllowedNetworks")
+      get() = _builder.getAllowedNetworks()
+      @JvmName("setAllowedNetworks")
+      set(value) {
+        _builder.setAllowedNetworks(value)
+      }
+    /**
+     * <code>.border0.v1.AllowedNetworks allowed_networks = 17;</code>
+     */
+    public fun clearAllowedNetworks() {
+      _builder.clearAllowedNetworks()
+    }
+    /**
+     * <code>.border0.v1.AllowedNetworks allowed_networks = 17;</code>
+     * @return Whether the allowedNetworks field is set.
+     */
+    public fun hasAllowedNetworks(): kotlin.Boolean {
+      return _builder.hasAllowedNetworks()
+    }
     public val requestTypeCase: border0.v1.Connector.ControlStreamResponse.RequestTypeCase
       @JvmName("getRequestTypeCase")
       get() = _builder.getRequestTypeCase()
@@ -438,4 +462,7 @@ public val border0.v1.Connector.ControlStreamResponseOrBuilder.peerOfflineOrNull
 
 public val border0.v1.Connector.ControlStreamResponseOrBuilder.sessionOrNull: border0.v1.Connector.SessionResponse?
   get() = if (hasSession()) getSession() else null
+
+public val border0.v1.Connector.ControlStreamResponseOrBuilder.allowedNetworksOrNull: border0.v1.Connector.AllowedNetworks?
+  get() = if (hasAllowedNetworks()) getAllowedNetworks() else null
 
