@@ -58,4 +58,8 @@ message Service {
   repeated string peer_public_key = 7;
   string dns_name = 8;
   string upstream_type = 9;
+  uint32 upstream_port = 10;
+  bool has_upstream_username = 11;
+  string upstream_ssh_type = 12;
+  map<string, string> tags = 13;
 }

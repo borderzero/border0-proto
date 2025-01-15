@@ -209,6 +209,14 @@ struct Border0_Device_V1_Service: Sendable {
 
   var upstreamType: String = String()
 
+  var upstreamPort: UInt32 = 0
+
+  var hasUpstreamUsername_p: Bool = false
+
+  var upstreamSshType: String = String()
+
+  var tags: Dictionary<String,String> = [:]
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -578,6 +586,10 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     7: .standard(proto: "peer_public_key"),
     8: .standard(proto: "dns_name"),
     9: .standard(proto: "upstream_type"),
+    10: .standard(proto: "upstream_port"),
+    11: .standard(proto: "has_upstream_username"),
+    12: .standard(proto: "upstream_ssh_type"),
+    13: .same(proto: "tags"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -595,6 +607,10 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 7: try { try decoder.decodeRepeatedStringField(value: &self.peerPublicKey) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.dnsName) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.upstreamType) }()
+      case 10: try { try decoder.decodeSingularUInt32Field(value: &self.upstreamPort) }()
+      case 11: try { try decoder.decodeSingularBoolField(value: &self.hasUpstreamUsername_p) }()
+      case 12: try { try decoder.decodeSingularStringField(value: &self.upstreamSshType) }()
+      case 13: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.tags) }()
       default: break
       }
     }
@@ -628,6 +644,18 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.upstreamType.isEmpty {
       try visitor.visitSingularStringField(value: self.upstreamType, fieldNumber: 9)
     }
+    if self.upstreamPort != 0 {
+      try visitor.visitSingularUInt32Field(value: self.upstreamPort, fieldNumber: 10)
+    }
+    if self.hasUpstreamUsername_p != false {
+      try visitor.visitSingularBoolField(value: self.hasUpstreamUsername_p, fieldNumber: 11)
+    }
+    if !self.upstreamSshType.isEmpty {
+      try visitor.visitSingularStringField(value: self.upstreamSshType, fieldNumber: 12)
+    }
+    if !self.tags.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.tags, fieldNumber: 13)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -641,6 +669,10 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.peerPublicKey != rhs.peerPublicKey {return false}
     if lhs.dnsName != rhs.dnsName {return false}
     if lhs.upstreamType != rhs.upstreamType {return false}
+    if lhs.upstreamPort != rhs.upstreamPort {return false}
+    if lhs.hasUpstreamUsername_p != rhs.hasUpstreamUsername_p {return false}
+    if lhs.upstreamSshType != rhs.upstreamSshType {return false}
+    if lhs.tags != rhs.tags {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

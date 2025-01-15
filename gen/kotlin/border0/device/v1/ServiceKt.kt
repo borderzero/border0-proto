@@ -280,6 +280,118 @@ public object ServiceKt {
     public fun clearUpstreamType() {
       _builder.clearUpstreamType()
     }
+
+    /**
+     * <code>uint32 upstream_port = 10;</code>
+     */
+    public var upstreamPort: kotlin.Int
+      @JvmName("getUpstreamPort")
+      get() = _builder.getUpstreamPort()
+      @JvmName("setUpstreamPort")
+      set(value) {
+        _builder.setUpstreamPort(value)
+      }
+    /**
+     * <code>uint32 upstream_port = 10;</code>
+     */
+    public fun clearUpstreamPort() {
+      _builder.clearUpstreamPort()
+    }
+
+    /**
+     * <code>bool has_upstream_username = 11;</code>
+     */
+    public var hasUpstreamUsername: kotlin.Boolean
+      @JvmName("getHasUpstreamUsername")
+      get() = _builder.getHasUpstreamUsername()
+      @JvmName("setHasUpstreamUsername")
+      set(value) {
+        _builder.setHasUpstreamUsername(value)
+      }
+    /**
+     * <code>bool has_upstream_username = 11;</code>
+     */
+    public fun clearHasUpstreamUsername() {
+      _builder.clearHasUpstreamUsername()
+    }
+
+    /**
+     * <code>string upstream_ssh_type = 12;</code>
+     */
+    public var upstreamSshType: kotlin.String
+      @JvmName("getUpstreamSshType")
+      get() = _builder.getUpstreamSshType()
+      @JvmName("setUpstreamSshType")
+      set(value) {
+        _builder.setUpstreamSshType(value)
+      }
+    /**
+     * <code>string upstream_ssh_type = 12;</code>
+     */
+    public fun clearUpstreamSshType() {
+      _builder.clearUpstreamSshType()
+    }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class TagsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <code>map&lt;string, string&gt; tags = 13;</code>
+     */
+     public val tags: com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, TagsProxy>
+      @kotlin.jvm.JvmSynthetic
+      @JvmName("getTagsMap")
+      get() = com.google.protobuf.kotlin.DslMap(
+        _builder.getTagsMap()
+      )
+    /**
+     * <code>map&lt;string, string&gt; tags = 13;</code>
+     */
+    @JvmName("putTags")
+    public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, TagsProxy>
+      .put(key: kotlin.String, value: kotlin.String) {
+         _builder.putTags(key, value)
+       }
+    /**
+     * <code>map&lt;string, string&gt; tags = 13;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @JvmName("setTags")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, TagsProxy>
+      .set(key: kotlin.String, value: kotlin.String) {
+         put(key, value)
+       }
+    /**
+     * <code>map&lt;string, string&gt; tags = 13;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @JvmName("removeTags")
+    public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, TagsProxy>
+      .remove(key: kotlin.String) {
+         _builder.removeTags(key)
+       }
+    /**
+     * <code>map&lt;string, string&gt; tags = 13;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @JvmName("putAllTags")
+    public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, TagsProxy>
+      .putAll(map: kotlin.collections.Map<kotlin.String, kotlin.String>) {
+         _builder.putAllTags(map)
+       }
+    /**
+     * <code>map&lt;string, string&gt; tags = 13;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @JvmName("clearTags")
+    public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, TagsProxy>
+      .clear() {
+         _builder.clearTags()
+       }
   }
 }
 @kotlin.jvm.JvmSynthetic
