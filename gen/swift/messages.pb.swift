@@ -22,6 +22,40 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum Border0_Common_V1_IPAddressType: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case ipv4 // = 0
+  case ipv6 // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .ipv4
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .ipv4
+    case 1: self = .ipv6
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .ipv4: return 0
+    case .ipv6: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [Border0_Common_V1_IPAddressType] = [
+    .ipv4,
+    .ipv6,
+  ]
+
+}
+
 enum Border0_Common_V1_PeerType: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unknown // = 0
@@ -369,9 +403,36 @@ struct Border0_Common_V1_Service: Sendable {
 
   var tags: Dictionary<String,String> = [:]
 
+  var publicIps: [Border0_Common_V1_IPAddressWithMetadata] = []
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+}
+
+struct Border0_Common_V1_IPAddressWithMetadata: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var ipAddress: String = String()
+
+  var type: Border0_Common_V1_IPAddressType = .ipv4
+
+  var metadata: SwiftProtobuf.Google_Protobuf_Struct {
+    get {return _metadata ?? SwiftProtobuf.Google_Protobuf_Struct()}
+    set {_metadata = newValue}
+  }
+  /// Returns true if `metadata` has been explicitly set.
+  var hasMetadata: Bool {return self._metadata != nil}
+  /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
+  mutating func clearMetadata() {self._metadata = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _metadata: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
 struct Border0_Common_V1_DisconnectMessage: Sendable {
@@ -389,6 +450,13 @@ struct Border0_Common_V1_DisconnectMessage: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "border0.common.v1"
+
+extension Border0_Common_V1_IPAddressType: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "IPV4"),
+    1: .same(proto: "IPV6"),
+  ]
+}
 
 extension Border0_Common_V1_PeerType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -957,6 +1025,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     9: .standard(proto: "has_upstream_username"),
     10: .standard(proto: "upstream_ssh_type"),
     11: .same(proto: "tags"),
+    12: .standard(proto: "public_ips"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -976,6 +1045,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 9: try { try decoder.decodeSingularBoolField(value: &self.hasUpstreamUsername_p) }()
       case 10: try { try decoder.decodeSingularStringField(value: &self.upstreamSshType) }()
       case 11: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.tags) }()
+      case 12: try { try decoder.decodeRepeatedMessageField(value: &self.publicIps) }()
       default: break
       }
     }
@@ -1015,6 +1085,9 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.tags.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.tags, fieldNumber: 11)
     }
+    if !self.publicIps.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.publicIps, fieldNumber: 12)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1030,6 +1103,55 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.hasUpstreamUsername_p != rhs.hasUpstreamUsername_p {return false}
     if lhs.upstreamSshType != rhs.upstreamSshType {return false}
     if lhs.tags != rhs.tags {return false}
+    if lhs.publicIps != rhs.publicIps {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Common_V1_IPAddressWithMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".IPAddressWithMetadata"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "ip_address"),
+    2: .same(proto: "type"),
+    3: .same(proto: "metadata"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.ipAddress) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._metadata) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.ipAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipAddress, fieldNumber: 1)
+    }
+    if self.type != .ipv4 {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
+    }
+    try { if let v = self._metadata {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Common_V1_IPAddressWithMetadata, rhs: Border0_Common_V1_IPAddressWithMetadata) -> Bool {
+    if lhs.ipAddress != rhs.ipAddress {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs._metadata != rhs._metadata {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
