@@ -7,6 +7,7 @@ option go_package = "github.com/borderzero/border0-proto/common";
 // sets the protobuf package name (i.e. definitions namespace)
 package border0.common.v1;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 message DiscoveryDetailsMessage {
@@ -93,6 +94,18 @@ message Service {
   bool has_upstream_username = 9;
   string upstream_ssh_type = 10;
   map<string, string> tags = 11;
+  repeated IPAddressWithMetadata public_ips = 12;
+}
+
+message IPAddressWithMetadata {
+  string ip_address = 1;
+  IPAddressType type = 2;
+  google.protobuf.Struct metadata = 3;
+}
+
+enum IPAddressType {
+   IPV4 = 0;
+   IPV6 = 1;
 }
 
 enum PeerType {

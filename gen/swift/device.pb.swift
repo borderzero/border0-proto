@@ -217,6 +217,8 @@ struct Border0_Device_V1_Service: Sendable {
 
   var tags: Dictionary<String,String> = [:]
 
+  var publicIps: [Border0_Common_V1_IPAddressWithMetadata] = []
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -590,6 +592,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     11: .standard(proto: "has_upstream_username"),
     12: .standard(proto: "upstream_ssh_type"),
     13: .same(proto: "tags"),
+    14: .standard(proto: "public_ips"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -611,6 +614,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 11: try { try decoder.decodeSingularBoolField(value: &self.hasUpstreamUsername_p) }()
       case 12: try { try decoder.decodeSingularStringField(value: &self.upstreamSshType) }()
       case 13: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.tags) }()
+      case 14: try { try decoder.decodeRepeatedMessageField(value: &self.publicIps) }()
       default: break
       }
     }
@@ -656,6 +660,9 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.tags.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.tags, fieldNumber: 13)
     }
+    if !self.publicIps.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.publicIps, fieldNumber: 14)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -673,6 +680,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.hasUpstreamUsername_p != rhs.hasUpstreamUsername_p {return false}
     if lhs.upstreamSshType != rhs.upstreamSshType {return false}
     if lhs.tags != rhs.tags {return false}
+    if lhs.publicIps != rhs.publicIps {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

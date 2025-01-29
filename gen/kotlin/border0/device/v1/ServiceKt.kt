@@ -392,6 +392,78 @@ public object ServiceKt {
       .clear() {
          _builder.clearTags()
        }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class PublicIpsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <code>repeated .border0.common.v1.IPAddressWithMetadata public_ips = 14;</code>
+     */
+     public val publicIps: com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddressWithMetadata, PublicIpsProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getPublicIpsList()
+      )
+    /**
+     * <code>repeated .border0.common.v1.IPAddressWithMetadata public_ips = 14;</code>
+     * @param value The publicIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addPublicIps")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddressWithMetadata, PublicIpsProxy>.add(value: border0.common.v1.Messages.IPAddressWithMetadata) {
+      _builder.addPublicIps(value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.IPAddressWithMetadata public_ips = 14;</code>
+     * @param value The publicIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignPublicIps")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddressWithMetadata, PublicIpsProxy>.plusAssign(value: border0.common.v1.Messages.IPAddressWithMetadata) {
+      add(value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.IPAddressWithMetadata public_ips = 14;</code>
+     * @param values The publicIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllPublicIps")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddressWithMetadata, PublicIpsProxy>.addAll(values: kotlin.collections.Iterable<border0.common.v1.Messages.IPAddressWithMetadata>) {
+      _builder.addAllPublicIps(values)
+    }
+    /**
+     * <code>repeated .border0.common.v1.IPAddressWithMetadata public_ips = 14;</code>
+     * @param values The publicIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllPublicIps")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddressWithMetadata, PublicIpsProxy>.plusAssign(values: kotlin.collections.Iterable<border0.common.v1.Messages.IPAddressWithMetadata>) {
+      addAll(values)
+    }
+    /**
+     * <code>repeated .border0.common.v1.IPAddressWithMetadata public_ips = 14;</code>
+     * @param index The index to set the value at.
+     * @param value The publicIps to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setPublicIps")
+    public operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddressWithMetadata, PublicIpsProxy>.set(index: kotlin.Int, value: border0.common.v1.Messages.IPAddressWithMetadata) {
+      _builder.setPublicIps(index, value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.IPAddressWithMetadata public_ips = 14;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearPublicIps")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddressWithMetadata, PublicIpsProxy>.clear() {
+      _builder.clearPublicIps()
+    }
+
   }
 }
 @kotlin.jvm.JvmSynthetic
