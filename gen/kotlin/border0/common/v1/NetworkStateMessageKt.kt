@@ -212,6 +212,78 @@ public object NetworkStateMessageKt {
     public fun clearNetworkResourcesCidrV6() {
       _builder.clearNetworkResourcesCidrV6()
     }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class StandaloneServicesProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <code>repeated .border0.common.v1.Service standalone_services = 9;</code>
+     */
+     public val standaloneServices: com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Service, StandaloneServicesProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getStandaloneServicesList()
+      )
+    /**
+     * <code>repeated .border0.common.v1.Service standalone_services = 9;</code>
+     * @param value The standaloneServices to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addStandaloneServices")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Service, StandaloneServicesProxy>.add(value: border0.common.v1.Messages.Service) {
+      _builder.addStandaloneServices(value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Service standalone_services = 9;</code>
+     * @param value The standaloneServices to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignStandaloneServices")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Service, StandaloneServicesProxy>.plusAssign(value: border0.common.v1.Messages.Service) {
+      add(value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Service standalone_services = 9;</code>
+     * @param values The standaloneServices to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllStandaloneServices")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Service, StandaloneServicesProxy>.addAll(values: kotlin.collections.Iterable<border0.common.v1.Messages.Service>) {
+      _builder.addAllStandaloneServices(values)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Service standalone_services = 9;</code>
+     * @param values The standaloneServices to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllStandaloneServices")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Service, StandaloneServicesProxy>.plusAssign(values: kotlin.collections.Iterable<border0.common.v1.Messages.Service>) {
+      addAll(values)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Service standalone_services = 9;</code>
+     * @param index The index to set the value at.
+     * @param value The standaloneServices to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setStandaloneServices")
+    public operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Service, StandaloneServicesProxy>.set(index: kotlin.Int, value: border0.common.v1.Messages.Service) {
+      _builder.setStandaloneServices(index, value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Service standalone_services = 9;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearStandaloneServices")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Service, StandaloneServicesProxy>.clear() {
+      _builder.clearStandaloneServices()
+    }
+
   }
 }
 @kotlin.jvm.JvmSynthetic
