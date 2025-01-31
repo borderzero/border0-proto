@@ -67,6 +67,7 @@ message NetworkStateMessage {
   repeated WireGuardPeer online_peers = 6;
   string network_resources_cidr_v4 = 7;
   string network_resources_cidr_v6 = 8;
+  repeated Service standalone_services = 9;
 }
 
 message WireGuardPeer {
