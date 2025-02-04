@@ -219,6 +219,10 @@ struct Border0_Device_V1_Service: Sendable {
 
   var publicIps: [Border0_Common_V1_IPAddressWithMetadata] = []
 
+  var standalone: Bool = false
+
+  var delete: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -593,6 +597,8 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     12: .standard(proto: "upstream_ssh_type"),
     13: .same(proto: "tags"),
     14: .standard(proto: "public_ips"),
+    15: .same(proto: "standalone"),
+    16: .same(proto: "delete"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -615,6 +621,8 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 12: try { try decoder.decodeSingularStringField(value: &self.upstreamSshType) }()
       case 13: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.tags) }()
       case 14: try { try decoder.decodeRepeatedMessageField(value: &self.publicIps) }()
+      case 15: try { try decoder.decodeSingularBoolField(value: &self.standalone) }()
+      case 16: try { try decoder.decodeSingularBoolField(value: &self.delete) }()
       default: break
       }
     }
@@ -663,6 +671,12 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.publicIps.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.publicIps, fieldNumber: 14)
     }
+    if self.standalone != false {
+      try visitor.visitSingularBoolField(value: self.standalone, fieldNumber: 15)
+    }
+    if self.delete != false {
+      try visitor.visitSingularBoolField(value: self.delete, fieldNumber: 16)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -681,6 +695,8 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.upstreamSshType != rhs.upstreamSshType {return false}
     if lhs.tags != rhs.tags {return false}
     if lhs.publicIps != rhs.publicIps {return false}
+    if lhs.standalone != rhs.standalone {return false}
+    if lhs.delete != rhs.delete {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

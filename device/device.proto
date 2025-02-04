@@ -62,5 +62,7 @@ message Service {
   bool has_upstream_username = 11;
   string upstream_ssh_type = 12;
   map<string, string> tags = 13;
-  repeated border0.common.v1.IPAddressWithMetadata public_ips = 14;
+  repeated border0.common.v1.IPAddressWithMetadata public_ips = 14;  
+  bool standalone = 15;
+  bool delete = 16;
 }

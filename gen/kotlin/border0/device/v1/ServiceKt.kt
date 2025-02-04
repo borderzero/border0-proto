@@ -464,6 +464,40 @@ public object ServiceKt {
       _builder.clearPublicIps()
     }
 
+
+    /**
+     * <code>bool standalone = 15;</code>
+     */
+    public var standalone: kotlin.Boolean
+      @JvmName("getStandalone")
+      get() = _builder.getStandalone()
+      @JvmName("setStandalone")
+      set(value) {
+        _builder.setStandalone(value)
+      }
+    /**
+     * <code>bool standalone = 15;</code>
+     */
+    public fun clearStandalone() {
+      _builder.clearStandalone()
+    }
+
+    /**
+     * <code>bool delete = 16;</code>
+     */
+    public var delete: kotlin.Boolean
+      @JvmName("getDelete")
+      get() = _builder.getDelete()
+      @JvmName("setDelete")
+      set(value) {
+        _builder.setDelete(value)
+      }
+    /**
+     * <code>bool delete = 16;</code>
+     */
+    public fun clearDelete() {
+      _builder.clearDelete()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
