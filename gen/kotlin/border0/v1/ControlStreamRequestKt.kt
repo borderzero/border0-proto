@@ -405,6 +405,30 @@ public object ControlStreamRequestKt {
     public fun hasStats(): kotlin.Boolean {
       return _builder.hasStats()
     }
+
+    /**
+     * <code>.border0.v1.Logs logs = 18;</code>
+     */
+    public var logs: border0.v1.Connector.Logs
+      @JvmName("getLogs")
+      get() = _builder.getLogs()
+      @JvmName("setLogs")
+      set(value) {
+        _builder.setLogs(value)
+      }
+    /**
+     * <code>.border0.v1.Logs logs = 18;</code>
+     */
+    public fun clearLogs() {
+      _builder.clearLogs()
+    }
+    /**
+     * <code>.border0.v1.Logs logs = 18;</code>
+     * @return Whether the logs field is set.
+     */
+    public fun hasLogs(): kotlin.Boolean {
+      return _builder.hasLogs()
+    }
     public val requestTypeCase: border0.v1.Connector.ControlStreamRequest.RequestTypeCase
       @JvmName("getRequestTypeCase")
       get() = _builder.getRequestTypeCase()
@@ -465,4 +489,7 @@ public val border0.v1.Connector.ControlStreamRequestOrBuilder.sessionOrNull: bor
 
 public val border0.v1.Connector.ControlStreamRequestOrBuilder.statsOrNull: border0.common.v1.Messages.StatsMessage?
   get() = if (hasStats()) getStats() else null
+
+public val border0.v1.Connector.ControlStreamRequestOrBuilder.logsOrNull: border0.v1.Connector.Logs?
+  get() = if (hasLogs()) getLogs() else null
 
