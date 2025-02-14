@@ -33,6 +33,7 @@ message ControlStreamRequest {
     AuthorizePeerRequest authorize_peer = 15;
     SessionRequest session = 16;
     border0.common.v1.StatsMessage stats = 17;
+    Logs logs = 18;
   }
 }
 
@@ -106,6 +107,10 @@ message Log {
   google.protobuf.Timestamp timestamp = 4;
   string severity = 5;
   string message = 6;
+}
+
+message Logs {
+  repeated Log logs = 1;
 }
 
 message ConnectorMetadata {

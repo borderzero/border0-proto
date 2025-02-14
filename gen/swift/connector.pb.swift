@@ -200,6 +200,14 @@ struct Border0_V1_ControlStreamRequest: Sendable {
     set {requestType = .stats(newValue)}
   }
 
+  var logs: Border0_V1_Logs {
+    get {
+      if case .logs(let v)? = requestType {return v}
+      return Border0_V1_Logs()
+    }
+    set {requestType = .logs(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_RequestType: Equatable, Sendable {
@@ -219,6 +227,7 @@ struct Border0_V1_ControlStreamRequest: Sendable {
     case authorizePeer(Border0_V1_AuthorizePeerRequest)
     case session(Border0_V1_SessionRequest)
     case stats(Border0_Common_V1_StatsMessage)
+    case logs(Border0_V1_Logs)
 
   }
 
@@ -549,6 +558,18 @@ struct Border0_V1_Log: Sendable {
   init() {}
 
   fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+struct Border0_V1_Logs: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var logs: [Border0_V1_Log] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct Border0_V1_ConnectorMetadata: Sendable {
@@ -1204,6 +1225,7 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
     15: .standard(proto: "authorize_peer"),
     16: .same(proto: "session"),
     17: .same(proto: "stats"),
+    18: .same(proto: "logs"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1420,6 +1442,19 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
           self.requestType = .stats(v)
         }
       }()
+      case 18: try {
+        var v: Border0_V1_Logs?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .logs(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .logs(v)
+        }
+      }()
       default: break
       }
     }
@@ -1494,6 +1529,10 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
     case .stats?: try {
       guard case .stats(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
+    case .logs?: try {
+      guard case .logs(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
     }()
     case nil: break
     }
@@ -2198,6 +2237,38 @@ extension Border0_V1_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if lhs._timestamp != rhs._timestamp {return false}
     if lhs.severity != rhs.severity {return false}
     if lhs.message != rhs.message {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_V1_Logs: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Logs"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "logs"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.logs) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.logs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.logs, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_Logs, rhs: Border0_V1_Logs) -> Bool {
+    if lhs.logs != rhs.logs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
