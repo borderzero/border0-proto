@@ -189,6 +189,30 @@ public object ServerToDeviceMessageKt {
     public fun hasService(): kotlin.Boolean {
       return _builder.hasService()
     }
+
+    /**
+     * <code>.border0.device.v1.OrgDetails org_details = 8;</code>
+     */
+    public var orgDetails: border0.device.v1.Device.OrgDetails
+      @JvmName("getOrgDetails")
+      get() = _builder.getOrgDetails()
+      @JvmName("setOrgDetails")
+      set(value) {
+        _builder.setOrgDetails(value)
+      }
+    /**
+     * <code>.border0.device.v1.OrgDetails org_details = 8;</code>
+     */
+    public fun clearOrgDetails() {
+      _builder.clearOrgDetails()
+    }
+    /**
+     * <code>.border0.device.v1.OrgDetails org_details = 8;</code>
+     * @return Whether the orgDetails field is set.
+     */
+    public fun hasOrgDetails(): kotlin.Boolean {
+      return _builder.hasOrgDetails()
+    }
     public val messageCase: border0.device.v1.Device.ServerToDeviceMessage.MessageCase
       @JvmName("getMessageCase")
       get() = _builder.getMessageCase()
@@ -222,4 +246,7 @@ public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.disconnectOrN
 
 public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.serviceOrNull: border0.device.v1.Device.Service?
   get() = if (hasService()) getService() else null
+
+public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.orgDetailsOrNull: border0.device.v1.Device.OrgDetails?
+  get() = if (hasOrgDetails()) getOrgDetails() else null
 

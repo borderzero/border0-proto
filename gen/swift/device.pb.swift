@@ -23,6 +23,42 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+/// InfoType represents type of information
+/// requested by the client device.
+enum Border0_Device_V1_InfoType: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case unknown // = 0
+  case orgDetails // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .orgDetails
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .orgDetails: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [Border0_Device_V1_InfoType] = [
+    .unknown,
+    .orgDetails,
+  ]
+
+}
+
 /// messages from devices to the server (api)
 struct Border0_Device_V1_DeviceToServerMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -63,6 +99,14 @@ struct Border0_Device_V1_DeviceToServerMessage: Sendable {
     set {message = .stats(newValue)}
   }
 
+  var infoRequest: Border0_Device_V1_InfoRequest {
+    get {
+      if case .infoRequest(let v)? = message {return v}
+      return Border0_Device_V1_InfoRequest()
+    }
+    set {message = .infoRequest(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Message: Equatable, Sendable {
@@ -70,6 +114,7 @@ struct Border0_Device_V1_DeviceToServerMessage: Sendable {
     case discoveryDetails(Border0_Common_V1_DiscoveryDetailsMessage)
     case heartbeat(Border0_Common_V1_HeartbeatMessage)
     case stats(Border0_Common_V1_StatsMessage)
+    case infoRequest(Border0_Device_V1_InfoRequest)
 
   }
 
@@ -140,6 +185,14 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     set {message = .service(newValue)}
   }
 
+  var orgDetails: Border0_Device_V1_OrgDetails {
+    get {
+      if case .orgDetails(let v)? = message {return v}
+      return Border0_Device_V1_OrgDetails()
+    }
+    set {message = .orgDetails(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Message: Equatable, Sendable {
@@ -150,6 +203,7 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     case peerOffline(Border0_Common_V1_PeerOfflineMessage)
     case disconnect(Border0_Common_V1_DisconnectMessage)
     case service(Border0_Device_V1_Service)
+    case orgDetails(Border0_Device_V1_OrgDetails)
 
   }
 
@@ -228,9 +282,53 @@ struct Border0_Device_V1_Service: Sendable {
   init() {}
 }
 
+/// InfoRequest is a generic request for information where
+/// the response from the GRPC server will be a message in
+/// accordance to the value of the info_type field.
+struct Border0_Device_V1_InfoRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var requestID: String = String()
+
+  var infoType: Border0_Device_V1_InfoType = .unknown
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// OrgDetails is returned upon the client device requesting
+/// this data via an InfoRequest with info_type ORG_DETAILS.
+struct Border0_Device_V1_OrgDetails: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var requestID: String = String()
+
+  var name: String = String()
+
+  var uuid: String = String()
+
+  var caCertPem: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "border0.device.v1"
+
+extension Border0_Device_V1_InfoType: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNKNOWN"),
+    1: .same(proto: "ORG_DETAILS"),
+  ]
+}
 
 extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DeviceToServerMessage"
@@ -239,6 +337,7 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
     2: .standard(proto: "discovery_details"),
     3: .same(proto: "heartbeat"),
     4: .same(proto: "stats"),
+    5: .standard(proto: "info_request"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -299,6 +398,19 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
           self.message = .stats(v)
         }
       }()
+      case 5: try {
+        var v: Border0_Device_V1_InfoRequest?
+        var hadOneofValue = false
+        if let current = self.message {
+          hadOneofValue = true
+          if case .infoRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.message = .infoRequest(v)
+        }
+      }()
       default: break
       }
     }
@@ -326,6 +438,10 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
       guard case .stats(let v)? = self.message else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
+    case .infoRequest?: try {
+      guard case .infoRequest(let v)? = self.message else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -348,6 +464,7 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
     5: .standard(proto: "peer_offline"),
     6: .same(proto: "disconnect"),
     7: .same(proto: "service"),
+    8: .standard(proto: "org_details"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -447,6 +564,19 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
           self.message = .service(v)
         }
       }()
+      case 8: try {
+        var v: Border0_Device_V1_OrgDetails?
+        var hadOneofValue = false
+        if let current = self.message {
+          hadOneofValue = true
+          if case .orgDetails(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.message = .orgDetails(v)
+        }
+      }()
       default: break
       }
     }
@@ -485,6 +615,10 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
     case .service?: try {
       guard case .service(let v)? = self.message else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
+    case .orgDetails?: try {
+      guard case .orgDetails(let v)? = self.message else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case nil: break
     }
@@ -697,6 +831,94 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.publicIps != rhs.publicIps {return false}
     if lhs.standalone != rhs.standalone {return false}
     if lhs.delete != rhs.delete {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Device_V1_InfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".InfoRequest"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "request_id"),
+    2: .standard(proto: "info_type"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.infoType) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if self.infoType != .unknown {
+      try visitor.visitSingularEnumField(value: self.infoType, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Device_V1_InfoRequest, rhs: Border0_Device_V1_InfoRequest) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.infoType != rhs.infoType {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Device_V1_OrgDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".OrgDetails"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "request_id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "uuid"),
+    4: .standard(proto: "ca_cert_pem"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.uuid) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.caCertPem) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    if !self.uuid.isEmpty {
+      try visitor.visitSingularStringField(value: self.uuid, fieldNumber: 3)
+    }
+    if !self.caCertPem.isEmpty {
+      try visitor.visitSingularStringField(value: self.caCertPem, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Device_V1_OrgDetails, rhs: Border0_Device_V1_OrgDetails) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.name != rhs.name {return false}
+    if lhs.uuid != rhs.uuid {return false}
+    if lhs.caCertPem != rhs.caCertPem {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
