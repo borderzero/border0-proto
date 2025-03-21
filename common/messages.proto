@@ -43,7 +43,6 @@ message SocketStatsMessage {
   string socket_id = 6;
 }
 
-
 message SocketsStatsMessage {
     repeated SocketStatsMessage socket_stats = 1;
 }

@@ -117,6 +117,30 @@ public object DeviceToServerMessageKt {
     public fun hasStats(): kotlin.Boolean {
       return _builder.hasStats()
     }
+
+    /**
+     * <code>.border0.device.v1.InfoRequest info_request = 5;</code>
+     */
+    public var infoRequest: border0.device.v1.Device.InfoRequest
+      @JvmName("getInfoRequest")
+      get() = _builder.getInfoRequest()
+      @JvmName("setInfoRequest")
+      set(value) {
+        _builder.setInfoRequest(value)
+      }
+    /**
+     * <code>.border0.device.v1.InfoRequest info_request = 5;</code>
+     */
+    public fun clearInfoRequest() {
+      _builder.clearInfoRequest()
+    }
+    /**
+     * <code>.border0.device.v1.InfoRequest info_request = 5;</code>
+     * @return Whether the infoRequest field is set.
+     */
+    public fun hasInfoRequest(): kotlin.Boolean {
+      return _builder.hasInfoRequest()
+    }
     public val messageCase: border0.device.v1.Device.DeviceToServerMessage.MessageCase
       @JvmName("getMessageCase")
       get() = _builder.getMessageCase()
@@ -141,4 +165,7 @@ public val border0.device.v1.Device.DeviceToServerMessageOrBuilder.heartbeatOrNu
 
 public val border0.device.v1.Device.DeviceToServerMessageOrBuilder.statsOrNull: border0.common.v1.Messages.StatsMessage?
   get() = if (hasStats()) getStats() else null
+
+public val border0.device.v1.Device.DeviceToServerMessageOrBuilder.infoRequestOrNull: border0.device.v1.Device.InfoRequest?
+  get() = if (hasInfoRequest()) getInfoRequest() else null
 

@@ -21,6 +21,7 @@ message DeviceToServerMessage {
     border0.common.v1.DiscoveryDetailsMessage discovery_details = 2;
     border0.common.v1.HeartbeatMessage heartbeat = 3;
     border0.common.v1.StatsMessage stats = 4;
+    InfoRequest info_request = 5;
   }
 }
 
@@ -34,6 +35,7 @@ message ServerToDeviceMessage {
     border0.common.v1.PeerOfflineMessage peer_offline = 5;
     border0.common.v1.DisconnectMessage disconnect = 6;
     Service service = 7;
+    OrgDetails org_details = 8;
   }
 }
 
@@ -65,4 +67,28 @@ message Service {
   repeated border0.common.v1.IPAddressWithMetadata public_ips = 14;  
   bool standalone = 15;
   bool delete = 16;
+}
+
+// InfoType represents type of information
+// requested by the client device.
+enum InfoType {
+  UNKNOWN = 0;
+  ORG_DETAILS = 1;
+}
+
+// InfoRequest is a generic request for information where
+// the response from the GRPC server will be a message in
+// accordance to the value of the info_type field.
+message InfoRequest {
+  string request_id = 1;
+  InfoType info_type = 2;
+}
+
+// OrgDetails is returned upon the client device requesting
+// this data via an InfoRequest with info_type ORG_DETAILS.
+message OrgDetails {
+  string request_id = 1;
+  string name = 2;
+  string uuid = 3;
+  string ca_cert_pem = 4;
 }
