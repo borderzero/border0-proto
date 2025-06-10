@@ -901,6 +901,8 @@ struct Border0_V1_AuthorizeResponse: Sendable {
 
   var entityUuid: String = String()
 
+  var groups: [Border0_Common_V1_Group] = []
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1035,7 +1037,7 @@ struct Border0_V1_SessionRequest: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-struct Border0_V1_SessionResponse: @unchecked Sendable {
+struct Border0_V1_SessionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1071,7 +1073,7 @@ struct Border0_V1_SessionEvent: Sendable {
   init() {}
 }
 
-struct Border0_V1_SshCertificateSignRequest: @unchecked Sendable {
+struct Border0_V1_SshCertificateSignRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1093,7 +1095,7 @@ struct Border0_V1_SshCertificateSignRequest: @unchecked Sendable {
   init() {}
 }
 
-struct Border0_V1_SshCertificateSignResponse: @unchecked Sendable {
+struct Border0_V1_SshCertificateSignResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1107,7 +1109,7 @@ struct Border0_V1_SshCertificateSignResponse: @unchecked Sendable {
   init() {}
 }
 
-struct Border0_V1_UploadRecording: @unchecked Sendable {
+struct Border0_V1_UploadRecording: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1129,7 +1131,7 @@ struct Border0_V1_UploadRecording: @unchecked Sendable {
   init() {}
 }
 
-struct Border0_V1_CertificateSignRequest: @unchecked Sendable {
+struct Border0_V1_CertificateSignRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1143,7 +1145,7 @@ struct Border0_V1_CertificateSignRequest: @unchecked Sendable {
   init() {}
 }
 
-struct Border0_V1_CertificateSignResponse: @unchecked Sendable {
+struct Border0_V1_CertificateSignResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2993,6 +2995,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     5: .same(proto: "permissions"),
     6: .same(proto: "email"),
     7: .standard(proto: "entity_uuid"),
+    8: .same(proto: "groups"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3007,6 +3010,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_Permissions>.self, value: &self.permissions) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.email) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.entityUuid) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.groups) }()
       default: break
       }
     }
@@ -3031,6 +3035,9 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.entityUuid.isEmpty {
       try visitor.visitSingularStringField(value: self.entityUuid, fieldNumber: 7)
     }
+    if !self.groups.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.groups, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3041,6 +3048,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.permissions != rhs.permissions {return false}
     if lhs.email != rhs.email {return false}
     if lhs.entityUuid != rhs.entityUuid {return false}
+    if lhs.groups != rhs.groups {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3143,15 +3151,11 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _metadata: Data = Data()
     var _entityUuid: String = String()
 
-    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
 
     private init() {}
 

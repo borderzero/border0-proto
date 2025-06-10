@@ -221,6 +221,7 @@ message AuthorizeResponse {
   map<string, Permissions> permissions = 5;
   string email = 6;
   string entity_uuid = 7;
+  repeated border0.common.v1.Group groups = 8;
 }
 
 message SessionUpdateRequest {
