@@ -210,7 +210,7 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_AuthChallengeMessage: @unchecked Sendable {
+struct Border0_Device_V1_AuthChallengeMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -226,7 +226,7 @@ struct Border0_Device_V1_AuthChallengeMessage: @unchecked Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_AuthChallengeSolutionMessage: @unchecked Sendable {
+struct Border0_Device_V1_AuthChallengeSolutionMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.

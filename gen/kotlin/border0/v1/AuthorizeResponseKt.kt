@@ -255,6 +255,78 @@ public object AuthorizeResponseKt {
     public fun clearEntityUuid() {
       _builder.clearEntityUuid()
     }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class GroupsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <code>repeated .border0.common.v1.Group groups = 8;</code>
+     */
+     public val groups: com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Group, GroupsProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getGroupsList()
+      )
+    /**
+     * <code>repeated .border0.common.v1.Group groups = 8;</code>
+     * @param value The groups to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addGroups")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Group, GroupsProxy>.add(value: border0.common.v1.Messages.Group) {
+      _builder.addGroups(value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Group groups = 8;</code>
+     * @param value The groups to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignGroups")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Group, GroupsProxy>.plusAssign(value: border0.common.v1.Messages.Group) {
+      add(value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Group groups = 8;</code>
+     * @param values The groups to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllGroups")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Group, GroupsProxy>.addAll(values: kotlin.collections.Iterable<border0.common.v1.Messages.Group>) {
+      _builder.addAllGroups(values)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Group groups = 8;</code>
+     * @param values The groups to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllGroups")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Group, GroupsProxy>.plusAssign(values: kotlin.collections.Iterable<border0.common.v1.Messages.Group>) {
+      addAll(values)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Group groups = 8;</code>
+     * @param index The index to set the value at.
+     * @param value The groups to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setGroups")
+    public operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Group, GroupsProxy>.set(index: kotlin.Int, value: border0.common.v1.Messages.Group) {
+      _builder.setGroups(index, value)
+    }
+    /**
+     * <code>repeated .border0.common.v1.Group groups = 8;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearGroups")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.Group, GroupsProxy>.clear() {
+      _builder.clearGroups()
+    }
+
   }
 }
 @kotlin.jvm.JvmSynthetic
