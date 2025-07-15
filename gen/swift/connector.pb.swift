@@ -1200,35 +1200,12 @@ struct Border0_V1_AllowedNetworksSubnets: Sendable {
 fileprivate let _protobuf_package = "border0.v1"
 
 extension Border0_V1_Action: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "CREATE"),
-    1: .same(proto: "UPDATE"),
-    2: .same(proto: "DELETE"),
-    3: .same(proto: "OTHER"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CREATE\0\u{1}UPDATE\0\u{1}DELETE\0\u{1}OTHER\0")
 }
 
 extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ControlStreamRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "config"),
-    2: .same(proto: "heartbeat"),
-    3: .standard(proto: "plugin_discovery_results"),
-    5: .standard(proto: "tunnel_certificate_sign_request"),
-    6: .same(proto: "log"),
-    7: .same(proto: "metadata"),
-    8: .same(proto: "authorize"),
-    9: .standard(proto: "session_update"),
-    10: .standard(proto: "ssh_certificate_sign_request"),
-    11: .standard(proto: "upload_recording"),
-    12: .standard(proto: "Certificate_sign_request"),
-    13: .standard(proto: "session_event"),
-    14: .standard(proto: "discovery_details"),
-    15: .standard(proto: "authorize_peer"),
-    16: .same(proto: "session"),
-    17: .same(proto: "stats"),
-    18: .same(proto: "logs"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}config\0\u{1}heartbeat\0\u{3}plugin_discovery_results\0\u{4}\u{2}tunnel_certificate_sign_request\0\u{1}log\0\u{1}metadata\0\u{1}authorize\0\u{3}session_update\0\u{3}ssh_certificate_sign_request\0\u{3}upload_recording\0\u{3}Certificate_sign_request\0\u{3}session_event\0\u{3}discovery_details\0\u{3}authorize_peer\0\u{1}session\0\u{1}stats\0\u{1}logs\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1550,24 +1527,7 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ControlStreamResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "init"),
-    2: .standard(proto: "connector_config"),
-    3: .standard(proto: "update_config"),
-    4: .same(proto: "heartbeat"),
-    5: .standard(proto: "tunnel_certificate_sign_response"),
-    6: .same(proto: "discover"),
-    7: .same(proto: "stop"),
-    8: .same(proto: "disconnect"),
-    9: .same(proto: "authorize"),
-    10: .standard(proto: "ssh_certificate_sign_response"),
-    11: .standard(proto: "Certificate_sign_response"),
-    12: .standard(proto: "network_state"),
-    13: .standard(proto: "peer_online"),
-    14: .standard(proto: "peer_offline"),
-    16: .same(proto: "session"),
-    17: .standard(proto: "allowed_networks"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}init\0\u{3}connector_config\0\u{3}update_config\0\u{1}heartbeat\0\u{3}tunnel_certificate_sign_response\0\u{1}discover\0\u{1}stop\0\u{1}disconnect\0\u{1}authorize\0\u{3}ssh_certificate_sign_response\0\u{3}Certificate_sign_response\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{2}\u{2}session\0\u{3}allowed_networks\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1872,12 +1832,7 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
 
 extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Organization"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "subdomain"),
-    4: .same(proto: "certificates"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}subdomain\0\u{1}certificates\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1926,11 +1881,7 @@ extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TunnelCertificateSignRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "socket_id"),
-    3: .standard(proto: "public_key"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}socket_id\0\u{3}public_key\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1970,11 +1921,7 @@ extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftP
 
 extension Border0_V1_TunnelCertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TunnelCertificateSignResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .same(proto: "certificate"),
-    3: .same(proto: "hostkey"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}certificate\0\u{1}hostkey\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2014,18 +1961,7 @@ extension Border0_V1_TunnelCertificateSignResponse: SwiftProtobuf.Message, Swift
 
 extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Init"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "connector_config"),
-    2: .same(proto: "sockets"),
-    3: .same(proto: "plugins"),
-    4: .standard(proto: "device_id"),
-    5: .standard(proto: "network_cidr_v4"),
-    6: .standard(proto: "network_cidr_v6"),
-    7: .standard(proto: "self_ipv4"),
-    8: .standard(proto: "self_ipv6"),
-    9: .standard(proto: "network_resources_cidr_v4"),
-    10: .standard(proto: "network_resources_cidr_v6"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}connector_config\0\u{1}sockets\0\u{1}plugins\0\u{3}device_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2104,11 +2040,7 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
 extension Border0_V1_UpdateConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".UpdateConfig"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "action"),
-    2: .standard(proto: "plugin_config"),
-    3: .standard(proto: "socket_config"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}action\0\u{3}plugin_config\0\u{3}socket_config\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2180,14 +2112,7 @@ extension Border0_V1_UpdateConfig: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Border0_V1_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Log"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "connector_id"),
-    2: .standard(proto: "socket_id"),
-    3: .standard(proto: "plugin_id"),
-    4: .same(proto: "timestamp"),
-    5: .same(proto: "severity"),
-    6: .same(proto: "message"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}connector_id\0\u{3}socket_id\0\u{3}plugin_id\0\u{1}timestamp\0\u{1}severity\0\u{1}message\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2246,9 +2171,7 @@ extension Border0_V1_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 
 extension Border0_V1_Logs: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Logs"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "logs"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}logs\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2278,9 +2201,7 @@ extension Border0_V1_Logs: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
 extension Border0_V1_ConnectorMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ConnectorMetadata"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "data"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}data\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2314,11 +2235,7 @@ extension Border0_V1_ConnectorMetadata: SwiftProtobuf.Message, SwiftProtobuf._Me
 
 extension Border0_V1_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Config"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "connector"),
-    2: .same(proto: "sockets"),
-    3: .same(proto: "plugins"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}connector\0\u{1}sockets\0\u{1}plugins\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2358,14 +2275,7 @@ extension Border0_V1_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
 
 extension Border0_V1_PluginDiscoveryResults: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PluginDiscoveryResults"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "plugin_id"),
-    2: .standard(proto: "request_id"),
-    3: .same(proto: "metadata"),
-    4: .same(proto: "resources"),
-    5: .same(proto: "errors"),
-    6: .same(proto: "warnings"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}plugin_id\0\u{3}request_id\0\u{1}metadata\0\u{1}resources\0\u{1}errors\0\u{1}warnings\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2424,11 +2334,7 @@ extension Border0_V1_PluginDiscoveryResults: SwiftProtobuf.Message, SwiftProtobu
 
 extension Border0_V1_PluginDiscoveryResultsMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PluginDiscoveryResultsMetadata"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "discovery_id"),
-    2: .standard(proto: "started_at"),
-    3: .standard(proto: "ended_at"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}discovery_id\0\u{3}started_at\0\u{3}ended_at\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2472,10 +2378,7 @@ extension Border0_V1_PluginDiscoveryResultsMetadata: SwiftProtobuf.Message, Swif
 
 extension Border0_V1_Tag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Tag"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "key"),
-    2: .same(proto: "value"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}value\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2510,12 +2413,7 @@ extension Border0_V1_Tag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 
 extension Border0_V1_SocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SocketConfig"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "type"),
-    4: .same(proto: "config"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}type\0\u{1}config\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2564,12 +2462,7 @@ extension Border0_V1_SocketConfig: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ConnectorConfig"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .standard(proto: "heartbeat_interval"),
-    3: .same(proto: "organization"),
-    4: .standard(proto: "private_network_enabled"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{3}heartbeat_interval\0\u{1}organization\0\u{3}private_network_enabled\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2618,12 +2511,7 @@ extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Border0_V1_PluginConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PluginConfig"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "type"),
-    4: .same(proto: "config"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}type\0\u{1}config\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2672,10 +2560,7 @@ extension Border0_V1_PluginConfig: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Border0_V1_Discover: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Discover"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .standard(proto: "request_id"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}request_id\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2710,9 +2595,7 @@ extension Border0_V1_Discover: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Border0_V1_Stop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Stop"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "reason"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reason\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2742,9 +2625,7 @@ extension Border0_V1_Stop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
 
 extension Border0_V1_Disconnect: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Disconnect"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "reason"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reason\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2774,14 +2655,7 @@ extension Border0_V1_Disconnect: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
 extension Border0_V1_AuthorizeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthorizeRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .same(proto: "protocol"),
-    3: .standard(proto: "user_email"),
-    4: .standard(proto: "ip_address"),
-    5: .standard(proto: "session_key"),
-    6: .standard(proto: "socket_id"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}protocol\0\u{3}user_email\0\u{3}ip_address\0\u{3}session_key\0\u{3}socket_id\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2836,13 +2710,7 @@ extension Border0_V1_AuthorizeRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
 
 extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthorizePeerRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .same(proto: "protocol"),
-    3: .standard(proto: "public_key"),
-    4: .standard(proto: "ip_address"),
-    5: .standard(proto: "socket_id"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}protocol\0\u{3}public_key\0\u{3}ip_address\0\u{3}socket_id\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2892,9 +2760,7 @@ extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Border0_V1_actionList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".actionList"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "values"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}values\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2924,9 +2790,7 @@ extension Border0_V1_actionList: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
 extension Border0_V1_Permissions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Permissions"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "permissions"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}permissions\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2956,9 +2820,7 @@ extension Border0_V1_Permissions: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
 extension Border0_V1_infoList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".infoList"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "values"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}values\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2988,15 +2850,7 @@ extension Border0_V1_infoList: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthorizeResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "allowed_actions"),
-    3: .same(proto: "info"),
-    5: .same(proto: "permissions"),
-    6: .same(proto: "email"),
-    7: .standard(proto: "entity_uuid"),
-    8: .same(proto: "groups"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}allowed_actions\0\u{1}info\0\u{2}\u{2}permissions\0\u{1}email\0\u{3}entity_uuid\0\u{1}groups\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3056,13 +2910,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
 
 extension Border0_V1_SessionUpdateRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionUpdateRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "session_key"),
-    2: .standard(proto: "socket_id"),
-    3: .standard(proto: "user_data"),
-    4: .same(proto: "result"),
-    5: .standard(proto: "auth_info_failed"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}socket_id\0\u{3}user_data\0\u{1}result\0\u{3}auth_info_failed\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3112,25 +2960,7 @@ extension Border0_V1_SessionUpdateRequest: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "start_time"),
-    3: .standard(proto: "end_time"),
-    4: .standard(proto: "last_seen"),
-    5: .same(proto: "email"),
-    6: .standard(proto: "log_type"),
-    7: .standard(proto: "socket_id"),
-    8: .standard(proto: "server_name"),
-    9: .standard(proto: "server_port"),
-    10: .standard(proto: "client_ip"),
-    11: .standard(proto: "client_port"),
-    12: .standard(proto: "session_data"),
-    13: .standard(proto: "session_key"),
-    14: .same(proto: "result"),
-    15: .standard(proto: "auth_info"),
-    16: .same(proto: "metadata"),
-    17: .standard(proto: "entity_uuid"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}start_time\0\u{3}end_time\0\u{3}last_seen\0\u{1}email\0\u{3}log_type\0\u{3}socket_id\0\u{3}server_name\0\u{3}server_port\0\u{3}client_ip\0\u{3}client_port\0\u{3}session_data\0\u{3}session_key\0\u{1}result\0\u{3}auth_info\0\u{1}metadata\0\u{3}entity_uuid\0")
 
   fileprivate class _StorageClass {
     var _requestID: String = String()
@@ -3312,11 +3142,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
 
 extension Border0_V1_SessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "session_id"),
-    3: .standard(proto: "ssh_ticket"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}session_id\0\u{3}ssh_ticket\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3356,13 +3182,7 @@ extension Border0_V1_SessionResponse: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Border0_V1_SessionEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionEvent"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "session_key"),
-    2: .standard(proto: "socket_id"),
-    3: .same(proto: "type"),
-    4: .same(proto: "status"),
-    5: .same(proto: "metadata"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}socket_id\0\u{1}type\0\u{1}status\0\u{1}metadata\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3412,14 +3232,7 @@ extension Border0_V1_SessionEvent: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Border0_V1_SshCertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SshCertificateSignRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "socket_id"),
-    3: .standard(proto: "session_key"),
-    4: .standard(proto: "user_email"),
-    5: .standard(proto: "public_key"),
-    6: .same(proto: "ticket"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}socket_id\0\u{3}session_key\0\u{3}user_email\0\u{3}public_key\0\u{1}ticket\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3474,10 +3287,7 @@ extension Border0_V1_SshCertificateSignRequest: SwiftProtobuf.Message, SwiftProt
 
 extension Border0_V1_SshCertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SshCertificateSignResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .same(proto: "certificate"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}certificate\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3512,12 +3322,7 @@ extension Border0_V1_SshCertificateSignResponse: SwiftProtobuf.Message, SwiftPro
 
 extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".UploadRecording"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "session_key"),
-    2: .standard(proto: "recording_id"),
-    3: .same(proto: "recording"),
-    4: .standard(proto: "recording_type"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}recording_id\0\u{1}recording\0\u{3}recording_type\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3562,10 +3367,7 @@ extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Border0_V1_CertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".CertificateSignRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "certificate_signing_request"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}certificate_signing_request\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3600,10 +3402,7 @@ extension Border0_V1_CertificateSignRequest: SwiftProtobuf.Message, SwiftProtobu
 
 extension Border0_V1_CertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".CertificateSignResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .same(proto: "certificate"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}certificate\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3638,9 +3437,7 @@ extension Border0_V1_CertificateSignResponse: SwiftProtobuf.Message, SwiftProtob
 
 extension Border0_V1_AllowedNetworks: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworks"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "devices"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}devices\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3670,9 +3467,7 @@ extension Border0_V1_AllowedNetworks: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworksSocketConfig"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "sockets"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sockets\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3702,9 +3497,7 @@ extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftPr
 
 extension Border0_V1_AllowedNetworksSubnets: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworksSubnets"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "subnets"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}subnets\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

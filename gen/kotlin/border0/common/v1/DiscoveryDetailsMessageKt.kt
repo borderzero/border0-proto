@@ -52,9 +52,9 @@ public object DiscoveryDetailsMessageKt {
      * the endpoint (IPv4 + port) to send packets to for the peer
      * </pre>
      *
-     * <code>string endpoint_public_udp4 = 2;</code>
+     * <code>string endpoint_public_udp4 = 2 [deprecated = true];</code>
      */
-    public var endpointPublicUdp4: kotlin.String
+    @kotlin.Deprecated(message = "Field endpointPublicUdp4 is deprecated") public var endpointPublicUdp4: kotlin.String
       @JvmName("getEndpointPublicUdp4")
       get() = _builder.getEndpointPublicUdp4()
       @JvmName("setEndpointPublicUdp4")
@@ -66,7 +66,9 @@ public object DiscoveryDetailsMessageKt {
      * the endpoint (IPv4 + port) to send packets to for the peer
      * </pre>
      *
-     * <code>string endpoint_public_udp4 = 2;</code>
+     * <code>string endpoint_public_udp4 = 2 [deprecated = true];</code>
+     * @deprecated border0.common.v1.DiscoveryDetailsMessage.endpoint_public_udp4 is deprecated.
+     *     See messages.proto;l=14
      */
     public fun clearEndpointPublicUdp4() {
       _builder.clearEndpointPublicUdp4()
@@ -77,9 +79,9 @@ public object DiscoveryDetailsMessageKt {
      * the endpoint (IPv6 + port) to send packets to for the peer
      * </pre>
      *
-     * <code>string endpoint_public_udp6 = 3;</code>
+     * <code>string endpoint_public_udp6 = 3 [deprecated = true];</code>
      */
-    public var endpointPublicUdp6: kotlin.String
+    @kotlin.Deprecated(message = "Field endpointPublicUdp6 is deprecated") public var endpointPublicUdp6: kotlin.String
       @JvmName("getEndpointPublicUdp6")
       get() = _builder.getEndpointPublicUdp6()
       @JvmName("setEndpointPublicUdp6")
@@ -91,7 +93,9 @@ public object DiscoveryDetailsMessageKt {
      * the endpoint (IPv6 + port) to send packets to for the peer
      * </pre>
      *
-     * <code>string endpoint_public_udp6 = 3;</code>
+     * <code>string endpoint_public_udp6 = 3 [deprecated = true];</code>
+     * @deprecated border0.common.v1.DiscoveryDetailsMessage.endpoint_public_udp6 is deprecated.
+     *     See messages.proto;l=15
      */
     public fun clearEndpointPublicUdp6() {
       _builder.clearEndpointPublicUdp6()
@@ -121,6 +125,106 @@ public object DiscoveryDetailsMessageKt {
     public fun clearPublicKey() {
       _builder.clearPublicKey()
     }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class AddressesProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.IPAddrPort addresses = 5;</code>
+     */
+     public val addresses: com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddrPort, AddressesProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getAddressesList()
+      )
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.IPAddrPort addresses = 5;</code>
+     * @param value The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAddresses")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddrPort, AddressesProxy>.add(value: border0.common.v1.Messages.IPAddrPort) {
+      _builder.addAddresses(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.IPAddrPort addresses = 5;</code>
+     * @param value The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAddresses")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddrPort, AddressesProxy>.plusAssign(value: border0.common.v1.Messages.IPAddrPort) {
+      add(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.IPAddrPort addresses = 5;</code>
+     * @param values The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllAddresses")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddrPort, AddressesProxy>.addAll(values: kotlin.collections.Iterable<border0.common.v1.Messages.IPAddrPort>) {
+      _builder.addAllAddresses(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.IPAddrPort addresses = 5;</code>
+     * @param values The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllAddresses")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddrPort, AddressesProxy>.plusAssign(values: kotlin.collections.Iterable<border0.common.v1.Messages.IPAddrPort>) {
+      addAll(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.IPAddrPort addresses = 5;</code>
+     * @param index The index to set the value at.
+     * @param value The addresses to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setAddresses")
+    public operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddrPort, AddressesProxy>.set(index: kotlin.Int, value: border0.common.v1.Messages.IPAddrPort) {
+      _builder.setAddresses(index, value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.IPAddrPort addresses = 5;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearAddresses")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.IPAddrPort, AddressesProxy>.clear() {
+      _builder.clearAddresses()
+    }
+
   }
 }
 @kotlin.jvm.JvmSynthetic
