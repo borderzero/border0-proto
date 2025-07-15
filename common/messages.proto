@@ -11,10 +11,11 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 message DiscoveryDetailsMessage {
-  bool discoverable = 1;           // whether the peer should be returned along with the networks it's in
-  string endpoint_public_udp4 = 2; // the endpoint (IPv4 + port) to send packets to for the peer
-  string endpoint_public_udp6 = 3; // the endpoint (IPv6 + port) to send packets to for the peer
-  string public_key = 4;           // the public key of the peer, only used in connector
+  bool discoverable = 1;                                // whether the peer should be returned along with the networks it's in
+  string endpoint_public_udp4 = 2 [deprecated = true];  // the endpoint (IPv4 + port) to send packets to for the peer
+  string endpoint_public_udp6 = 3 [deprecated = true];  // the endpoint (IPv6 + port) to send packets to for the peer
+  string public_key = 4;                                // the public key of the peer, only used in connector
+  repeated WireGuardEndpointAddr wg_endpoint_addrs = 5; // all ip address and port combinations that the peer can tx/rx traffic
 }
 
 message HeartbeatMessage {}
@@ -75,11 +76,12 @@ message WireGuardPeer {
   string ipv6 = 3;                                     // the peer's (private) IPv6 address in the WireGuard network
   repeated string allowed_ips = 4 [deprecated = true]; // list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
   uint32 persistent_keepalive_interval_seconds = 5;    // the interval for sending keepalive packets (0 means disabled)
-  string public_udp4_endpoint = 6;                     // endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
-  string public_udp6_endpoint = 7;                     // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
+  string public_udp4_endpoint = 6 [deprecated = true]; // endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
+  string public_udp6_endpoint = 7 [deprecated = true]; // endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
   PeerType type = 8;                                   // client or connector
   repeated Service services = 9;                       // applicable only when PeerType == PEER_TYPE_CONNECTOR
-  string name = 10;                                   // device (client or connector) name
+  string name = 10;                                    // device (client or connector) name
+  repeated WireGuardEndpointAddr addresses = 11;       // all ip address and port combinations that the peer can tx/rx traffic
 }
 
 message Service {
@@ -101,6 +103,14 @@ message IPAddressWithMetadata {
   string ip_address = 1;
   IPAddressType type = 2;
   google.protobuf.Struct metadata = 3;
+}
+
+message WireGuardEndpointAddr {
+  bool from_stun = 1;    // true if address was discovered via STUN
+  string iface_name = 2; // the name of the local interface that has the address (e.g., "eth0")
+  string iface_cidr = 3; // the CIDR block this IP belongs to (e.g., "192.168.0.0/24")
+  string ip_address = 4; // the actual IP address
+  uint32 port = 5;       // the UDP port number used for WireGuard
 }
 
 enum IPAddressType {

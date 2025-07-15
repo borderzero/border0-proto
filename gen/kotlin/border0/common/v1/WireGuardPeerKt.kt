@@ -110,7 +110,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
+     *     See messages.proto;l=76
      * @return A list containing the allowedIps.
      */
     @kotlin.Deprecated(message = "Field allowedIps is deprecated") public val allowedIps: com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>
@@ -125,7 +125,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
+     *     See messages.proto;l=76
      * @param value The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -140,7 +140,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
+     *     See messages.proto;l=76
      * @param value The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -156,7 +156,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
+     *     See messages.proto;l=76
      * @param values The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -171,7 +171,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
+     *     See messages.proto;l=76
      * @param values The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -187,7 +187,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
+     *     See messages.proto;l=76
      * @param index The index to set the value at.
      * @param value The allowedIps to set.
      */
@@ -202,7 +202,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
+     *     See messages.proto;l=76
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("clearAllowedIps")
@@ -239,9 +239,9 @@ public object WireGuardPeerKt {
      * endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
      * </pre>
      *
-     * <code>string public_udp4_endpoint = 6;</code>
+     * <code>string public_udp4_endpoint = 6 [deprecated = true];</code>
      */
-    public var publicUdp4Endpoint: kotlin.String
+    @kotlin.Deprecated(message = "Field publicUdp4Endpoint is deprecated") public var publicUdp4Endpoint: kotlin.String
       @JvmName("getPublicUdp4Endpoint")
       get() = _builder.getPublicUdp4Endpoint()
       @JvmName("setPublicUdp4Endpoint")
@@ -253,7 +253,9 @@ public object WireGuardPeerKt {
      * endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
      * </pre>
      *
-     * <code>string public_udp4_endpoint = 6;</code>
+     * <code>string public_udp4_endpoint = 6 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.public_udp4_endpoint is deprecated.
+     *     See messages.proto;l=78
      */
     public fun clearPublicUdp4Endpoint() {
       _builder.clearPublicUdp4Endpoint()
@@ -264,9 +266,9 @@ public object WireGuardPeerKt {
      * endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
      * </pre>
      *
-     * <code>string public_udp6_endpoint = 7;</code>
+     * <code>string public_udp6_endpoint = 7 [deprecated = true];</code>
      */
-    public var publicUdp6Endpoint: kotlin.String
+    @kotlin.Deprecated(message = "Field publicUdp6Endpoint is deprecated") public var publicUdp6Endpoint: kotlin.String
       @JvmName("getPublicUdp6Endpoint")
       get() = _builder.getPublicUdp6Endpoint()
       @JvmName("setPublicUdp6Endpoint")
@@ -278,7 +280,9 @@ public object WireGuardPeerKt {
      * endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
      * </pre>
      *
-     * <code>string public_udp6_endpoint = 7;</code>
+     * <code>string public_udp6_endpoint = 7 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.public_udp6_endpoint is deprecated.
+     *     See messages.proto;l=79
      */
     public fun clearPublicUdp6Endpoint() {
       _builder.clearPublicUdp6Endpoint()
@@ -433,6 +437,106 @@ public object WireGuardPeerKt {
     public fun clearName() {
       _builder.clearName()
     }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class AddressesProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr addresses = 11;</code>
+     */
+     public val addresses: com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, AddressesProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getAddressesList()
+      )
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr addresses = 11;</code>
+     * @param value The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAddresses")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, AddressesProxy>.add(value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      _builder.addAddresses(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr addresses = 11;</code>
+     * @param value The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAddresses")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, AddressesProxy>.plusAssign(value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      add(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr addresses = 11;</code>
+     * @param values The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllAddresses")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, AddressesProxy>.addAll(values: kotlin.collections.Iterable<border0.common.v1.Messages.WireGuardEndpointAddr>) {
+      _builder.addAllAddresses(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr addresses = 11;</code>
+     * @param values The addresses to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllAddresses")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, AddressesProxy>.plusAssign(values: kotlin.collections.Iterable<border0.common.v1.Messages.WireGuardEndpointAddr>) {
+      addAll(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr addresses = 11;</code>
+     * @param index The index to set the value at.
+     * @param value The addresses to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setAddresses")
+    public operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, AddressesProxy>.set(index: kotlin.Int, value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      _builder.setAddresses(index, value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr addresses = 11;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearAddresses")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, AddressesProxy>.clear() {
+      _builder.clearAddresses()
+    }
+
   }
 }
 @kotlin.jvm.JvmSynthetic
