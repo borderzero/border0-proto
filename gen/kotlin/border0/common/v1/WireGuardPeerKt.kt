@@ -98,118 +98,6 @@ public object WireGuardPeerKt {
     }
 
     /**
-     * An uninstantiable, behaviorless type to represent the field in
-     * generics.
-     */
-    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
-    public class AllowedIpsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
-    /**
-     * <pre>
-     * list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-     * </pre>
-     *
-     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
-     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
-     * @return A list containing the allowedIps.
-     */
-    @kotlin.Deprecated(message = "Field allowedIps is deprecated") public val allowedIps: com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>
-      @kotlin.jvm.JvmSynthetic
-      get() = com.google.protobuf.kotlin.DslList(
-        _builder.getAllowedIpsList()
-      )
-    /**
-     * <pre>
-     * list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-     * </pre>
-     *
-     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
-     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
-     * @param value The allowedIps to add.
-     */
-    @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addAllowedIps")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.add(value: kotlin.String) {
-      _builder.addAllowedIps(value)
-    }
-    /**
-     * <pre>
-     * list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-     * </pre>
-     *
-     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
-     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
-     * @param value The allowedIps to add.
-     */
-    @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignAllowedIps")
-    @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.plusAssign(value: kotlin.String) {
-      add(value)
-    }
-    /**
-     * <pre>
-     * list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-     * </pre>
-     *
-     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
-     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
-     * @param values The allowedIps to add.
-     */
-    @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addAllAllowedIps")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.addAll(values: kotlin.collections.Iterable<kotlin.String>) {
-      _builder.addAllAllowedIps(values)
-    }
-    /**
-     * <pre>
-     * list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-     * </pre>
-     *
-     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
-     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
-     * @param values The allowedIps to add.
-     */
-    @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignAllAllowedIps")
-    @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.String>) {
-      addAll(values)
-    }
-    /**
-     * <pre>
-     * list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-     * </pre>
-     *
-     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
-     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
-     * @param index The index to set the value at.
-     * @param value The allowedIps to set.
-     */
-    @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("setAllowedIps")
-    public operator fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.set(index: kotlin.Int, value: kotlin.String) {
-      _builder.setAllowedIps(index, value)
-    }/**
-     * <pre>
-     * list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-     * </pre>
-     *
-     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
-     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=75
-     */
-    @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("clearAllowedIps")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.clear() {
-      _builder.clearAllowedIps()
-    }
-    /**
      * <pre>
      * the interval for sending keepalive packets (0 means disabled)
      * </pre>
@@ -232,56 +120,6 @@ public object WireGuardPeerKt {
      */
     public fun clearPersistentKeepaliveIntervalSeconds() {
       _builder.clearPersistentKeepaliveIntervalSeconds()
-    }
-
-    /**
-     * <pre>
-     * endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
-     * </pre>
-     *
-     * <code>string public_udp4_endpoint = 6;</code>
-     */
-    public var publicUdp4Endpoint: kotlin.String
-      @JvmName("getPublicUdp4Endpoint")
-      get() = _builder.getPublicUdp4Endpoint()
-      @JvmName("setPublicUdp4Endpoint")
-      set(value) {
-        _builder.setPublicUdp4Endpoint(value)
-      }
-    /**
-     * <pre>
-     * endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
-     * </pre>
-     *
-     * <code>string public_udp4_endpoint = 6;</code>
-     */
-    public fun clearPublicUdp4Endpoint() {
-      _builder.clearPublicUdp4Endpoint()
-    }
-
-    /**
-     * <pre>
-     * endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
-     * </pre>
-     *
-     * <code>string public_udp6_endpoint = 7;</code>
-     */
-    public var publicUdp6Endpoint: kotlin.String
-      @JvmName("getPublicUdp6Endpoint")
-      get() = _builder.getPublicUdp6Endpoint()
-      @JvmName("setPublicUdp6Endpoint")
-      set(value) {
-        _builder.setPublicUdp6Endpoint(value)
-      }
-    /**
-     * <pre>
-     * endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
-     * </pre>
-     *
-     * <code>string public_udp6_endpoint = 7;</code>
-     */
-    public fun clearPublicUdp6Endpoint() {
-      _builder.clearPublicUdp6Endpoint()
     }
 
     /**
@@ -432,6 +270,297 @@ public object WireGuardPeerKt {
      */
     public fun clearName() {
       _builder.clearName()
+    }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class WgEpAddrsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 11;</code>
+     */
+     public val wgEpAddrs: com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getWgEpAddrsList()
+      )
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 11;</code>
+     * @param value The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addWgEpAddrs")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.add(value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      _builder.addWgEpAddrs(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 11;</code>
+     * @param value The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignWgEpAddrs")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.plusAssign(value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      add(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 11;</code>
+     * @param values The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllWgEpAddrs")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.addAll(values: kotlin.collections.Iterable<border0.common.v1.Messages.WireGuardEndpointAddr>) {
+      _builder.addAllWgEpAddrs(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 11;</code>
+     * @param values The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllWgEpAddrs")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.plusAssign(values: kotlin.collections.Iterable<border0.common.v1.Messages.WireGuardEndpointAddr>) {
+      addAll(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 11;</code>
+     * @param index The index to set the value at.
+     * @param value The wgEpAddrs to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setWgEpAddrs")
+    public operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.set(index: kotlin.Int, value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      _builder.setWgEpAddrs(index, value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 11;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearWgEpAddrs")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.clear() {
+      _builder.clearWgEpAddrs()
+    }
+
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class AllowedIpsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <pre>
+     * DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+     * message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+     * The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+     * peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+     * </pre>
+     *
+     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
+     *     See messages.proto;l=87
+     * @return A list containing the allowedIps.
+     */
+    @kotlin.Deprecated(message = "Field allowedIps is deprecated") public val allowedIps: com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getAllowedIpsList()
+      )
+    /**
+     * <pre>
+     * DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+     * message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+     * The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+     * peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+     * </pre>
+     *
+     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
+     *     See messages.proto;l=87
+     * @param value The allowedIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllowedIps")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.add(value: kotlin.String) {
+      _builder.addAllowedIps(value)
+    }
+    /**
+     * <pre>
+     * DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+     * message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+     * The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+     * peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+     * </pre>
+     *
+     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
+     *     See messages.proto;l=87
+     * @param value The allowedIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllowedIps")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.plusAssign(value: kotlin.String) {
+      add(value)
+    }
+    /**
+     * <pre>
+     * DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+     * message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+     * The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+     * peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+     * </pre>
+     *
+     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
+     *     See messages.proto;l=87
+     * @param values The allowedIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllAllowedIps")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.addAll(values: kotlin.collections.Iterable<kotlin.String>) {
+      _builder.addAllAllowedIps(values)
+    }
+    /**
+     * <pre>
+     * DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+     * message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+     * The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+     * peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+     * </pre>
+     *
+     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
+     *     See messages.proto;l=87
+     * @param values The allowedIps to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllAllowedIps")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.String>) {
+      addAll(values)
+    }
+    /**
+     * <pre>
+     * DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+     * message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+     * The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+     * peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+     * </pre>
+     *
+     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
+     *     See messages.proto;l=87
+     * @param index The index to set the value at.
+     * @param value The allowedIps to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setAllowedIps")
+    public operator fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.set(index: kotlin.Int, value: kotlin.String) {
+      _builder.setAllowedIps(index, value)
+    }/**
+     * <pre>
+     * DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+     * message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+     * The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+     * peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+     * </pre>
+     *
+     * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
+     *     See messages.proto;l=87
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearAllowedIps")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>.clear() {
+      _builder.clearAllowedIps()
+    }
+    /**
+     * <pre>
+     * DEPRECATED: All addresses are now part of wg_ep_addrs.
+     * The peer's public IP WireGuard endpoint (IPv4 + port) discovered via STUN.
+     * </pre>
+     *
+     * <code>string public_udp4_endpoint = 6 [deprecated = true];</code>
+     */
+    @kotlin.Deprecated(message = "Field publicUdp4Endpoint is deprecated") public var publicUdp4Endpoint: kotlin.String
+      @JvmName("getPublicUdp4Endpoint")
+      get() = _builder.getPublicUdp4Endpoint()
+      @JvmName("setPublicUdp4Endpoint")
+      set(value) {
+        _builder.setPublicUdp4Endpoint(value)
+      }
+    /**
+     * <pre>
+     * DEPRECATED: All addresses are now part of wg_ep_addrs.
+     * The peer's public IP WireGuard endpoint (IPv4 + port) discovered via STUN.
+     * </pre>
+     *
+     * <code>string public_udp4_endpoint = 6 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.public_udp4_endpoint is deprecated.
+     *     See messages.proto;l=92
+     */
+    public fun clearPublicUdp4Endpoint() {
+      _builder.clearPublicUdp4Endpoint()
+    }
+
+    /**
+     * <pre>
+     * DEPRECATED: All addresses are now part of wg_ep_addrs.
+     * The peer's public IP WireGuard endpoint (IPv6 + port) discovered via STUN.
+     * </pre>
+     *
+     * <code>string public_udp6_endpoint = 7 [deprecated = true];</code>
+     */
+    @kotlin.Deprecated(message = "Field publicUdp6Endpoint is deprecated") public var publicUdp6Endpoint: kotlin.String
+      @JvmName("getPublicUdp6Endpoint")
+      get() = _builder.getPublicUdp6Endpoint()
+      @JvmName("setPublicUdp6Endpoint")
+      set(value) {
+        _builder.setPublicUdp6Endpoint(value)
+      }
+    /**
+     * <pre>
+     * DEPRECATED: All addresses are now part of wg_ep_addrs.
+     * The peer's public IP WireGuard endpoint (IPv6 + port) discovered via STUN.
+     * </pre>
+     *
+     * <code>string public_udp6_endpoint = 7 [deprecated = true];</code>
+     * @deprecated border0.common.v1.WireGuardPeer.public_udp6_endpoint is deprecated.
+     *     See messages.proto;l=97
+     */
+    public fun clearPublicUdp6Endpoint() {
+      _builder.clearPublicUdp6Endpoint()
     }
   }
 }

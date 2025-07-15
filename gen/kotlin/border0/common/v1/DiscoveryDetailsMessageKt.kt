@@ -49,7 +49,7 @@ public object DiscoveryDetailsMessageKt {
 
     /**
      * <pre>
-     * the endpoint (IPv4 + port) to send packets to for the peer
+     * the peer's public IP WireGuard endpoint (IPv4 + port) discovered via STUN
      * </pre>
      *
      * <code>string endpoint_public_udp4 = 2;</code>
@@ -63,7 +63,7 @@ public object DiscoveryDetailsMessageKt {
       }
     /**
      * <pre>
-     * the endpoint (IPv4 + port) to send packets to for the peer
+     * the peer's public IP WireGuard endpoint (IPv4 + port) discovered via STUN
      * </pre>
      *
      * <code>string endpoint_public_udp4 = 2;</code>
@@ -74,7 +74,7 @@ public object DiscoveryDetailsMessageKt {
 
     /**
      * <pre>
-     * the endpoint (IPv6 + port) to send packets to for the peer
+     * the peer's public IP WireGuard endpoint (IPv6 + port) discovered via STUN
      * </pre>
      *
      * <code>string endpoint_public_udp6 = 3;</code>
@@ -88,7 +88,7 @@ public object DiscoveryDetailsMessageKt {
       }
     /**
      * <pre>
-     * the endpoint (IPv6 + port) to send packets to for the peer
+     * the peer's public IP WireGuard endpoint (IPv6 + port) discovered via STUN
      * </pre>
      *
      * <code>string endpoint_public_udp6 = 3;</code>
@@ -121,6 +121,106 @@ public object DiscoveryDetailsMessageKt {
     public fun clearPublicKey() {
       _builder.clearPublicKey()
     }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class WgEpAddrsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 5;</code>
+     */
+     public val wgEpAddrs: com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getWgEpAddrsList()
+      )
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 5;</code>
+     * @param value The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addWgEpAddrs")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.add(value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      _builder.addWgEpAddrs(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 5;</code>
+     * @param value The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignWgEpAddrs")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.plusAssign(value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      add(value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 5;</code>
+     * @param values The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllWgEpAddrs")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.addAll(values: kotlin.collections.Iterable<border0.common.v1.Messages.WireGuardEndpointAddr>) {
+      _builder.addAllWgEpAddrs(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 5;</code>
+     * @param values The wgEpAddrs to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllWgEpAddrs")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.plusAssign(values: kotlin.collections.Iterable<border0.common.v1.Messages.WireGuardEndpointAddr>) {
+      addAll(values)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 5;</code>
+     * @param index The index to set the value at.
+     * @param value The wgEpAddrs to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setWgEpAddrs")
+    public operator fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.set(index: kotlin.Int, value: border0.common.v1.Messages.WireGuardEndpointAddr) {
+      _builder.setWgEpAddrs(index, value)
+    }
+    /**
+     * <pre>
+     * all ip address and port combinations that the peer can use to tx/rx traffic
+     * </pre>
+     *
+     * <code>repeated .border0.common.v1.WireGuardEndpointAddr wg_ep_addrs = 5;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearWgEpAddrs")
+    public fun com.google.protobuf.kotlin.DslList<border0.common.v1.Messages.WireGuardEndpointAddr, WgEpAddrsProxy>.clear() {
+      _builder.clearWgEpAddrs()
+    }
+
   }
 }
 @kotlin.jvm.JvmSynthetic

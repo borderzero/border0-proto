@@ -324,21 +324,12 @@ struct Border0_Device_V1_OrgDetails: Sendable {
 fileprivate let _protobuf_package = "border0.device.v1"
 
 extension Border0_Device_V1_InfoType: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "UNKNOWN"),
-    1: .same(proto: "ORG_DETAILS"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN\0\u{1}ORG_DETAILS\0")
 }
 
 extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DeviceToServerMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "auth_challenge_solution"),
-    2: .standard(proto: "discovery_details"),
-    3: .same(proto: "heartbeat"),
-    4: .same(proto: "stats"),
-    5: .standard(proto: "info_request"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge_solution\0\u{3}discovery_details\0\u{1}heartbeat\0\u{1}stats\0\u{3}info_request\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -456,16 +447,7 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
 
 extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ServerToDeviceMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "auth_challenge"),
-    2: .same(proto: "heartbeat"),
-    3: .standard(proto: "network_state"),
-    4: .standard(proto: "peer_online"),
-    5: .standard(proto: "peer_offline"),
-    6: .same(proto: "disconnect"),
-    7: .same(proto: "service"),
-    8: .standard(proto: "org_details"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge\0\u{1}heartbeat\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{1}disconnect\0\u{1}service\0\u{3}org_details\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -634,11 +616,7 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
 
 extension Border0_Device_V1_AuthChallengeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthChallengeMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "serverPublicKey"),
-    2: .same(proto: "challenge"),
-    3: .same(proto: "challengeNonce"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}serverPublicKey\0\u{1}challenge\0\u{1}challengeNonce\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -678,10 +656,7 @@ extension Border0_Device_V1_AuthChallengeMessage: SwiftProtobuf.Message, SwiftPr
 
 extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthChallengeSolutionMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "solved"),
-    2: .same(proto: "solvedNonce"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}solved\0\u{1}solvedNonce\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -716,24 +691,7 @@ extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message,
 
 extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "network_id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "type"),
-    4: .same(proto: "ipv4"),
-    5: .same(proto: "ipv6"),
-    6: .standard(proto: "subnet_routes"),
-    7: .standard(proto: "peer_public_key"),
-    8: .standard(proto: "dns_name"),
-    9: .standard(proto: "upstream_type"),
-    10: .standard(proto: "upstream_port"),
-    11: .standard(proto: "has_upstream_username"),
-    12: .standard(proto: "upstream_ssh_type"),
-    13: .same(proto: "tags"),
-    14: .standard(proto: "public_ips"),
-    15: .same(proto: "standalone"),
-    16: .same(proto: "delete"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -838,10 +796,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
 
 extension Border0_Device_V1_InfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".InfoRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .standard(proto: "info_type"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}info_type\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -876,12 +831,7 @@ extension Border0_Device_V1_InfoRequest: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension Border0_Device_V1_OrgDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".OrgDetails"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "request_id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "uuid"),
-    4: .standard(proto: "ca_cert_pem"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}name\0\u{1}uuid\0\u{3}ca_cert_pem\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
