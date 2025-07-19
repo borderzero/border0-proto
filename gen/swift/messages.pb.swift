@@ -140,14 +140,17 @@ struct Border0_Common_V1_DiscoveryDetailsMessage: Sendable {
   /// whether the peer should be returned along with the networks it's in
   var discoverable: Bool = false
 
-  /// the endpoint (IPv4 + port) to send packets to for the peer
+  /// the peer's public IP WireGuard endpoint (IPv4 + port) discovered via STUN
   var endpointPublicUdp4: String = String()
 
-  /// the endpoint (IPv6 + port) to send packets to for the peer
+  /// the peer's public IP WireGuard endpoint (IPv6 + port) discovered via STUN
   var endpointPublicUdp6: String = String()
 
   /// the public key of the peer, only used in connector
   var publicKey: String = String()
+
+  /// all ip address and port combinations that the peer can use to tx/rx traffic
+  var wgEpAddrs: [Border0_Common_V1_WireGuardEndpointAddr] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -349,19 +352,8 @@ struct Border0_Common_V1_WireGuardPeer: Sendable {
   /// the peer's (private) IPv6 address in the WireGuard network
   var ipv6: String = String()
 
-  /// list of routes (CIDRs) to be routed through this peer (most peers will just have their own IP/32). (this field is now deprecated in favor of building the allowed_ips list from ipv4 + ipv6 + service ips + subnet routes)
-  ///
-  /// NOTE: This field was marked as deprecated in the .proto file.
-  var allowedIps: [String] = []
-
   /// the interval for sending keepalive packets (0 means disabled)
   var persistentKeepaliveIntervalSeconds: UInt32 = 0
-
-  /// endpoint for UDP peer-to-peer communication over IPv4 (public IPv4 + port as seen from the Internet)
-  var publicUdp4Endpoint: String = String()
-
-  /// endpoint for UDP peer-to-peer communication over IPv6 (public IPv6 + port as seen from the Internet)
-  var publicUdp6Endpoint: String = String()
 
   /// client or connector
   var type: Border0_Common_V1_PeerType = .unknown
@@ -371,6 +363,32 @@ struct Border0_Common_V1_WireGuardPeer: Sendable {
 
   /// device (client or connector) name
   var name: String = String()
+
+  /// all ip address and port combinations that the peer can use to tx/rx traffic
+  var wgEpAddrs: [Border0_Common_V1_WireGuardEndpointAddr] = []
+
+  /// DEPRECATED: The list of allowed IPs (for WireGuard configuration) is now built on the receiver of this
+  /// message based on the ipv4, ipv6, service addresses (v4 and/or v6), and subnet routes (v4 and/or v6).
+  ///
+  /// The peer's list of routes (in CIDR notation) to be routed through this peer. Most
+  /// peers will just have their own border0-private-network IPv4/32 and IPv6/128.
+  ///
+  /// NOTE: This field was marked as deprecated in the .proto file.
+  var allowedIps: [String] = []
+
+  /// DEPRECATED: All addresses are now part of wg_ep_addrs.
+  ///
+  /// The peer's public IP WireGuard endpoint (IPv4 + port) discovered via STUN.
+  ///
+  /// NOTE: This field was marked as deprecated in the .proto file.
+  var publicUdp4Endpoint: String = String()
+
+  /// DEPRECATED: All addresses are now part of wg_ep_addrs.
+  ///
+  /// The peer's public IP WireGuard endpoint (IPv6 + port) discovered via STUN.
+  ///
+  /// NOTE: This field was marked as deprecated in the .proto file.
+  var publicUdp6Endpoint: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -437,6 +455,31 @@ struct Border0_Common_V1_IPAddressWithMetadata: Sendable {
   fileprivate var _metadata: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
+struct Border0_Common_V1_WireGuardEndpointAddr: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// true if address was discovered via STUN
+  var fromStun: Bool = false
+
+  /// the name of the local interface that has the address (e.g., "eth0"), empty if from_stun is true.
+  var ifaceName: String = String()
+
+  /// the CIDR block this IP belongs to (e.g., "192.168.0.0/24"), empty if from_stun is true.
+  var ifaceCidr: String = String()
+
+  /// the actual IP address
+  var ipAddress: String = String()
+
+  /// the UDP port number used for WireGuard
+  var port: UInt32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct Border0_Common_V1_DisconnectMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -470,36 +513,20 @@ struct Border0_Common_V1_Group: Sendable {
 fileprivate let _protobuf_package = "border0.common.v1"
 
 extension Border0_Common_V1_IPAddressType: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "IPV4"),
-    1: .same(proto: "IPV6"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0IPV4\0\u{1}IPV6\0")
 }
 
 extension Border0_Common_V1_PeerType: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PEER_TYPE_UNKNOWN"),
-    1: .same(proto: "PEER_TYPE_DEVICE"),
-    2: .same(proto: "PEER_TYPE_CONNECTOR"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0PEER_TYPE_UNKNOWN\0\u{1}PEER_TYPE_DEVICE\0\u{1}PEER_TYPE_CONNECTOR\0")
 }
 
 extension Border0_Common_V1_DisconnectionReason: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "UNKNOWN"),
-    1: .same(proto: "SERVER_SHUTDOWN"),
-    2: .same(proto: "NEWER_CONNECTION"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN\0\u{1}SERVER_SHUTDOWN\0\u{1}NEWER_CONNECTION\0")
 }
 
 extension Border0_Common_V1_DiscoveryDetailsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DiscoveryDetailsMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "discoverable"),
-    2: .standard(proto: "endpoint_public_udp4"),
-    3: .standard(proto: "endpoint_public_udp6"),
-    4: .standard(proto: "public_key"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}discoverable\0\u{3}endpoint_public_udp4\0\u{3}endpoint_public_udp6\0\u{3}public_key\0\u{3}wg_ep_addrs\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -511,6 +538,7 @@ extension Border0_Common_V1_DiscoveryDetailsMessage: SwiftProtobuf.Message, Swif
       case 2: try { try decoder.decodeSingularStringField(value: &self.endpointPublicUdp4) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.endpointPublicUdp6) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.publicKey) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.wgEpAddrs) }()
       default: break
       }
     }
@@ -529,6 +557,9 @@ extension Border0_Common_V1_DiscoveryDetailsMessage: SwiftProtobuf.Message, Swif
     if !self.publicKey.isEmpty {
       try visitor.visitSingularStringField(value: self.publicKey, fieldNumber: 4)
     }
+    if !self.wgEpAddrs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.wgEpAddrs, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -537,6 +568,7 @@ extension Border0_Common_V1_DiscoveryDetailsMessage: SwiftProtobuf.Message, Swif
     if lhs.endpointPublicUdp4 != rhs.endpointPublicUdp4 {return false}
     if lhs.endpointPublicUdp6 != rhs.endpointPublicUdp6 {return false}
     if lhs.publicKey != rhs.publicKey {return false}
+    if lhs.wgEpAddrs != rhs.wgEpAddrs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -563,10 +595,7 @@ extension Border0_Common_V1_HeartbeatMessage: SwiftProtobuf.Message, SwiftProtob
 
 extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".StatsMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "network_device_stats"),
-    2: .standard(proto: "sockets_stats"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_device_stats\0\u{3}sockets_stats\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -633,13 +662,7 @@ extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".NetworkDeviceStatsMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "timestamp"),
-    2: .standard(proto: "bytes_in"),
-    3: .standard(proto: "bytes_out"),
-    4: .standard(proto: "packets_in"),
-    5: .standard(proto: "packets_out"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{3}bytes_in\0\u{3}bytes_out\0\u{3}packets_in\0\u{3}packets_out\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -693,14 +716,7 @@ extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, Sw
 
 extension Border0_Common_V1_SocketStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SocketStatsMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "timestamp"),
-    2: .standard(proto: "bytes_in"),
-    3: .standard(proto: "bytes_out"),
-    4: .standard(proto: "packets_in"),
-    5: .standard(proto: "packets_out"),
-    6: .standard(proto: "socket_id"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{3}bytes_in\0\u{3}bytes_out\0\u{3}packets_in\0\u{3}packets_out\0\u{3}socket_id\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -759,9 +775,7 @@ extension Border0_Common_V1_SocketStatsMessage: SwiftProtobuf.Message, SwiftProt
 
 extension Border0_Common_V1_SocketsStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SocketsStatsMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "socket_stats"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}socket_stats\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -791,10 +805,7 @@ extension Border0_Common_V1_SocketsStatsMessage: SwiftProtobuf.Message, SwiftPro
 
 extension Border0_Common_V1_PeerOnlineMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PeerOnlineMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "network_id"),
-    2: .same(proto: "peer"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}peer\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -833,10 +844,7 @@ extension Border0_Common_V1_PeerOnlineMessage: SwiftProtobuf.Message, SwiftProto
 
 extension Border0_Common_V1_PeerOfflineMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PeerOfflineMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "network_id"),
-    2: .standard(proto: "peer_public_key"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{3}peer_public_key\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -871,17 +879,7 @@ extension Border0_Common_V1_PeerOfflineMessage: SwiftProtobuf.Message, SwiftProt
 
 extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".NetworkStateMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "network_id"),
-    2: .standard(proto: "network_cidr_v4"),
-    3: .standard(proto: "network_cidr_v6"),
-    4: .standard(proto: "self_ipv4"),
-    5: .standard(proto: "self_ipv6"),
-    6: .standard(proto: "online_peers"),
-    7: .standard(proto: "network_resources_cidr_v4"),
-    8: .standard(proto: "network_resources_cidr_v6"),
-    9: .standard(proto: "standalone_services"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}online_peers\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0\u{3}standalone_services\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -951,18 +949,7 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
 
 extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".WireGuardPeer"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "public_key"),
-    2: .same(proto: "ipv4"),
-    3: .same(proto: "ipv6"),
-    4: .standard(proto: "allowed_ips"),
-    5: .standard(proto: "persistent_keepalive_interval_seconds"),
-    6: .standard(proto: "public_udp4_endpoint"),
-    7: .standard(proto: "public_udp6_endpoint"),
-    8: .same(proto: "type"),
-    9: .same(proto: "services"),
-    10: .same(proto: "name"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}public_key\0\u{1}ipv4\0\u{1}ipv6\0\u{3}allowed_ips\0\u{3}persistent_keepalive_interval_seconds\0\u{3}public_udp4_endpoint\0\u{3}public_udp6_endpoint\0\u{1}type\0\u{1}services\0\u{1}name\0\u{3}wg_ep_addrs\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -980,6 +967,7 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
       case 8: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       case 9: try { try decoder.decodeRepeatedMessageField(value: &self.services) }()
       case 10: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 11: try { try decoder.decodeRepeatedMessageField(value: &self.wgEpAddrs) }()
       default: break
       }
     }
@@ -1016,6 +1004,9 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.name.isEmpty {
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 10)
     }
+    if !self.wgEpAddrs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.wgEpAddrs, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1023,13 +1014,14 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.publicKey != rhs.publicKey {return false}
     if lhs.ipv4 != rhs.ipv4 {return false}
     if lhs.ipv6 != rhs.ipv6 {return false}
-    if lhs.allowedIps != rhs.allowedIps {return false}
     if lhs.persistentKeepaliveIntervalSeconds != rhs.persistentKeepaliveIntervalSeconds {return false}
-    if lhs.publicUdp4Endpoint != rhs.publicUdp4Endpoint {return false}
-    if lhs.publicUdp6Endpoint != rhs.publicUdp6Endpoint {return false}
     if lhs.type != rhs.type {return false}
     if lhs.services != rhs.services {return false}
     if lhs.name != rhs.name {return false}
+    if lhs.wgEpAddrs != rhs.wgEpAddrs {return false}
+    if lhs.allowedIps != rhs.allowedIps {return false}
+    if lhs.publicUdp4Endpoint != rhs.publicUdp4Endpoint {return false}
+    if lhs.publicUdp6Endpoint != rhs.publicUdp6Endpoint {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1037,20 +1029,7 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "type"),
-    3: .same(proto: "ipv4"),
-    4: .same(proto: "ipv6"),
-    5: .standard(proto: "subnet_routes"),
-    6: .standard(proto: "dns_name"),
-    7: .standard(proto: "upstream_type"),
-    8: .standard(proto: "upstream_port"),
-    9: .standard(proto: "has_upstream_username"),
-    10: .standard(proto: "upstream_ssh_type"),
-    11: .same(proto: "tags"),
-    12: .standard(proto: "public_ips"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1135,11 +1114,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
 
 extension Border0_Common_V1_IPAddressWithMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".IPAddressWithMetadata"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "ip_address"),
-    2: .same(proto: "type"),
-    3: .same(proto: "metadata"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}ip_address\0\u{1}type\0\u{1}metadata\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1181,11 +1156,59 @@ extension Border0_Common_V1_IPAddressWithMetadata: SwiftProtobuf.Message, SwiftP
   }
 }
 
+extension Border0_Common_V1_WireGuardEndpointAddr: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".WireGuardEndpointAddr"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}from_stun\0\u{3}iface_name\0\u{3}iface_cidr\0\u{3}ip_address\0\u{1}port\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.fromStun) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.ifaceName) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.ifaceCidr) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.ipAddress) }()
+      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.port) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.fromStun != false {
+      try visitor.visitSingularBoolField(value: self.fromStun, fieldNumber: 1)
+    }
+    if !self.ifaceName.isEmpty {
+      try visitor.visitSingularStringField(value: self.ifaceName, fieldNumber: 2)
+    }
+    if !self.ifaceCidr.isEmpty {
+      try visitor.visitSingularStringField(value: self.ifaceCidr, fieldNumber: 3)
+    }
+    if !self.ipAddress.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipAddress, fieldNumber: 4)
+    }
+    if self.port != 0 {
+      try visitor.visitSingularUInt32Field(value: self.port, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Common_V1_WireGuardEndpointAddr, rhs: Border0_Common_V1_WireGuardEndpointAddr) -> Bool {
+    if lhs.fromStun != rhs.fromStun {return false}
+    if lhs.ifaceName != rhs.ifaceName {return false}
+    if lhs.ifaceCidr != rhs.ifaceCidr {return false}
+    if lhs.ipAddress != rhs.ipAddress {return false}
+    if lhs.port != rhs.port {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Border0_Common_V1_DisconnectMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DisconnectMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "reason"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reason\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1215,11 +1238,7 @@ extension Border0_Common_V1_DisconnectMessage: SwiftProtobuf.Message, SwiftProto
 
 extension Border0_Common_V1_Group: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Group"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "uuid"),
-    2: .same(proto: "name"),
-    3: .same(proto: "type"),
-  ]
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0\u{1}name\0\u{1}type\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
