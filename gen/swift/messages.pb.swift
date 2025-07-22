@@ -503,6 +503,8 @@ struct Border0_Common_V1_Group: Sendable {
 
   var type: String = String()
 
+  var prefix: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1238,7 +1240,7 @@ extension Border0_Common_V1_DisconnectMessage: SwiftProtobuf.Message, SwiftProto
 
 extension Border0_Common_V1_Group: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Group"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0\u{1}name\0\u{1}type\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0\u{1}name\0\u{1}type\0\u{1}prefix\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1249,6 +1251,7 @@ extension Border0_Common_V1_Group: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 1: try { try decoder.decodeSingularStringField(value: &self.uuid) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.prefix) }()
       default: break
       }
     }
@@ -1264,6 +1267,9 @@ extension Border0_Common_V1_Group: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.type.isEmpty {
       try visitor.visitSingularStringField(value: self.type, fieldNumber: 3)
     }
+    if !self.prefix.isEmpty {
+      try visitor.visitSingularStringField(value: self.prefix, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1271,6 +1277,7 @@ extension Border0_Common_V1_Group: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.uuid != rhs.uuid {return false}
     if lhs.name != rhs.name {return false}
     if lhs.type != rhs.type {return false}
+    if lhs.prefix != rhs.prefix {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
