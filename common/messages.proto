@@ -152,4 +152,5 @@ message Group {
   string uuid = 1;
   string name = 2;
   string type = 3;
+  string prefix = 4;
 }

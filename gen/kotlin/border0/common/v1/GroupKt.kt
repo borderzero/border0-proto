@@ -72,6 +72,23 @@ public object GroupKt {
     public fun clearType() {
       _builder.clearType()
     }
+
+    /**
+     * <code>string prefix = 4;</code>
+     */
+    public var prefix: kotlin.String
+      @JvmName("getPrefix")
+      get() = _builder.getPrefix()
+      @JvmName("setPrefix")
+      set(value) {
+        _builder.setPrefix(value)
+      }
+    /**
+     * <code>string prefix = 4;</code>
+     */
+    public fun clearPrefix() {
+      _builder.clearPrefix()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
