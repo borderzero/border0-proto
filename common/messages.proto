@@ -111,6 +111,7 @@ message Service {
   string upstream_ssh_type = 10;
   map<string, string> tags = 11;
   repeated IPAddressWithMetadata public_ips = 12;
+  string display_name = 13;
 }
 
 message IPAddressWithMetadata {
