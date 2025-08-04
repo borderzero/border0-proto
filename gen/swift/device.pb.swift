@@ -240,46 +240,101 @@ struct Border0_Device_V1_AuthChallengeSolutionMessage: Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_Service: Sendable {
+struct Border0_Device_V1_Service: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var networkID: String = String()
+  var networkID: String {
+    get {return _storage._networkID}
+    set {_uniqueStorage()._networkID = newValue}
+  }
 
-  var name: String = String()
+  var name: String {
+    get {return _storage._name}
+    set {_uniqueStorage()._name = newValue}
+  }
 
-  var type: String = String()
+  var type: String {
+    get {return _storage._type}
+    set {_uniqueStorage()._type = newValue}
+  }
 
-  var ipv4: String = String()
+  var ipv4: String {
+    get {return _storage._ipv4}
+    set {_uniqueStorage()._ipv4 = newValue}
+  }
 
-  var ipv6: String = String()
+  var ipv6: String {
+    get {return _storage._ipv6}
+    set {_uniqueStorage()._ipv6 = newValue}
+  }
 
-  var subnetRoutes: [String] = []
+  var subnetRoutes: [String] {
+    get {return _storage._subnetRoutes}
+    set {_uniqueStorage()._subnetRoutes = newValue}
+  }
 
-  var peerPublicKey: [String] = []
+  var peerPublicKey: [String] {
+    get {return _storage._peerPublicKey}
+    set {_uniqueStorage()._peerPublicKey = newValue}
+  }
 
-  var dnsName: String = String()
+  var dnsName: String {
+    get {return _storage._dnsName}
+    set {_uniqueStorage()._dnsName = newValue}
+  }
 
-  var upstreamType: String = String()
+  var upstreamType: String {
+    get {return _storage._upstreamType}
+    set {_uniqueStorage()._upstreamType = newValue}
+  }
 
-  var upstreamPort: UInt32 = 0
+  var upstreamPort: UInt32 {
+    get {return _storage._upstreamPort}
+    set {_uniqueStorage()._upstreamPort = newValue}
+  }
 
-  var hasUpstreamUsername_p: Bool = false
+  var hasUpstreamUsername_p: Bool {
+    get {return _storage._hasUpstreamUsername_p}
+    set {_uniqueStorage()._hasUpstreamUsername_p = newValue}
+  }
 
-  var upstreamSshType: String = String()
+  var upstreamSshType: String {
+    get {return _storage._upstreamSshType}
+    set {_uniqueStorage()._upstreamSshType = newValue}
+  }
 
-  var tags: Dictionary<String,String> = [:]
+  var tags: Dictionary<String,String> {
+    get {return _storage._tags}
+    set {_uniqueStorage()._tags = newValue}
+  }
 
-  var publicIps: [Border0_Common_V1_IPAddressWithMetadata] = []
+  var publicIps: [Border0_Common_V1_IPAddressWithMetadata] {
+    get {return _storage._publicIps}
+    set {_uniqueStorage()._publicIps = newValue}
+  }
 
-  var standalone: Bool = false
+  var standalone: Bool {
+    get {return _storage._standalone}
+    set {_uniqueStorage()._standalone = newValue}
+  }
 
-  var delete: Bool = false
+  var delete: Bool {
+    get {return _storage._delete}
+    set {_uniqueStorage()._delete = newValue}
+  }
+
+  var displayName: String {
+    get {return _storage._displayName}
+    set {_uniqueStorage()._displayName = newValue}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 /// InfoRequest is a generic request for information where
@@ -691,104 +746,177 @@ extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message,
 
 extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0")
+
+  fileprivate class _StorageClass {
+    var _networkID: String = String()
+    var _name: String = String()
+    var _type: String = String()
+    var _ipv4: String = String()
+    var _ipv6: String = String()
+    var _subnetRoutes: [String] = []
+    var _peerPublicKey: [String] = []
+    var _dnsName: String = String()
+    var _upstreamType: String = String()
+    var _upstreamPort: UInt32 = 0
+    var _hasUpstreamUsername_p: Bool = false
+    var _upstreamSshType: String = String()
+    var _tags: Dictionary<String,String> = [:]
+    var _publicIps: [Border0_Common_V1_IPAddressWithMetadata] = []
+    var _standalone: Bool = false
+    var _delete: Bool = false
+    var _displayName: String = String()
+
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _networkID = source._networkID
+      _name = source._name
+      _type = source._type
+      _ipv4 = source._ipv4
+      _ipv6 = source._ipv6
+      _subnetRoutes = source._subnetRoutes
+      _peerPublicKey = source._peerPublicKey
+      _dnsName = source._dnsName
+      _upstreamType = source._upstreamType
+      _upstreamPort = source._upstreamPort
+      _hasUpstreamUsername_p = source._hasUpstreamUsername_p
+      _upstreamSshType = source._upstreamSshType
+      _tags = source._tags
+      _publicIps = source._publicIps
+      _standalone = source._standalone
+      _delete = source._delete
+      _displayName = source._displayName
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.networkID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.type) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.ipv4) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.ipv6) }()
-      case 6: try { try decoder.decodeRepeatedStringField(value: &self.subnetRoutes) }()
-      case 7: try { try decoder.decodeRepeatedStringField(value: &self.peerPublicKey) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.dnsName) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.upstreamType) }()
-      case 10: try { try decoder.decodeSingularUInt32Field(value: &self.upstreamPort) }()
-      case 11: try { try decoder.decodeSingularBoolField(value: &self.hasUpstreamUsername_p) }()
-      case 12: try { try decoder.decodeSingularStringField(value: &self.upstreamSshType) }()
-      case 13: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.tags) }()
-      case 14: try { try decoder.decodeRepeatedMessageField(value: &self.publicIps) }()
-      case 15: try { try decoder.decodeSingularBoolField(value: &self.standalone) }()
-      case 16: try { try decoder.decodeSingularBoolField(value: &self.delete) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._networkID) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._name) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._type) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._ipv4) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._ipv6) }()
+        case 6: try { try decoder.decodeRepeatedStringField(value: &_storage._subnetRoutes) }()
+        case 7: try { try decoder.decodeRepeatedStringField(value: &_storage._peerPublicKey) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._dnsName) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._upstreamType) }()
+        case 10: try { try decoder.decodeSingularUInt32Field(value: &_storage._upstreamPort) }()
+        case 11: try { try decoder.decodeSingularBoolField(value: &_storage._hasUpstreamUsername_p) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._upstreamSshType) }()
+        case 13: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._tags) }()
+        case 14: try { try decoder.decodeRepeatedMessageField(value: &_storage._publicIps) }()
+        case 15: try { try decoder.decodeSingularBoolField(value: &_storage._standalone) }()
+        case 16: try { try decoder.decodeSingularBoolField(value: &_storage._delete) }()
+        case 17: try { try decoder.decodeSingularStringField(value: &_storage._displayName) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.networkID.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkID, fieldNumber: 1)
-    }
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
-    }
-    if !self.type.isEmpty {
-      try visitor.visitSingularStringField(value: self.type, fieldNumber: 3)
-    }
-    if !self.ipv4.isEmpty {
-      try visitor.visitSingularStringField(value: self.ipv4, fieldNumber: 4)
-    }
-    if !self.ipv6.isEmpty {
-      try visitor.visitSingularStringField(value: self.ipv6, fieldNumber: 5)
-    }
-    if !self.subnetRoutes.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.subnetRoutes, fieldNumber: 6)
-    }
-    if !self.peerPublicKey.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.peerPublicKey, fieldNumber: 7)
-    }
-    if !self.dnsName.isEmpty {
-      try visitor.visitSingularStringField(value: self.dnsName, fieldNumber: 8)
-    }
-    if !self.upstreamType.isEmpty {
-      try visitor.visitSingularStringField(value: self.upstreamType, fieldNumber: 9)
-    }
-    if self.upstreamPort != 0 {
-      try visitor.visitSingularUInt32Field(value: self.upstreamPort, fieldNumber: 10)
-    }
-    if self.hasUpstreamUsername_p != false {
-      try visitor.visitSingularBoolField(value: self.hasUpstreamUsername_p, fieldNumber: 11)
-    }
-    if !self.upstreamSshType.isEmpty {
-      try visitor.visitSingularStringField(value: self.upstreamSshType, fieldNumber: 12)
-    }
-    if !self.tags.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.tags, fieldNumber: 13)
-    }
-    if !self.publicIps.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.publicIps, fieldNumber: 14)
-    }
-    if self.standalone != false {
-      try visitor.visitSingularBoolField(value: self.standalone, fieldNumber: 15)
-    }
-    if self.delete != false {
-      try visitor.visitSingularBoolField(value: self.delete, fieldNumber: 16)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._networkID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkID, fieldNumber: 1)
+      }
+      if !_storage._name.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._name, fieldNumber: 2)
+      }
+      if !_storage._type.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._type, fieldNumber: 3)
+      }
+      if !_storage._ipv4.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._ipv4, fieldNumber: 4)
+      }
+      if !_storage._ipv6.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._ipv6, fieldNumber: 5)
+      }
+      if !_storage._subnetRoutes.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._subnetRoutes, fieldNumber: 6)
+      }
+      if !_storage._peerPublicKey.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._peerPublicKey, fieldNumber: 7)
+      }
+      if !_storage._dnsName.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._dnsName, fieldNumber: 8)
+      }
+      if !_storage._upstreamType.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._upstreamType, fieldNumber: 9)
+      }
+      if _storage._upstreamPort != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._upstreamPort, fieldNumber: 10)
+      }
+      if _storage._hasUpstreamUsername_p != false {
+        try visitor.visitSingularBoolField(value: _storage._hasUpstreamUsername_p, fieldNumber: 11)
+      }
+      if !_storage._upstreamSshType.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._upstreamSshType, fieldNumber: 12)
+      }
+      if !_storage._tags.isEmpty {
+        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: _storage._tags, fieldNumber: 13)
+      }
+      if !_storage._publicIps.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._publicIps, fieldNumber: 14)
+      }
+      if _storage._standalone != false {
+        try visitor.visitSingularBoolField(value: _storage._standalone, fieldNumber: 15)
+      }
+      if _storage._delete != false {
+        try visitor.visitSingularBoolField(value: _storage._delete, fieldNumber: 16)
+      }
+      if !_storage._displayName.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._displayName, fieldNumber: 17)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Border0_Device_V1_Service, rhs: Border0_Device_V1_Service) -> Bool {
-    if lhs.networkID != rhs.networkID {return false}
-    if lhs.name != rhs.name {return false}
-    if lhs.type != rhs.type {return false}
-    if lhs.ipv4 != rhs.ipv4 {return false}
-    if lhs.ipv6 != rhs.ipv6 {return false}
-    if lhs.subnetRoutes != rhs.subnetRoutes {return false}
-    if lhs.peerPublicKey != rhs.peerPublicKey {return false}
-    if lhs.dnsName != rhs.dnsName {return false}
-    if lhs.upstreamType != rhs.upstreamType {return false}
-    if lhs.upstreamPort != rhs.upstreamPort {return false}
-    if lhs.hasUpstreamUsername_p != rhs.hasUpstreamUsername_p {return false}
-    if lhs.upstreamSshType != rhs.upstreamSshType {return false}
-    if lhs.tags != rhs.tags {return false}
-    if lhs.publicIps != rhs.publicIps {return false}
-    if lhs.standalone != rhs.standalone {return false}
-    if lhs.delete != rhs.delete {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._networkID != rhs_storage._networkID {return false}
+        if _storage._name != rhs_storage._name {return false}
+        if _storage._type != rhs_storage._type {return false}
+        if _storage._ipv4 != rhs_storage._ipv4 {return false}
+        if _storage._ipv6 != rhs_storage._ipv6 {return false}
+        if _storage._subnetRoutes != rhs_storage._subnetRoutes {return false}
+        if _storage._peerPublicKey != rhs_storage._peerPublicKey {return false}
+        if _storage._dnsName != rhs_storage._dnsName {return false}
+        if _storage._upstreamType != rhs_storage._upstreamType {return false}
+        if _storage._upstreamPort != rhs_storage._upstreamPort {return false}
+        if _storage._hasUpstreamUsername_p != rhs_storage._hasUpstreamUsername_p {return false}
+        if _storage._upstreamSshType != rhs_storage._upstreamSshType {return false}
+        if _storage._tags != rhs_storage._tags {return false}
+        if _storage._publicIps != rhs_storage._publicIps {return false}
+        if _storage._standalone != rhs_storage._standalone {return false}
+        if _storage._delete != rhs_storage._delete {return false}
+        if _storage._displayName != rhs_storage._displayName {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
