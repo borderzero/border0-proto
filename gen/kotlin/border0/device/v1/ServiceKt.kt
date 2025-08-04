@@ -498,6 +498,23 @@ public object ServiceKt {
     public fun clearDelete() {
       _builder.clearDelete()
     }
+
+    /**
+     * <code>string display_name = 17;</code>
+     */
+    public var displayName: kotlin.String
+      @JvmName("getDisplayName")
+      get() = _builder.getDisplayName()
+      @JvmName("setDisplayName")
+      set(value) {
+        _builder.setDisplayName(value)
+      }
+    /**
+     * <code>string display_name = 17;</code>
+     */
+    public fun clearDisplayName() {
+      _builder.clearDisplayName()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
