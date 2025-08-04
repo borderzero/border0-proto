@@ -405,6 +405,23 @@ public object ServiceKt {
       _builder.clearPublicIps()
     }
 
+
+    /**
+     * <code>string display_name = 13;</code>
+     */
+    public var displayName: kotlin.String
+      @JvmName("getDisplayName")
+      get() = _builder.getDisplayName()
+      @JvmName("setDisplayName")
+      set(value) {
+        _builder.setDisplayName(value)
+      }
+    /**
+     * <code>string display_name = 13;</code>
+     */
+    public fun clearDisplayName() {
+      _builder.clearDisplayName()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
