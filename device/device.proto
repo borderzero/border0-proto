@@ -36,6 +36,7 @@ message ServerToDeviceMessage {
     border0.common.v1.DisconnectMessage disconnect = 6;
     Service service = 7;
     OrgDetails org_details = 8;
+    ServiceBatch service_batch = 9;
   }
 }
 
@@ -68,6 +69,14 @@ message Service {
   bool standalone = 15;
   bool delete = 16;
   string display_name = 17;
+}
+
+message ServiceBatch {
+  repeated Service services = 1;
+  bool is_first_batch = 2;     // Optional: for progress tracking
+  bool is_last_batch = 3;      // Optional: for progress tracking
+  int32 total_services = 4;    // Optional: total across all batches
+  int32 batch_number = 5;      // Optional: current batch number (0-based)
 }
 
 // InfoType represents type of information

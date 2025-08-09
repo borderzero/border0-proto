@@ -213,6 +213,30 @@ public object ServerToDeviceMessageKt {
     public fun hasOrgDetails(): kotlin.Boolean {
       return _builder.hasOrgDetails()
     }
+
+    /**
+     * <code>.border0.device.v1.ServiceBatch service_batch = 9;</code>
+     */
+    public var serviceBatch: border0.device.v1.Device.ServiceBatch
+      @JvmName("getServiceBatch")
+      get() = _builder.getServiceBatch()
+      @JvmName("setServiceBatch")
+      set(value) {
+        _builder.setServiceBatch(value)
+      }
+    /**
+     * <code>.border0.device.v1.ServiceBatch service_batch = 9;</code>
+     */
+    public fun clearServiceBatch() {
+      _builder.clearServiceBatch()
+    }
+    /**
+     * <code>.border0.device.v1.ServiceBatch service_batch = 9;</code>
+     * @return Whether the serviceBatch field is set.
+     */
+    public fun hasServiceBatch(): kotlin.Boolean {
+      return _builder.hasServiceBatch()
+    }
     public val messageCase: border0.device.v1.Device.ServerToDeviceMessage.MessageCase
       @JvmName("getMessageCase")
       get() = _builder.getMessageCase()
@@ -249,4 +273,7 @@ public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.serviceOrNull
 
 public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.orgDetailsOrNull: border0.device.v1.Device.OrgDetails?
   get() = if (hasOrgDetails()) getOrgDetails() else null
+
+public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.serviceBatchOrNull: border0.device.v1.Device.ServiceBatch?
+  get() = if (hasServiceBatch()) getServiceBatch() else null
 
