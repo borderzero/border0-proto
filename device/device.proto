@@ -36,6 +36,7 @@ message ServerToDeviceMessage {
     border0.common.v1.DisconnectMessage disconnect = 6;
     Service service = 7;
     OrgDetails org_details = 8;
+    ServiceBatch service_batch = 9;
   }
 }
 
@@ -68,6 +69,12 @@ message Service {
   bool standalone = 15;
   bool delete = 16;
   string display_name = 17;
+}
+
+message ServiceBatch {
+  repeated Service services = 1;
+  int32 total_services = 2;
+  int32 batch_number = 3;
 }
 
 // InfoType represents type of information
