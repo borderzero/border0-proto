@@ -112,6 +112,7 @@ message Service {
   map<string, string> tags = 11;
   repeated IPAddressWithMetadata public_ips = 12;
   string display_name = 13;
+  string database_name = 14;
 }
 
 message IPAddressWithMetadata {

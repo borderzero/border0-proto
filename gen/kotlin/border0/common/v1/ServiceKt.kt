@@ -422,6 +422,23 @@ public object ServiceKt {
     public fun clearDisplayName() {
       _builder.clearDisplayName()
     }
+
+    /**
+     * <code>string database_name = 14;</code>
+     */
+    public var databaseName: kotlin.String
+      @JvmName("getDatabaseName")
+      get() = _builder.getDatabaseName()
+      @JvmName("setDatabaseName")
+      set(value) {
+        _builder.setDatabaseName(value)
+      }
+    /**
+     * <code>string database_name = 14;</code>
+     */
+    public fun clearDatabaseName() {
+      _builder.clearDatabaseName()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic

@@ -427,6 +427,8 @@ struct Border0_Common_V1_Service: Sendable {
 
   var displayName: String = String()
 
+  var databaseName: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1033,7 +1035,7 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{3}display_name\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{3}display_name\0\u{3}database_name\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1054,6 +1056,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 11: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.tags) }()
       case 12: try { try decoder.decodeRepeatedMessageField(value: &self.publicIps) }()
       case 13: try { try decoder.decodeSingularStringField(value: &self.displayName) }()
+      case 14: try { try decoder.decodeSingularStringField(value: &self.databaseName) }()
       default: break
       }
     }
@@ -1099,6 +1102,9 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.displayName.isEmpty {
       try visitor.visitSingularStringField(value: self.displayName, fieldNumber: 13)
     }
+    if !self.databaseName.isEmpty {
+      try visitor.visitSingularStringField(value: self.databaseName, fieldNumber: 14)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1116,6 +1122,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.tags != rhs.tags {return false}
     if lhs.publicIps != rhs.publicIps {return false}
     if lhs.displayName != rhs.displayName {return false}
+    if lhs.databaseName != rhs.databaseName {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
