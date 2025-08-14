@@ -249,6 +249,18 @@ struct Border0_Device_V1_AuthChallengeSolutionMessage: Sendable {
   init() {}
 }
 
+struct Border0_Device_V1_DatabaseSettings: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var databaseName: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct Border0_Device_V1_Service: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -338,6 +350,15 @@ struct Border0_Device_V1_Service: @unchecked Sendable {
     get {return _storage._displayName}
     set {_uniqueStorage()._displayName = newValue}
   }
+
+  var databaseSettings: Border0_Device_V1_DatabaseSettings {
+    get {return _storage._databaseSettings ?? Border0_Device_V1_DatabaseSettings()}
+    set {_uniqueStorage()._databaseSettings = newValue}
+  }
+  /// Returns true if `databaseSettings` has been explicitly set.
+  var hasDatabaseSettings: Bool {return _storage._databaseSettings != nil}
+  /// Clears the value of `databaseSettings`. Subsequent reads from it will return its default value.
+  mutating func clearDatabaseSettings() {_uniqueStorage()._databaseSettings = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -786,9 +807,39 @@ extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message,
   }
 }
 
+extension Border0_Device_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".DatabaseSettings"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}database_name\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.databaseName) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.databaseName.isEmpty {
+      try visitor.visitSingularStringField(value: self.databaseName, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Device_V1_DatabaseSettings, rhs: Border0_Device_V1_DatabaseSettings) -> Bool {
+    if lhs.databaseName != rhs.databaseName {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0\u{3}database_settings\0")
 
   fileprivate class _StorageClass {
     var _networkID: String = String()
@@ -808,6 +859,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _standalone: Bool = false
     var _delete: Bool = false
     var _displayName: String = String()
+    var _databaseSettings: Border0_Device_V1_DatabaseSettings? = nil
 
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
@@ -835,6 +887,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       _standalone = source._standalone
       _delete = source._delete
       _displayName = source._displayName
+      _databaseSettings = source._databaseSettings
     }
   }
 
@@ -870,6 +923,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
         case 15: try { try decoder.decodeSingularBoolField(value: &_storage._standalone) }()
         case 16: try { try decoder.decodeSingularBoolField(value: &_storage._delete) }()
         case 17: try { try decoder.decodeSingularStringField(value: &_storage._displayName) }()
+        case 18: try { try decoder.decodeSingularMessageField(value: &_storage._databaseSettings) }()
         default: break
         }
       }
@@ -878,6 +932,10 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._networkID.isEmpty {
         try visitor.visitSingularStringField(value: _storage._networkID, fieldNumber: 1)
       }
@@ -929,6 +987,9 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       if !_storage._displayName.isEmpty {
         try visitor.visitSingularStringField(value: _storage._displayName, fieldNumber: 17)
       }
+      try { if let v = _storage._databaseSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -955,6 +1016,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
         if _storage._standalone != rhs_storage._standalone {return false}
         if _storage._delete != rhs_storage._delete {return false}
         if _storage._displayName != rhs_storage._displayName {return false}
+        if _storage._databaseSettings != rhs_storage._databaseSettings {return false}
         return true
       }
       if !storagesAreEqual {return false}
