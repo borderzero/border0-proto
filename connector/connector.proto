@@ -69,6 +69,7 @@ message TunnelCertificateSignRequest {
   string request_id = 1;
   string socket_id = 2;
   string public_key = 3;
+  bool is_v2 = 4;
 }
 
 message TunnelCertificateSignResponse {

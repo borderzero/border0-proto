@@ -72,6 +72,23 @@ public object TunnelCertificateSignRequestKt {
     public fun clearPublicKey() {
       _builder.clearPublicKey()
     }
+
+    /**
+     * <code>bool is_v2 = 4;</code>
+     */
+    public var isV2: kotlin.Boolean
+      @JvmName("getIsV2")
+      get() = _builder.getIsV2()
+      @JvmName("setIsV2")
+      set(value) {
+        _builder.setIsV2(value)
+      }
+    /**
+     * <code>bool is_v2 = 4;</code>
+     */
+    public fun clearIsV2() {
+      _builder.clearIsV2()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
