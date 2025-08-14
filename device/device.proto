@@ -51,6 +51,10 @@ message AuthChallengeSolutionMessage {
   bytes solvedNonce = 2;
 }
 
+message DatabaseSettings {
+  string database_name = 1;
+}
+
 message Service {
   string network_id = 1;
   string name = 2;
@@ -69,6 +73,7 @@ message Service {
   bool standalone = 15;
   bool delete = 16;
   string display_name = 17;
+  DatabaseSettings database_settings = 18;
 }
 
 message ServiceBatch {

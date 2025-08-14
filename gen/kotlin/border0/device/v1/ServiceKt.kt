@@ -515,9 +515,36 @@ public object ServiceKt {
     public fun clearDisplayName() {
       _builder.clearDisplayName()
     }
+
+    /**
+     * <code>.border0.device.v1.DatabaseSettings database_settings = 18;</code>
+     */
+    public var databaseSettings: border0.device.v1.Device.DatabaseSettings
+      @JvmName("getDatabaseSettings")
+      get() = _builder.getDatabaseSettings()
+      @JvmName("setDatabaseSettings")
+      set(value) {
+        _builder.setDatabaseSettings(value)
+      }
+    /**
+     * <code>.border0.device.v1.DatabaseSettings database_settings = 18;</code>
+     */
+    public fun clearDatabaseSettings() {
+      _builder.clearDatabaseSettings()
+    }
+    /**
+     * <code>.border0.device.v1.DatabaseSettings database_settings = 18;</code>
+     * @return Whether the databaseSettings field is set.
+     */
+    public fun hasDatabaseSettings(): kotlin.Boolean {
+      return _builder.hasDatabaseSettings()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
 public inline fun border0.device.v1.Device.Service.copy(block: border0.device.v1.ServiceKt.Dsl.() -> kotlin.Unit): border0.device.v1.Device.Service =
   border0.device.v1.ServiceKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+
+public val border0.device.v1.Device.ServiceOrBuilder.databaseSettingsOrNull: border0.device.v1.Device.DatabaseSettings?
+  get() = if (hasDatabaseSettings()) getDatabaseSettings() else null
 

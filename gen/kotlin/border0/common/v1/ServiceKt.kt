@@ -424,24 +424,34 @@ public object ServiceKt {
     }
 
     /**
-     * <code>string database_name = 14;</code>
+     * <code>.border0.common.v1.DatabaseSettings database_settings = 14;</code>
      */
-    public var databaseName: kotlin.String
-      @JvmName("getDatabaseName")
-      get() = _builder.getDatabaseName()
-      @JvmName("setDatabaseName")
+    public var databaseSettings: border0.common.v1.Messages.DatabaseSettings
+      @JvmName("getDatabaseSettings")
+      get() = _builder.getDatabaseSettings()
+      @JvmName("setDatabaseSettings")
       set(value) {
-        _builder.setDatabaseName(value)
+        _builder.setDatabaseSettings(value)
       }
     /**
-     * <code>string database_name = 14;</code>
+     * <code>.border0.common.v1.DatabaseSettings database_settings = 14;</code>
      */
-    public fun clearDatabaseName() {
-      _builder.clearDatabaseName()
+    public fun clearDatabaseSettings() {
+      _builder.clearDatabaseSettings()
+    }
+    /**
+     * <code>.border0.common.v1.DatabaseSettings database_settings = 14;</code>
+     * @return Whether the databaseSettings field is set.
+     */
+    public fun hasDatabaseSettings(): kotlin.Boolean {
+      return _builder.hasDatabaseSettings()
     }
   }
 }
 @kotlin.jvm.JvmSynthetic
 public inline fun border0.common.v1.Messages.Service.copy(block: border0.common.v1.ServiceKt.Dsl.() -> kotlin.Unit): border0.common.v1.Messages.Service =
   border0.common.v1.ServiceKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+
+public val border0.common.v1.Messages.ServiceOrBuilder.databaseSettingsOrNull: border0.common.v1.Messages.DatabaseSettings?
+  get() = if (hasDatabaseSettings()) getDatabaseSettings() else null
 
