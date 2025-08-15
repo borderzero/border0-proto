@@ -432,6 +432,8 @@ struct Border0_V1_TunnelCertificateSignRequest: Sendable {
 
   var publicKey: String = String()
 
+  var isV2: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1881,7 +1883,7 @@ extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TunnelCertificateSignRequest"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}socket_id\0\u{3}public_key\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}socket_id\0\u{3}public_key\0\u{3}is_v2\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1892,6 +1894,7 @@ extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftP
       case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.socketID) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.publicKey) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.isV2) }()
       default: break
       }
     }
@@ -1907,6 +1910,9 @@ extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftP
     if !self.publicKey.isEmpty {
       try visitor.visitSingularStringField(value: self.publicKey, fieldNumber: 3)
     }
+    if self.isV2 != false {
+      try visitor.visitSingularBoolField(value: self.isV2, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1914,6 +1920,7 @@ extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftP
     if lhs.requestID != rhs.requestID {return false}
     if lhs.socketID != rhs.socketID {return false}
     if lhs.publicKey != rhs.publicKey {return false}
+    if lhs.isV2 != rhs.isV2 {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
