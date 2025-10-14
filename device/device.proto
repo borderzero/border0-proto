@@ -37,6 +37,7 @@ message ServerToDeviceMessage {
     Service service = 7;
     OrgDetails org_details = 8;
     ServiceBatch service_batch = 9;
+    border0.common.v1.DNSConfigurationMessage dns_configuration = 10;
   }
 }
 
