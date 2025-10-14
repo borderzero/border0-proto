@@ -237,6 +237,30 @@ public object ServerToDeviceMessageKt {
     public fun hasServiceBatch(): kotlin.Boolean {
       return _builder.hasServiceBatch()
     }
+
+    /**
+     * <code>.border0.common.v1.DNSConfigurationMessage dns_configuration = 10;</code>
+     */
+    public var dnsConfiguration: border0.common.v1.Messages.DNSConfigurationMessage
+      @JvmName("getDnsConfiguration")
+      get() = _builder.getDnsConfiguration()
+      @JvmName("setDnsConfiguration")
+      set(value) {
+        _builder.setDnsConfiguration(value)
+      }
+    /**
+     * <code>.border0.common.v1.DNSConfigurationMessage dns_configuration = 10;</code>
+     */
+    public fun clearDnsConfiguration() {
+      _builder.clearDnsConfiguration()
+    }
+    /**
+     * <code>.border0.common.v1.DNSConfigurationMessage dns_configuration = 10;</code>
+     * @return Whether the dnsConfiguration field is set.
+     */
+    public fun hasDnsConfiguration(): kotlin.Boolean {
+      return _builder.hasDnsConfiguration()
+    }
     public val messageCase: border0.device.v1.Device.ServerToDeviceMessage.MessageCase
       @JvmName("getMessageCase")
       get() = _builder.getMessageCase()
@@ -276,4 +300,7 @@ public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.orgDetailsOrN
 
 public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.serviceBatchOrNull: border0.device.v1.Device.ServiceBatch?
   get() = if (hasServiceBatch()) getServiceBatch() else null
+
+public val border0.device.v1.Device.ServerToDeviceMessageOrBuilder.dnsConfigurationOrNull: border0.common.v1.Messages.DNSConfigurationMessage?
+  get() = if (hasDnsConfiguration()) getDnsConfiguration() else null
 

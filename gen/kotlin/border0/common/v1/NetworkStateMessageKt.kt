@@ -284,9 +284,48 @@ public object NetworkStateMessageKt {
       _builder.clearStandaloneServices()
     }
 
+
+    /**
+     * <pre>
+     * DNS configuration for the organization
+     * </pre>
+     *
+     * <code>.border0.common.v1.DNSConfigurationMessage dns_configuration = 10;</code>
+     */
+    public var dnsConfiguration: border0.common.v1.Messages.DNSConfigurationMessage
+      @JvmName("getDnsConfiguration")
+      get() = _builder.getDnsConfiguration()
+      @JvmName("setDnsConfiguration")
+      set(value) {
+        _builder.setDnsConfiguration(value)
+      }
+    /**
+     * <pre>
+     * DNS configuration for the organization
+     * </pre>
+     *
+     * <code>.border0.common.v1.DNSConfigurationMessage dns_configuration = 10;</code>
+     */
+    public fun clearDnsConfiguration() {
+      _builder.clearDnsConfiguration()
+    }
+    /**
+     * <pre>
+     * DNS configuration for the organization
+     * </pre>
+     *
+     * <code>.border0.common.v1.DNSConfigurationMessage dns_configuration = 10;</code>
+     * @return Whether the dnsConfiguration field is set.
+     */
+    public fun hasDnsConfiguration(): kotlin.Boolean {
+      return _builder.hasDnsConfiguration()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
 public inline fun border0.common.v1.Messages.NetworkStateMessage.copy(block: border0.common.v1.NetworkStateMessageKt.Dsl.() -> kotlin.Unit): border0.common.v1.Messages.NetworkStateMessage =
   border0.common.v1.NetworkStateMessageKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+
+public val border0.common.v1.Messages.NetworkStateMessageOrBuilder.dnsConfigurationOrNull: border0.common.v1.Messages.DNSConfigurationMessage?
+  get() = if (hasDnsConfiguration()) getDnsConfiguration() else null
 

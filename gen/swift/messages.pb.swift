@@ -495,6 +495,9 @@ struct Border0_Common_V1_Service: Sendable {
   /// Clears the value of `databaseSettings`. Subsequent reads from it will return its default value.
   mutating func clearDatabaseSettings() {self._databaseSettings = nil}
 
+  /// DNS domain patterns to route through this service
+  var dnsPatterns: [String] = []
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1217,7 +1220,7 @@ extension Border0_Common_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtob
 
 extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{3}display_name\0\u{3}database_settings\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{3}display_name\0\u{3}database_settings\0\u{3}dns_patterns\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1239,6 +1242,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 12: try { try decoder.decodeRepeatedMessageField(value: &self.publicIps) }()
       case 13: try { try decoder.decodeSingularStringField(value: &self.displayName) }()
       case 14: try { try decoder.decodeSingularMessageField(value: &self._databaseSettings) }()
+      case 15: try { try decoder.decodeRepeatedStringField(value: &self.dnsPatterns) }()
       default: break
       }
     }
@@ -1291,6 +1295,9 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try { if let v = self._databaseSettings {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
     } }()
+    if !self.dnsPatterns.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.dnsPatterns, fieldNumber: 15)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1309,6 +1316,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.publicIps != rhs.publicIps {return false}
     if lhs.displayName != rhs.displayName {return false}
     if lhs._databaseSettings != rhs._databaseSettings {return false}
+    if lhs.dnsPatterns != rhs.dnsPatterns {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -388,7 +388,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=87
+     *     See messages.proto;l=99
      * @return A list containing the allowedIps.
      */
     @kotlin.Deprecated(message = "Field allowedIps is deprecated") public val allowedIps: com.google.protobuf.kotlin.DslList<kotlin.String, AllowedIpsProxy>
@@ -406,7 +406,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=87
+     *     See messages.proto;l=99
      * @param value The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -424,7 +424,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=87
+     *     See messages.proto;l=99
      * @param value The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -443,7 +443,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=87
+     *     See messages.proto;l=99
      * @param values The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -461,7 +461,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=87
+     *     See messages.proto;l=99
      * @param values The allowedIps to add.
      */
     @kotlin.jvm.JvmSynthetic
@@ -480,7 +480,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=87
+     *     See messages.proto;l=99
      * @param index The index to set the value at.
      * @param value The allowedIps to set.
      */
@@ -498,7 +498,7 @@ public object WireGuardPeerKt {
      *
      * <code>repeated string allowed_ips = 4 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.allowed_ips is deprecated.
-     *     See messages.proto;l=87
+     *     See messages.proto;l=99
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("clearAllowedIps")
@@ -528,7 +528,7 @@ public object WireGuardPeerKt {
      *
      * <code>string public_udp4_endpoint = 6 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.public_udp4_endpoint is deprecated.
-     *     See messages.proto;l=92
+     *     See messages.proto;l=104
      */
     public fun clearPublicUdp4Endpoint() {
       _builder.clearPublicUdp4Endpoint()
@@ -557,7 +557,7 @@ public object WireGuardPeerKt {
      *
      * <code>string public_udp6_endpoint = 7 [deprecated = true];</code>
      * @deprecated border0.common.v1.WireGuardPeer.public_udp6_endpoint is deprecated.
-     *     See messages.proto;l=97
+     *     See messages.proto;l=109
      */
     public fun clearPublicUdp6Endpoint() {
       _builder.clearPublicUdp6Endpoint()
