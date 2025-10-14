@@ -310,6 +310,41 @@ struct Border0_Common_V1_PeerOfflineMessage: Sendable {
   init() {}
 }
 
+struct Border0_Common_V1_SplitDNSRule: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Domain pattern (e.g., "example.com")
+  var domain: String = String()
+
+  /// DNS servers to use for this domain
+  var dnsServers: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Border0_Common_V1_DNSConfigurationMessage: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Flag indicating if DNS management is enabled for the organization
+  var dnsManagementEnabled: Bool = false
+
+  /// List of global DNS server IP addresses (IPv4/IPv6) to use for all queries
+  var globalDnsServers: [String] = []
+
+  /// List of domain-specific DNS routing rules
+  var splitDnsRules: [Border0_Common_V1_SplitDNSRule] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct Border0_Common_V1_NetworkStateMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -333,9 +368,21 @@ struct Border0_Common_V1_NetworkStateMessage: Sendable {
 
   var standaloneServices: [Border0_Common_V1_Service] = []
 
+  /// DNS configuration for the organization
+  var dnsConfiguration: Border0_Common_V1_DNSConfigurationMessage {
+    get {return _dnsConfiguration ?? Border0_Common_V1_DNSConfigurationMessage()}
+    set {_dnsConfiguration = newValue}
+  }
+  /// Returns true if `dnsConfiguration` has been explicitly set.
+  var hasDnsConfiguration: Bool {return self._dnsConfiguration != nil}
+  /// Clears the value of `dnsConfiguration`. Subsequent reads from it will return its default value.
+  mutating func clearDnsConfiguration() {self._dnsConfiguration = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _dnsConfiguration: Border0_Common_V1_DNSConfigurationMessage? = nil
 }
 
 struct Border0_Common_V1_WireGuardPeer: Sendable {
@@ -904,9 +951,84 @@ extension Border0_Common_V1_PeerOfflineMessage: SwiftProtobuf.Message, SwiftProt
   }
 }
 
+extension Border0_Common_V1_SplitDNSRule: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".SplitDNSRule"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}domain\0\u{3}dns_servers\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.domain) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.dnsServers) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.domain.isEmpty {
+      try visitor.visitSingularStringField(value: self.domain, fieldNumber: 1)
+    }
+    if !self.dnsServers.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.dnsServers, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Common_V1_SplitDNSRule, rhs: Border0_Common_V1_SplitDNSRule) -> Bool {
+    if lhs.domain != rhs.domain {return false}
+    if lhs.dnsServers != rhs.dnsServers {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_Common_V1_DNSConfigurationMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".DNSConfigurationMessage"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}dns_management_enabled\0\u{3}global_dns_servers\0\u{3}split_dns_rules\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.dnsManagementEnabled) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.globalDnsServers) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.splitDnsRules) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.dnsManagementEnabled != false {
+      try visitor.visitSingularBoolField(value: self.dnsManagementEnabled, fieldNumber: 1)
+    }
+    if !self.globalDnsServers.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.globalDnsServers, fieldNumber: 2)
+    }
+    if !self.splitDnsRules.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.splitDnsRules, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_Common_V1_DNSConfigurationMessage, rhs: Border0_Common_V1_DNSConfigurationMessage) -> Bool {
+    if lhs.dnsManagementEnabled != rhs.dnsManagementEnabled {return false}
+    if lhs.globalDnsServers != rhs.globalDnsServers {return false}
+    if lhs.splitDnsRules != rhs.splitDnsRules {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".NetworkStateMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}online_peers\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0\u{3}standalone_services\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}online_peers\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0\u{3}standalone_services\0\u{3}dns_configuration\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -923,12 +1045,17 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
       case 7: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV4) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV6) }()
       case 9: try { try decoder.decodeRepeatedMessageField(value: &self.standaloneServices) }()
+      case 10: try { try decoder.decodeSingularMessageField(value: &self._dnsConfiguration) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.networkID.isEmpty {
       try visitor.visitSingularStringField(value: self.networkID, fieldNumber: 1)
     }
@@ -956,6 +1083,9 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
     if !self.standaloneServices.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.standaloneServices, fieldNumber: 9)
     }
+    try { if let v = self._dnsConfiguration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -969,6 +1099,7 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
     if lhs.networkResourcesCidrV4 != rhs.networkResourcesCidrV4 {return false}
     if lhs.networkResourcesCidrV6 != rhs.networkResourcesCidrV6 {return false}
     if lhs.standaloneServices != rhs.standaloneServices {return false}
+    if lhs._dnsConfiguration != rhs._dnsConfiguration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

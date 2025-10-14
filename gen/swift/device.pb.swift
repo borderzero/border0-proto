@@ -201,6 +201,14 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     set {message = .serviceBatch(newValue)}
   }
 
+  var dnsConfiguration: Border0_Common_V1_DNSConfigurationMessage {
+    get {
+      if case .dnsConfiguration(let v)? = message {return v}
+      return Border0_Common_V1_DNSConfigurationMessage()
+    }
+    set {message = .dnsConfiguration(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Message: Equatable, Sendable {
@@ -213,6 +221,7 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     case service(Border0_Device_V1_Service)
     case orgDetails(Border0_Device_V1_OrgDetails)
     case serviceBatch(Border0_Device_V1_ServiceBatch)
+    case dnsConfiguration(Border0_Common_V1_DNSConfigurationMessage)
 
   }
 
@@ -548,7 +557,7 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
 
 extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ServerToDeviceMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge\0\u{1}heartbeat\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{1}disconnect\0\u{1}service\0\u{3}org_details\0\u{3}service_batch\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge\0\u{1}heartbeat\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{1}disconnect\0\u{1}service\0\u{3}org_details\0\u{3}service_batch\0\u{3}dns_configuration\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -673,6 +682,19 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
           self.message = .serviceBatch(v)
         }
       }()
+      case 10: try {
+        var v: Border0_Common_V1_DNSConfigurationMessage?
+        var hadOneofValue = false
+        if let current = self.message {
+          hadOneofValue = true
+          if case .dnsConfiguration(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.message = .dnsConfiguration(v)
+        }
+      }()
       default: break
       }
     }
@@ -719,6 +741,10 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
     case .serviceBatch?: try {
       guard case .serviceBatch(let v)? = self.message else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    }()
+    case .dnsConfiguration?: try {
+      guard case .dnsConfiguration(let v)? = self.message else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case nil: break
     }

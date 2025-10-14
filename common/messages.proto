@@ -129,6 +129,7 @@ message Service {
   repeated IPAddressWithMetadata public_ips = 12;
   string display_name = 13;
   DatabaseSettings database_settings = 14;
+  repeated string dns_patterns = 15; // DNS domain patterns to route through this service
 }
 
 message IPAddressWithMetadata {

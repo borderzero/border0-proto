@@ -75,6 +75,7 @@ message Service {
   bool delete = 16;
   string display_name = 17;
   DatabaseSettings database_settings = 18;
+  repeated string dns_patterns = 19; // DNS domain patterns to route through this service
 }
 
 message ServiceBatch {
