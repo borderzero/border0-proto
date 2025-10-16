@@ -539,7 +539,105 @@ public object ServiceKt {
     public fun hasDatabaseSettings(): kotlin.Boolean {
       return _builder.hasDatabaseSettings()
     }
-  }
+
+    /**
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class DnsPatternsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * <pre>
+     * DNS domain patterns to route through this service
+     * </pre>
+     *
+     * <code>repeated string dns_patterns = 19;</code>
+     * @return A list containing the dnsPatterns.
+     */
+    public val dnsPatterns: com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getDnsPatternsList()
+      )
+    /**
+     * <pre>
+     * DNS domain patterns to route through this service
+     * </pre>
+     *
+     * <code>repeated string dns_patterns = 19;</code>
+     * @param value The dnsPatterns to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addDnsPatterns")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>.add(value: kotlin.String) {
+      _builder.addDnsPatterns(value)
+    }
+    /**
+     * <pre>
+     * DNS domain patterns to route through this service
+     * </pre>
+     *
+     * <code>repeated string dns_patterns = 19;</code>
+     * @param value The dnsPatterns to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignDnsPatterns")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>.plusAssign(value: kotlin.String) {
+      add(value)
+    }
+    /**
+     * <pre>
+     * DNS domain patterns to route through this service
+     * </pre>
+     *
+     * <code>repeated string dns_patterns = 19;</code>
+     * @param values The dnsPatterns to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllDnsPatterns")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>.addAll(values: kotlin.collections.Iterable<kotlin.String>) {
+      _builder.addAllDnsPatterns(values)
+    }
+    /**
+     * <pre>
+     * DNS domain patterns to route through this service
+     * </pre>
+     *
+     * <code>repeated string dns_patterns = 19;</code>
+     * @param values The dnsPatterns to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllDnsPatterns")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.String>) {
+      addAll(values)
+    }
+    /**
+     * <pre>
+     * DNS domain patterns to route through this service
+     * </pre>
+     *
+     * <code>repeated string dns_patterns = 19;</code>
+     * @param index The index to set the value at.
+     * @param value The dnsPatterns to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setDnsPatterns")
+    public operator fun com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>.set(index: kotlin.Int, value: kotlin.String) {
+      _builder.setDnsPatterns(index, value)
+    }/**
+     * <pre>
+     * DNS domain patterns to route through this service
+     * </pre>
+     *
+     * <code>repeated string dns_patterns = 19;</code>
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearDnsPatterns")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>.clear() {
+      _builder.clearDnsPatterns()
+    }}
 }
 @kotlin.jvm.JvmSynthetic
 public inline fun border0.device.v1.Device.Service.copy(block: border0.device.v1.ServiceKt.Dsl.() -> kotlin.Unit): border0.device.v1.Device.Service =

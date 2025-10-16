@@ -37,6 +37,7 @@ message ServerToDeviceMessage {
     Service service = 7;
     OrgDetails org_details = 8;
     ServiceBatch service_batch = 9;
+    border0.common.v1.DNSConfigurationMessage dns_configuration = 10;
   }
 }
 
@@ -74,6 +75,7 @@ message Service {
   bool delete = 16;
   string display_name = 17;
   DatabaseSettings database_settings = 18;
+  repeated string dns_patterns = 19; // DNS domain patterns to route through this service
 }
 
 message ServiceBatch {

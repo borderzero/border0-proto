@@ -201,6 +201,14 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     set {message = .serviceBatch(newValue)}
   }
 
+  var dnsConfiguration: Border0_Common_V1_DNSConfigurationMessage {
+    get {
+      if case .dnsConfiguration(let v)? = message {return v}
+      return Border0_Common_V1_DNSConfigurationMessage()
+    }
+    set {message = .dnsConfiguration(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Message: Equatable, Sendable {
@@ -213,6 +221,7 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
     case service(Border0_Device_V1_Service)
     case orgDetails(Border0_Device_V1_OrgDetails)
     case serviceBatch(Border0_Device_V1_ServiceBatch)
+    case dnsConfiguration(Border0_Common_V1_DNSConfigurationMessage)
 
   }
 
@@ -359,6 +368,12 @@ struct Border0_Device_V1_Service: @unchecked Sendable {
   var hasDatabaseSettings: Bool {return _storage._databaseSettings != nil}
   /// Clears the value of `databaseSettings`. Subsequent reads from it will return its default value.
   mutating func clearDatabaseSettings() {_uniqueStorage()._databaseSettings = nil}
+
+  /// DNS domain patterns to route through this service
+  var dnsPatterns: [String] {
+    get {return _storage._dnsPatterns}
+    set {_uniqueStorage()._dnsPatterns = newValue}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -548,7 +563,7 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
 
 extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ServerToDeviceMessage"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge\0\u{1}heartbeat\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{1}disconnect\0\u{1}service\0\u{3}org_details\0\u{3}service_batch\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge\0\u{1}heartbeat\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{1}disconnect\0\u{1}service\0\u{3}org_details\0\u{3}service_batch\0\u{3}dns_configuration\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -673,6 +688,19 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
           self.message = .serviceBatch(v)
         }
       }()
+      case 10: try {
+        var v: Border0_Common_V1_DNSConfigurationMessage?
+        var hadOneofValue = false
+        if let current = self.message {
+          hadOneofValue = true
+          if case .dnsConfiguration(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.message = .dnsConfiguration(v)
+        }
+      }()
       default: break
       }
     }
@@ -719,6 +747,10 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
     case .serviceBatch?: try {
       guard case .serviceBatch(let v)? = self.message else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    }()
+    case .dnsConfiguration?: try {
+      guard case .dnsConfiguration(let v)? = self.message else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case nil: break
     }
@@ -839,7 +871,7 @@ extension Border0_Device_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtob
 
 extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0\u{3}database_settings\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0\u{3}database_settings\0\u{3}dns_patterns\0")
 
   fileprivate class _StorageClass {
     var _networkID: String = String()
@@ -860,6 +892,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _delete: Bool = false
     var _displayName: String = String()
     var _databaseSettings: Border0_Device_V1_DatabaseSettings? = nil
+    var _dnsPatterns: [String] = []
 
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
@@ -888,6 +921,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       _delete = source._delete
       _displayName = source._displayName
       _databaseSettings = source._databaseSettings
+      _dnsPatterns = source._dnsPatterns
     }
   }
 
@@ -924,6 +958,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
         case 16: try { try decoder.decodeSingularBoolField(value: &_storage._delete) }()
         case 17: try { try decoder.decodeSingularStringField(value: &_storage._displayName) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._databaseSettings) }()
+        case 19: try { try decoder.decodeRepeatedStringField(value: &_storage._dnsPatterns) }()
         default: break
         }
       }
@@ -990,6 +1025,9 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       try { if let v = _storage._databaseSettings {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
       } }()
+      if !_storage._dnsPatterns.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._dnsPatterns, fieldNumber: 19)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1017,6 +1055,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
         if _storage._delete != rhs_storage._delete {return false}
         if _storage._displayName != rhs_storage._displayName {return false}
         if _storage._databaseSettings != rhs_storage._databaseSettings {return false}
+        if _storage._dnsPatterns != rhs_storage._dnsPatterns {return false}
         return true
       }
       if !storagesAreEqual {return false}

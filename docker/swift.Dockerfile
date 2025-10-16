@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install swift, track versions in https://www.swift.org/download/
 # Note(@adriano): I have an M1 MacBook Pro (arm), so I need the aarch64 version. If you are on an intel machine, use the x86_64 version.
-RUN curl https://download.swift.org/swift-6.0.1-release/ubuntu2404-aarch64/swift-6.0.1-RELEASE/swift-6.0.1-RELEASE-ubuntu24.04-aarch64.tar.gz -o swift.tar.gz
+RUN curl https://download.swift.org/swift-6.1-release/ubuntu2404-aarch64/swift-6.1-RELEASE/swift-6.1-RELEASE-ubuntu24.04-aarch64.tar.gz -o swift.tar.gz
 RUN tar xzf swift.tar.gz --directory / --strip-components=1 && rm swift.tar.gz
 
 WORKDIR /app

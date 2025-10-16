@@ -58,6 +58,17 @@ message PeerOfflineMessage {
   string peer_public_key = 2;
 }
 
+message SplitDNSRule {
+  string domain = 1;                    // Domain pattern (e.g., "example.com")
+  repeated string dns_servers = 2;      // DNS servers to use for this domain
+}
+
+message DNSConfigurationMessage {
+  bool dns_management_enabled = 1;                 // Flag indicating if DNS management is enabled for the organization
+  repeated string global_dns_servers = 2;          // List of global DNS server IP addresses (IPv4/IPv6) to use for all queries
+  repeated SplitDNSRule split_dns_rules = 3;       // List of domain-specific DNS routing rules
+}
+
 message NetworkStateMessage {
   string network_id = 1;
   string network_cidr_v4 = 2;
@@ -68,6 +79,7 @@ message NetworkStateMessage {
   string network_resources_cidr_v4 = 7;
   string network_resources_cidr_v6 = 8;
   repeated Service standalone_services = 9;
+  DNSConfigurationMessage dns_configuration = 10;  // DNS configuration for the organization
 }
 
 message WireGuardPeer {
@@ -117,6 +129,7 @@ message Service {
   repeated IPAddressWithMetadata public_ips = 12;
   string display_name = 13;
   DatabaseSettings database_settings = 14;
+  repeated string dns_patterns = 15; // DNS domain patterns to route through this service
 }
 
 message IPAddressWithMetadata {
