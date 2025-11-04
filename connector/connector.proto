@@ -304,9 +304,16 @@ message AllowedNetworks {
 
 message AllowedNetworksSocketConfig {
   map<string, AllowedNetworksSubnets> sockets = 1;
+  map<string, AllowedNetworksDnsPatterns> dns_patterns = 2; // socketID -> DNS patterns for DNS-based routing
 }
 
 message AllowedNetworksSubnets {
   repeated string subnets = 1;
+}
+
+// DNS patterns for a socket. Supports exact domains ("api.example.com") and wildcards ("*.example.com").
+// Connectors use these patterns to resolve DNS queries and manage firewall rules automatically.
+message AllowedNetworksDnsPatterns {
+  repeated string patterns = 1; // List of DNS patterns (e.g., "*.example.com", "api.company.io")
 }
 

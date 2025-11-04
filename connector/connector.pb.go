@@ -3045,7 +3045,8 @@ type AllowedNetworksSocketConfig struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Sockets map[string]*AllowedNetworksSubnets `protobuf:"bytes,1,rep,name=sockets,proto3" json:"sockets,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Sockets     map[string]*AllowedNetworksSubnets     `protobuf:"bytes,1,rep,name=sockets,proto3" json:"sockets,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	DnsPatterns map[string]*AllowedNetworksDnsPatterns `protobuf:"bytes,2,rep,name=dns_patterns,json=dnsPatterns,proto3" json:"dns_patterns,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"` // socketID -> DNS patterns for DNS-based routing
 }
 
 func (x *AllowedNetworksSocketConfig) Reset() {
@@ -3083,6 +3084,13 @@ func (*AllowedNetworksSocketConfig) Descriptor() ([]byte, []int) {
 func (x *AllowedNetworksSocketConfig) GetSockets() map[string]*AllowedNetworksSubnets {
 	if x != nil {
 		return x.Sockets
+	}
+	return nil
+}
+
+func (x *AllowedNetworksSocketConfig) GetDnsPatterns() map[string]*AllowedNetworksDnsPatterns {
+	if x != nil {
+		return x.DnsPatterns
 	}
 	return nil
 }
@@ -3130,6 +3138,55 @@ func (*AllowedNetworksSubnets) Descriptor() ([]byte, []int) {
 func (x *AllowedNetworksSubnets) GetSubnets() []string {
 	if x != nil {
 		return x.Subnets
+	}
+	return nil
+}
+
+// DNS patterns for a socket. Supports exact domains ("api.example.com") and wildcards ("*.example.com").
+// Connectors use these patterns to resolve DNS queries and manage firewall rules automatically.
+type AllowedNetworksDnsPatterns struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Patterns []string `protobuf:"bytes,1,rep,name=patterns,proto3" json:"patterns,omitempty"` // List of DNS patterns (e.g., "*.example.com", "api.company.io")
+}
+
+func (x *AllowedNetworksDnsPatterns) Reset() {
+	*x = AllowedNetworksDnsPatterns{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_connector_proto_msgTypes[38]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AllowedNetworksDnsPatterns) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AllowedNetworksDnsPatterns) ProtoMessage() {}
+
+func (x *AllowedNetworksDnsPatterns) ProtoReflect() protoreflect.Message {
+	mi := &file_connector_proto_msgTypes[38]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AllowedNetworksDnsPatterns.ProtoReflect.Descriptor instead.
+func (*AllowedNetworksDnsPatterns) Descriptor() ([]byte, []int) {
+	return file_connector_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *AllowedNetworksDnsPatterns) GetPatterns() []string {
+	if x != nil {
+		return x.Patterns
 	}
 	return nil
 }
@@ -3651,37 +3708,53 @@ var file_connector_proto_rawDesc = []byte{
 	0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65,
 	0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x4e, 0x65, 0x74,
 	0x77, 0x6f, 0x72, 0x6b, 0x73, 0x53, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69,
-	0x67, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0xcd, 0x01, 0x0a,
+	0x67, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x92, 0x03, 0x0a,
 	0x1b, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73,
 	0x53, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x4e, 0x0a, 0x07,
 	0x73, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x34, 0x2e,
 	0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x6c, 0x6c, 0x6f, 0x77,
 	0x65, 0x64, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x53, 0x6f, 0x63, 0x6b, 0x65, 0x74,
 	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x2e, 0x53, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x45, 0x6e,
-	0x74, 0x72, 0x79, 0x52, 0x07, 0x73, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x1a, 0x5e, 0x0a, 0x0c,
-	0x53, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03,
-	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x38,
-	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e,
-	0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x6c, 0x6c, 0x6f, 0x77,
-	0x65, 0x64, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x53, 0x75, 0x62, 0x6e, 0x65, 0x74,
-	0x73, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x32, 0x0a, 0x16,
+	0x74, 0x72, 0x79, 0x52, 0x07, 0x73, 0x6f, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x12, 0x5b, 0x0a, 0x0c,
+	0x64, 0x6e, 0x73, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x38, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e,
 	0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x53,
-	0x75, 0x62, 0x6e, 0x65, 0x74, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x62, 0x6e, 0x65, 0x74,
-	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x73, 0x75, 0x62, 0x6e, 0x65, 0x74, 0x73,
-	0x2a, 0x37, 0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x52,
-	0x45, 0x41, 0x54, 0x45, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45,
-	0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x02, 0x12, 0x09,
-	0x0a, 0x05, 0x4f, 0x54, 0x48, 0x45, 0x52, 0x10, 0x03, 0x32, 0x6c, 0x0a, 0x10, 0x43, 0x6f, 0x6e,
-	0x6e, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x58, 0x0a,
-	0x0d, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x20,
-	0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6e, 0x74,
-	0x72, 0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x21, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f,
-	0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x28, 0x01, 0x30, 0x01, 0x42, 0x2f, 0x5a, 0x2d, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x7a, 0x65, 0x72, 0x6f,
-	0x2f, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63,
-	0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6f, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x2e, 0x44, 0x6e, 0x73, 0x50,
+	0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x0b, 0x64, 0x6e,
+	0x73, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x1a, 0x5e, 0x0a, 0x0c, 0x53, 0x6f, 0x63,
+	0x6b, 0x65, 0x74, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x38, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x62, 0x6f, 0x72,
+	0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x4e,
+	0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x53, 0x75, 0x62, 0x6e, 0x65, 0x74, 0x73, 0x52, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x1a, 0x66, 0x0a, 0x10, 0x44, 0x6e, 0x73,
+	0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a,
+	0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12,
+	0x3c, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26,
+	0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x6c, 0x6c, 0x6f,
+	0x77, 0x65, 0x64, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x44, 0x6e, 0x73, 0x50, 0x61,
+	0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38,
+	0x01, 0x22, 0x32, 0x0a, 0x16, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x4e, 0x65, 0x74, 0x77,
+	0x6f, 0x72, 0x6b, 0x73, 0x53, 0x75, 0x62, 0x6e, 0x65, 0x74, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73,
+	0x75, 0x62, 0x6e, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x73, 0x75,
+	0x62, 0x6e, 0x65, 0x74, 0x73, 0x22, 0x38, 0x0a, 0x1a, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64,
+	0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x73, 0x44, 0x6e, 0x73, 0x50, 0x61, 0x74, 0x74, 0x65,
+	0x72, 0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x2a,
+	0x37, 0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x52, 0x45,
+	0x41, 0x54, 0x45, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x10,
+	0x01, 0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x02, 0x12, 0x09, 0x0a,
+	0x05, 0x4f, 0x54, 0x48, 0x45, 0x52, 0x10, 0x03, 0x32, 0x6c, 0x0a, 0x10, 0x43, 0x6f, 0x6e, 0x6e,
+	0x65, 0x63, 0x74, 0x6f, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x58, 0x0a, 0x0d,
+	0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x20, 0x2e,
+	0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6e, 0x74, 0x72,
+	0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x21, 0x2e, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6e,
+	0x74, 0x72, 0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x28, 0x01, 0x30, 0x01, 0x42, 0x2f, 0x5a, 0x2d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x7a, 0x65, 0x72, 0x6f, 0x2f,
+	0x62, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x30, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f,
+	0x6e, 0x6e, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3697,7 +3770,7 @@ func file_connector_proto_rawDescGZIP() []byte {
 }
 
 var file_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
+var file_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
 var file_connector_proto_goTypes = []any{
 	(Action)(0),                            // 0: border0.v1.Action
 	(*ControlStreamRequest)(nil),           // 1: border0.v1.ControlStreamRequest
@@ -3738,24 +3811,26 @@ var file_connector_proto_goTypes = []any{
 	(*AllowedNetworks)(nil),                // 36: border0.v1.AllowedNetworks
 	(*AllowedNetworksSocketConfig)(nil),    // 37: border0.v1.AllowedNetworksSocketConfig
 	(*AllowedNetworksSubnets)(nil),         // 38: border0.v1.AllowedNetworksSubnets
-	nil,                                    // 39: border0.v1.AuthorizeResponse.AllowedActionsEntry
-	nil,                                    // 40: border0.v1.AuthorizeResponse.InfoEntry
-	nil,                                    // 41: border0.v1.AuthorizeResponse.PermissionsEntry
-	nil,                                    // 42: border0.v1.AllowedNetworks.DevicesEntry
-	nil,                                    // 43: border0.v1.AllowedNetworksSocketConfig.SocketsEntry
-	(*common.HeartbeatMessage)(nil),        // 44: border0.common.v1.HeartbeatMessage
-	(*common.DiscoveryDetailsMessage)(nil), // 45: border0.common.v1.DiscoveryDetailsMessage
-	(*common.StatsMessage)(nil),            // 46: border0.common.v1.StatsMessage
-	(*common.NetworkStateMessage)(nil),     // 47: border0.common.v1.NetworkStateMessage
-	(*common.PeerOnlineMessage)(nil),       // 48: border0.common.v1.PeerOnlineMessage
-	(*common.PeerOfflineMessage)(nil),      // 49: border0.common.v1.PeerOfflineMessage
-	(*structpb.Struct)(nil),                // 50: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),          // 51: google.protobuf.Timestamp
-	(*common.Group)(nil),                   // 52: border0.common.v1.Group
+	(*AllowedNetworksDnsPatterns)(nil),     // 39: border0.v1.AllowedNetworksDnsPatterns
+	nil,                                    // 40: border0.v1.AuthorizeResponse.AllowedActionsEntry
+	nil,                                    // 41: border0.v1.AuthorizeResponse.InfoEntry
+	nil,                                    // 42: border0.v1.AuthorizeResponse.PermissionsEntry
+	nil,                                    // 43: border0.v1.AllowedNetworks.DevicesEntry
+	nil,                                    // 44: border0.v1.AllowedNetworksSocketConfig.SocketsEntry
+	nil,                                    // 45: border0.v1.AllowedNetworksSocketConfig.DnsPatternsEntry
+	(*common.HeartbeatMessage)(nil),        // 46: border0.common.v1.HeartbeatMessage
+	(*common.DiscoveryDetailsMessage)(nil), // 47: border0.common.v1.DiscoveryDetailsMessage
+	(*common.StatsMessage)(nil),            // 48: border0.common.v1.StatsMessage
+	(*common.NetworkStateMessage)(nil),     // 49: border0.common.v1.NetworkStateMessage
+	(*common.PeerOnlineMessage)(nil),       // 50: border0.common.v1.PeerOnlineMessage
+	(*common.PeerOfflineMessage)(nil),      // 51: border0.common.v1.PeerOfflineMessage
+	(*structpb.Struct)(nil),                // 52: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),          // 53: google.protobuf.Timestamp
+	(*common.Group)(nil),                   // 54: border0.common.v1.Group
 }
 var file_connector_proto_depIdxs = []int32{
 	11, // 0: border0.v1.ControlStreamRequest.config:type_name -> border0.v1.Config
-	44, // 1: border0.v1.ControlStreamRequest.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
+	46, // 1: border0.v1.ControlStreamRequest.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
 	12, // 2: border0.v1.ControlStreamRequest.plugin_discovery_results:type_name -> border0.v1.PluginDiscoveryResults
 	4,  // 3: border0.v1.ControlStreamRequest.tunnel_certificate_sign_request:type_name -> border0.v1.TunnelCertificateSignRequest
 	8,  // 4: border0.v1.ControlStreamRequest.log:type_name -> border0.v1.Log
@@ -3766,15 +3841,15 @@ var file_connector_proto_depIdxs = []int32{
 	33, // 9: border0.v1.ControlStreamRequest.upload_recording:type_name -> border0.v1.UploadRecording
 	34, // 10: border0.v1.ControlStreamRequest.Certificate_sign_request:type_name -> border0.v1.CertificateSignRequest
 	30, // 11: border0.v1.ControlStreamRequest.session_event:type_name -> border0.v1.SessionEvent
-	45, // 12: border0.v1.ControlStreamRequest.discovery_details:type_name -> border0.common.v1.DiscoveryDetailsMessage
+	47, // 12: border0.v1.ControlStreamRequest.discovery_details:type_name -> border0.common.v1.DiscoveryDetailsMessage
 	22, // 13: border0.v1.ControlStreamRequest.authorize_peer:type_name -> border0.v1.AuthorizePeerRequest
 	28, // 14: border0.v1.ControlStreamRequest.session:type_name -> border0.v1.SessionRequest
-	46, // 15: border0.v1.ControlStreamRequest.stats:type_name -> border0.common.v1.StatsMessage
+	48, // 15: border0.v1.ControlStreamRequest.stats:type_name -> border0.common.v1.StatsMessage
 	9,  // 16: border0.v1.ControlStreamRequest.logs:type_name -> border0.v1.Logs
 	6,  // 17: border0.v1.ControlStreamResponse.init:type_name -> border0.v1.Init
 	16, // 18: border0.v1.ControlStreamResponse.connector_config:type_name -> border0.v1.ConnectorConfig
 	7,  // 19: border0.v1.ControlStreamResponse.update_config:type_name -> border0.v1.UpdateConfig
-	44, // 20: border0.v1.ControlStreamResponse.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
+	46, // 20: border0.v1.ControlStreamResponse.heartbeat:type_name -> border0.common.v1.HeartbeatMessage
 	5,  // 21: border0.v1.ControlStreamResponse.tunnel_certificate_sign_response:type_name -> border0.v1.TunnelCertificateSignResponse
 	18, // 22: border0.v1.ControlStreamResponse.discover:type_name -> border0.v1.Discover
 	19, // 23: border0.v1.ControlStreamResponse.stop:type_name -> border0.v1.Stop
@@ -3782,50 +3857,52 @@ var file_connector_proto_depIdxs = []int32{
 	26, // 25: border0.v1.ControlStreamResponse.authorize:type_name -> border0.v1.AuthorizeResponse
 	32, // 26: border0.v1.ControlStreamResponse.ssh_certificate_sign_response:type_name -> border0.v1.SshCertificateSignResponse
 	35, // 27: border0.v1.ControlStreamResponse.Certificate_sign_response:type_name -> border0.v1.CertificateSignResponse
-	47, // 28: border0.v1.ControlStreamResponse.network_state:type_name -> border0.common.v1.NetworkStateMessage
-	48, // 29: border0.v1.ControlStreamResponse.peer_online:type_name -> border0.common.v1.PeerOnlineMessage
-	49, // 30: border0.v1.ControlStreamResponse.peer_offline:type_name -> border0.common.v1.PeerOfflineMessage
+	49, // 28: border0.v1.ControlStreamResponse.network_state:type_name -> border0.common.v1.NetworkStateMessage
+	50, // 29: border0.v1.ControlStreamResponse.peer_online:type_name -> border0.common.v1.PeerOnlineMessage
+	51, // 30: border0.v1.ControlStreamResponse.peer_offline:type_name -> border0.common.v1.PeerOfflineMessage
 	29, // 31: border0.v1.ControlStreamResponse.session:type_name -> border0.v1.SessionResponse
 	36, // 32: border0.v1.ControlStreamResponse.allowed_networks:type_name -> border0.v1.AllowedNetworks
-	50, // 33: border0.v1.Organization.certificates:type_name -> google.protobuf.Struct
+	52, // 33: border0.v1.Organization.certificates:type_name -> google.protobuf.Struct
 	16, // 34: border0.v1.Init.connector_config:type_name -> border0.v1.ConnectorConfig
 	15, // 35: border0.v1.Init.sockets:type_name -> border0.v1.SocketConfig
 	17, // 36: border0.v1.Init.plugins:type_name -> border0.v1.PluginConfig
 	0,  // 37: border0.v1.UpdateConfig.action:type_name -> border0.v1.Action
 	17, // 38: border0.v1.UpdateConfig.plugin_config:type_name -> border0.v1.PluginConfig
 	15, // 39: border0.v1.UpdateConfig.socket_config:type_name -> border0.v1.SocketConfig
-	51, // 40: border0.v1.Log.timestamp:type_name -> google.protobuf.Timestamp
+	53, // 40: border0.v1.Log.timestamp:type_name -> google.protobuf.Timestamp
 	8,  // 41: border0.v1.Logs.logs:type_name -> border0.v1.Log
-	50, // 42: border0.v1.ConnectorMetadata.data:type_name -> google.protobuf.Struct
+	52, // 42: border0.v1.ConnectorMetadata.data:type_name -> google.protobuf.Struct
 	13, // 43: border0.v1.PluginDiscoveryResults.metadata:type_name -> border0.v1.PluginDiscoveryResultsMetadata
-	50, // 44: border0.v1.PluginDiscoveryResults.resources:type_name -> google.protobuf.Struct
-	51, // 45: border0.v1.PluginDiscoveryResultsMetadata.started_at:type_name -> google.protobuf.Timestamp
-	51, // 46: border0.v1.PluginDiscoveryResultsMetadata.ended_at:type_name -> google.protobuf.Timestamp
-	50, // 47: border0.v1.SocketConfig.config:type_name -> google.protobuf.Struct
+	52, // 44: border0.v1.PluginDiscoveryResults.resources:type_name -> google.protobuf.Struct
+	53, // 45: border0.v1.PluginDiscoveryResultsMetadata.started_at:type_name -> google.protobuf.Timestamp
+	53, // 46: border0.v1.PluginDiscoveryResultsMetadata.ended_at:type_name -> google.protobuf.Timestamp
+	52, // 47: border0.v1.SocketConfig.config:type_name -> google.protobuf.Struct
 	3,  // 48: border0.v1.ConnectorConfig.organization:type_name -> border0.v1.Organization
-	50, // 49: border0.v1.PluginConfig.config:type_name -> google.protobuf.Struct
-	50, // 50: border0.v1.Permissions.permissions:type_name -> google.protobuf.Struct
-	39, // 51: border0.v1.AuthorizeResponse.allowed_actions:type_name -> border0.v1.AuthorizeResponse.AllowedActionsEntry
-	40, // 52: border0.v1.AuthorizeResponse.info:type_name -> border0.v1.AuthorizeResponse.InfoEntry
-	41, // 53: border0.v1.AuthorizeResponse.permissions:type_name -> border0.v1.AuthorizeResponse.PermissionsEntry
-	52, // 54: border0.v1.AuthorizeResponse.groups:type_name -> border0.common.v1.Group
-	51, // 55: border0.v1.SessionRequest.start_time:type_name -> google.protobuf.Timestamp
-	51, // 56: border0.v1.SessionRequest.end_time:type_name -> google.protobuf.Timestamp
-	51, // 57: border0.v1.SessionRequest.last_seen:type_name -> google.protobuf.Timestamp
-	42, // 58: border0.v1.AllowedNetworks.devices:type_name -> border0.v1.AllowedNetworks.DevicesEntry
-	43, // 59: border0.v1.AllowedNetworksSocketConfig.sockets:type_name -> border0.v1.AllowedNetworksSocketConfig.SocketsEntry
-	23, // 60: border0.v1.AuthorizeResponse.AllowedActionsEntry.value:type_name -> border0.v1.actionList
-	25, // 61: border0.v1.AuthorizeResponse.InfoEntry.value:type_name -> border0.v1.infoList
-	24, // 62: border0.v1.AuthorizeResponse.PermissionsEntry.value:type_name -> border0.v1.Permissions
-	37, // 63: border0.v1.AllowedNetworks.DevicesEntry.value:type_name -> border0.v1.AllowedNetworksSocketConfig
-	38, // 64: border0.v1.AllowedNetworksSocketConfig.SocketsEntry.value:type_name -> border0.v1.AllowedNetworksSubnets
-	1,  // 65: border0.v1.ConnectorService.ControlStream:input_type -> border0.v1.ControlStreamRequest
-	2,  // 66: border0.v1.ConnectorService.ControlStream:output_type -> border0.v1.ControlStreamResponse
-	66, // [66:67] is the sub-list for method output_type
-	65, // [65:66] is the sub-list for method input_type
-	65, // [65:65] is the sub-list for extension type_name
-	65, // [65:65] is the sub-list for extension extendee
-	0,  // [0:65] is the sub-list for field type_name
+	52, // 49: border0.v1.PluginConfig.config:type_name -> google.protobuf.Struct
+	52, // 50: border0.v1.Permissions.permissions:type_name -> google.protobuf.Struct
+	40, // 51: border0.v1.AuthorizeResponse.allowed_actions:type_name -> border0.v1.AuthorizeResponse.AllowedActionsEntry
+	41, // 52: border0.v1.AuthorizeResponse.info:type_name -> border0.v1.AuthorizeResponse.InfoEntry
+	42, // 53: border0.v1.AuthorizeResponse.permissions:type_name -> border0.v1.AuthorizeResponse.PermissionsEntry
+	54, // 54: border0.v1.AuthorizeResponse.groups:type_name -> border0.common.v1.Group
+	53, // 55: border0.v1.SessionRequest.start_time:type_name -> google.protobuf.Timestamp
+	53, // 56: border0.v1.SessionRequest.end_time:type_name -> google.protobuf.Timestamp
+	53, // 57: border0.v1.SessionRequest.last_seen:type_name -> google.protobuf.Timestamp
+	43, // 58: border0.v1.AllowedNetworks.devices:type_name -> border0.v1.AllowedNetworks.DevicesEntry
+	44, // 59: border0.v1.AllowedNetworksSocketConfig.sockets:type_name -> border0.v1.AllowedNetworksSocketConfig.SocketsEntry
+	45, // 60: border0.v1.AllowedNetworksSocketConfig.dns_patterns:type_name -> border0.v1.AllowedNetworksSocketConfig.DnsPatternsEntry
+	23, // 61: border0.v1.AuthorizeResponse.AllowedActionsEntry.value:type_name -> border0.v1.actionList
+	25, // 62: border0.v1.AuthorizeResponse.InfoEntry.value:type_name -> border0.v1.infoList
+	24, // 63: border0.v1.AuthorizeResponse.PermissionsEntry.value:type_name -> border0.v1.Permissions
+	37, // 64: border0.v1.AllowedNetworks.DevicesEntry.value:type_name -> border0.v1.AllowedNetworksSocketConfig
+	38, // 65: border0.v1.AllowedNetworksSocketConfig.SocketsEntry.value:type_name -> border0.v1.AllowedNetworksSubnets
+	39, // 66: border0.v1.AllowedNetworksSocketConfig.DnsPatternsEntry.value:type_name -> border0.v1.AllowedNetworksDnsPatterns
+	1,  // 67: border0.v1.ConnectorService.ControlStream:input_type -> border0.v1.ControlStreamRequest
+	2,  // 68: border0.v1.ConnectorService.ControlStream:output_type -> border0.v1.ControlStreamResponse
+	68, // [68:69] is the sub-list for method output_type
+	67, // [67:68] is the sub-list for method input_type
+	67, // [67:67] is the sub-list for extension type_name
+	67, // [67:67] is the sub-list for extension extendee
+	0,  // [0:67] is the sub-list for field type_name
 }
 
 func init() { file_connector_proto_init() }
@@ -4290,6 +4367,18 @@ func file_connector_proto_init() {
 				return nil
 			}
 		}
+		file_connector_proto_msgTypes[38].Exporter = func(v any, i int) any {
+			switch v := v.(*AllowedNetworksDnsPatterns); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_connector_proto_msgTypes[0].OneofWrappers = []any{
 		(*ControlStreamRequest_Config)(nil),
@@ -4338,7 +4427,7 @@ func file_connector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_connector_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   43,
+			NumMessages:   45,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
