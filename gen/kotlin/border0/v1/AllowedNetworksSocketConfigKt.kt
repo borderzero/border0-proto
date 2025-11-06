@@ -167,6 +167,56 @@ public object AllowedNetworksSocketConfigKt {
       .clear() {
          _builder.clearDnsPatterns()
        }
+
+    /**
+     * <pre>
+     * The device's IPv4 address (may be empty)
+     * </pre>
+     *
+     * <code>string ipv4_address = 3;</code>
+     */
+    public var ipv4Address: kotlin.String
+      @JvmName("getIpv4Address")
+      get() = _builder.getIpv4Address()
+      @JvmName("setIpv4Address")
+      set(value) {
+        _builder.setIpv4Address(value)
+      }
+    /**
+     * <pre>
+     * The device's IPv4 address (may be empty)
+     * </pre>
+     *
+     * <code>string ipv4_address = 3;</code>
+     */
+    public fun clearIpv4Address() {
+      _builder.clearIpv4Address()
+    }
+
+    /**
+     * <pre>
+     * The device's IPv6 address (may be empty)
+     * </pre>
+     *
+     * <code>string ipv6_address = 4;</code>
+     */
+    public var ipv6Address: kotlin.String
+      @JvmName("getIpv6Address")
+      get() = _builder.getIpv6Address()
+      @JvmName("setIpv6Address")
+      set(value) {
+        _builder.setIpv6Address(value)
+      }
+    /**
+     * <pre>
+     * The device's IPv6 address (may be empty)
+     * </pre>
+     *
+     * <code>string ipv6_address = 4;</code>
+     */
+    public fun clearIpv6Address() {
+      _builder.clearIpv6Address()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic

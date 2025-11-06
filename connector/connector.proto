@@ -305,6 +305,8 @@ message AllowedNetworks {
 message AllowedNetworksSocketConfig {
   map<string, AllowedNetworksSubnets> sockets = 1;
   map<string, AllowedNetworksDnsPatterns> dns_patterns = 2; // socketID -> DNS patterns for DNS-based routing
+  string ipv4_address = 3; // The device's IPv4 address (may be empty)
+  string ipv6_address = 4; // The device's IPv6 address (may be empty)
 }
 
 message AllowedNetworksSubnets {

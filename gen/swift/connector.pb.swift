@@ -1180,6 +1180,15 @@ struct Border0_V1_AllowedNetworksSocketConfig: Sendable {
 
   var sockets: Dictionary<String,Border0_V1_AllowedNetworksSubnets> = [:]
 
+  /// socketID -> DNS patterns for DNS-based routing
+  var dnsPatterns: Dictionary<String,Border0_V1_AllowedNetworksDnsPatterns> = [:]
+
+  /// The device's IPv4 address (may be empty)
+  var ipv4Address: String = String()
+
+  /// The device's IPv6 address (may be empty)
+  var ipv6Address: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1191,6 +1200,21 @@ struct Border0_V1_AllowedNetworksSubnets: Sendable {
   // methods supported on all messages.
 
   var subnets: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// DNS patterns for a socket. Supports exact domains ("api.example.com") and wildcards ("*.example.com").
+/// Connectors use these patterns to resolve DNS queries and manage firewall rules automatically.
+struct Border0_V1_AllowedNetworksDnsPatterns: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// List of DNS patterns (e.g., "*.example.com", "api.company.io")
+  var patterns: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3474,7 +3498,7 @@ extension Border0_V1_AllowedNetworks: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworksSocketConfig"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sockets\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sockets\0\u{3}dns_patterns\0\u{3}ipv4_address\0\u{3}ipv6_address\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3483,6 +3507,9 @@ extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftPr
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksSubnets>.self, value: &self.sockets) }()
+      case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksDnsPatterns>.self, value: &self.dnsPatterns) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.ipv4Address) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.ipv6Address) }()
       default: break
       }
     }
@@ -3492,11 +3519,23 @@ extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftPr
     if !self.sockets.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksSubnets>.self, value: self.sockets, fieldNumber: 1)
     }
+    if !self.dnsPatterns.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Border0_V1_AllowedNetworksDnsPatterns>.self, value: self.dnsPatterns, fieldNumber: 2)
+    }
+    if !self.ipv4Address.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipv4Address, fieldNumber: 3)
+    }
+    if !self.ipv6Address.isEmpty {
+      try visitor.visitSingularStringField(value: self.ipv6Address, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Border0_V1_AllowedNetworksSocketConfig, rhs: Border0_V1_AllowedNetworksSocketConfig) -> Bool {
     if lhs.sockets != rhs.sockets {return false}
+    if lhs.dnsPatterns != rhs.dnsPatterns {return false}
+    if lhs.ipv4Address != rhs.ipv4Address {return false}
+    if lhs.ipv6Address != rhs.ipv6Address {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3527,6 +3566,36 @@ extension Border0_V1_AllowedNetworksSubnets: SwiftProtobuf.Message, SwiftProtobu
 
   static func ==(lhs: Border0_V1_AllowedNetworksSubnets, rhs: Border0_V1_AllowedNetworksSubnets) -> Bool {
     if lhs.subnets != rhs.subnets {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Border0_V1_AllowedNetworksDnsPatterns: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AllowedNetworksDnsPatterns"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}patterns\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.patterns) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.patterns.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.patterns, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_AllowedNetworksDnsPatterns, rhs: Border0_V1_AllowedNetworksDnsPatterns) -> Bool {
+    if lhs.patterns != rhs.patterns {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
