@@ -276,102 +276,102 @@ struct Border0_Device_V1_Service: @unchecked Sendable {
   // methods supported on all messages.
 
   var networkID: String {
-    get {return _storage._networkID}
+    get {_storage._networkID}
     set {_uniqueStorage()._networkID = newValue}
   }
 
   var name: String {
-    get {return _storage._name}
+    get {_storage._name}
     set {_uniqueStorage()._name = newValue}
   }
 
   var type: String {
-    get {return _storage._type}
+    get {_storage._type}
     set {_uniqueStorage()._type = newValue}
   }
 
   var ipv4: String {
-    get {return _storage._ipv4}
+    get {_storage._ipv4}
     set {_uniqueStorage()._ipv4 = newValue}
   }
 
   var ipv6: String {
-    get {return _storage._ipv6}
+    get {_storage._ipv6}
     set {_uniqueStorage()._ipv6 = newValue}
   }
 
   var subnetRoutes: [String] {
-    get {return _storage._subnetRoutes}
+    get {_storage._subnetRoutes}
     set {_uniqueStorage()._subnetRoutes = newValue}
   }
 
   var peerPublicKey: [String] {
-    get {return _storage._peerPublicKey}
+    get {_storage._peerPublicKey}
     set {_uniqueStorage()._peerPublicKey = newValue}
   }
 
   var dnsName: String {
-    get {return _storage._dnsName}
+    get {_storage._dnsName}
     set {_uniqueStorage()._dnsName = newValue}
   }
 
   var upstreamType: String {
-    get {return _storage._upstreamType}
+    get {_storage._upstreamType}
     set {_uniqueStorage()._upstreamType = newValue}
   }
 
   var upstreamPort: UInt32 {
-    get {return _storage._upstreamPort}
+    get {_storage._upstreamPort}
     set {_uniqueStorage()._upstreamPort = newValue}
   }
 
   var hasUpstreamUsername_p: Bool {
-    get {return _storage._hasUpstreamUsername_p}
+    get {_storage._hasUpstreamUsername_p}
     set {_uniqueStorage()._hasUpstreamUsername_p = newValue}
   }
 
   var upstreamSshType: String {
-    get {return _storage._upstreamSshType}
+    get {_storage._upstreamSshType}
     set {_uniqueStorage()._upstreamSshType = newValue}
   }
 
   var tags: Dictionary<String,String> {
-    get {return _storage._tags}
+    get {_storage._tags}
     set {_uniqueStorage()._tags = newValue}
   }
 
   var publicIps: [Border0_Common_V1_IPAddressWithMetadata] {
-    get {return _storage._publicIps}
+    get {_storage._publicIps}
     set {_uniqueStorage()._publicIps = newValue}
   }
 
   var standalone: Bool {
-    get {return _storage._standalone}
+    get {_storage._standalone}
     set {_uniqueStorage()._standalone = newValue}
   }
 
   var delete: Bool {
-    get {return _storage._delete}
+    get {_storage._delete}
     set {_uniqueStorage()._delete = newValue}
   }
 
   var displayName: String {
-    get {return _storage._displayName}
+    get {_storage._displayName}
     set {_uniqueStorage()._displayName = newValue}
   }
 
   var databaseSettings: Border0_Device_V1_DatabaseSettings {
-    get {return _storage._databaseSettings ?? Border0_Device_V1_DatabaseSettings()}
+    get {_storage._databaseSettings ?? Border0_Device_V1_DatabaseSettings()}
     set {_uniqueStorage()._databaseSettings = newValue}
   }
   /// Returns true if `databaseSettings` has been explicitly set.
-  var hasDatabaseSettings: Bool {return _storage._databaseSettings != nil}
+  var hasDatabaseSettings: Bool {_storage._databaseSettings != nil}
   /// Clears the value of `databaseSettings`. Subsequent reads from it will return its default value.
   mutating func clearDatabaseSettings() {_uniqueStorage()._databaseSettings = nil}
 
   /// DNS domain patterns to route through this service
   var dnsPatterns: [String] {
-    get {return _storage._dnsPatterns}
+    get {_storage._dnsPatterns}
     set {_uniqueStorage()._dnsPatterns = newValue}
   }
 

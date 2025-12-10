@@ -201,6 +201,7 @@ message AuthorizePeerRequest {
   string public_key = 3;
   string ip_address = 4;
   string socket_id = 5;
+  string user_email = 6; // optional, used instead of public_key for email-based authz if provided
 }
 
 message actionList {

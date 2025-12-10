@@ -106,6 +106,31 @@ public object AuthorizePeerRequestKt {
     public fun clearSocketId() {
       _builder.clearSocketId()
     }
+
+    /**
+     * <pre>
+     * optional, used instead of public_key for email-based authz if provided
+     * </pre>
+     *
+     * <code>string user_email = 6;</code>
+     */
+    public var userEmail: kotlin.String
+      @JvmName("getUserEmail")
+      get() = _builder.getUserEmail()
+      @JvmName("setUserEmail")
+      set(value) {
+        _builder.setUserEmail(value)
+      }
+    /**
+     * <pre>
+     * optional, used instead of public_key for email-based authz if provided
+     * </pre>
+     *
+     * <code>string user_email = 6;</code>
+     */
+    public fun clearUserEmail() {
+      _builder.clearUserEmail()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
