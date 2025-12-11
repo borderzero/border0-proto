@@ -17,7 +17,8 @@ RUN tar xzf swift.tar.gz --directory / --strip-components=1 && rm swift.tar.gz
 WORKDIR /app
 
 # Build swift-protobuf from source
-RUN git clone https://github.com/apple/swift-protobuf.git && \
+# Note: --recursive is required to fetch C++ protobuf submodules
+RUN git clone --recursive https://github.com/apple/swift-protobuf.git && \
     cd swift-protobuf && \
     swift build -c release && \
     cp .build/release/protoc-gen-swift /usr/local/bin/ && \

@@ -207,11 +207,11 @@ struct Border0_Common_V1_NetworkDeviceStatsMessage: Sendable {
   // methods supported on all messages.
 
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool {self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   mutating func clearTimestamp() {self._timestamp = nil}
 
@@ -236,11 +236,11 @@ struct Border0_Common_V1_SocketStatsMessage: Sendable {
   // methods supported on all messages.
 
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool {self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   mutating func clearTimestamp() {self._timestamp = nil}
 
@@ -281,11 +281,11 @@ struct Border0_Common_V1_PeerOnlineMessage: Sendable {
   var networkID: String = String()
 
   var peer: Border0_Common_V1_WireGuardPeer {
-    get {return _peer ?? Border0_Common_V1_WireGuardPeer()}
+    get {_peer ?? Border0_Common_V1_WireGuardPeer()}
     set {_peer = newValue}
   }
   /// Returns true if `peer` has been explicitly set.
-  var hasPeer: Bool {return self._peer != nil}
+  var hasPeer: Bool {self._peer != nil}
   /// Clears the value of `peer`. Subsequent reads from it will return its default value.
   mutating func clearPeer() {self._peer = nil}
 
@@ -370,11 +370,11 @@ struct Border0_Common_V1_NetworkStateMessage: Sendable {
 
   /// DNS configuration for the organization
   var dnsConfiguration: Border0_Common_V1_DNSConfigurationMessage {
-    get {return _dnsConfiguration ?? Border0_Common_V1_DNSConfigurationMessage()}
+    get {_dnsConfiguration ?? Border0_Common_V1_DNSConfigurationMessage()}
     set {_dnsConfiguration = newValue}
   }
   /// Returns true if `dnsConfiguration` has been explicitly set.
-  var hasDnsConfiguration: Bool {return self._dnsConfiguration != nil}
+  var hasDnsConfiguration: Bool {self._dnsConfiguration != nil}
   /// Clears the value of `dnsConfiguration`. Subsequent reads from it will return its default value.
   mutating func clearDnsConfiguration() {self._dnsConfiguration = nil}
 
@@ -487,11 +487,11 @@ struct Border0_Common_V1_Service: Sendable {
   var displayName: String = String()
 
   var databaseSettings: Border0_Common_V1_DatabaseSettings {
-    get {return _databaseSettings ?? Border0_Common_V1_DatabaseSettings()}
+    get {_databaseSettings ?? Border0_Common_V1_DatabaseSettings()}
     set {_databaseSettings = newValue}
   }
   /// Returns true if `databaseSettings` has been explicitly set.
-  var hasDatabaseSettings: Bool {return self._databaseSettings != nil}
+  var hasDatabaseSettings: Bool {self._databaseSettings != nil}
   /// Clears the value of `databaseSettings`. Subsequent reads from it will return its default value.
   mutating func clearDatabaseSettings() {self._databaseSettings = nil}
 
@@ -515,11 +515,11 @@ struct Border0_Common_V1_IPAddressWithMetadata: Sendable {
   var type: Border0_Common_V1_IPAddressType = .ipv4
 
   var metadata: SwiftProtobuf.Google_Protobuf_Struct {
-    get {return _metadata ?? SwiftProtobuf.Google_Protobuf_Struct()}
+    get {_metadata ?? SwiftProtobuf.Google_Protobuf_Struct()}
     set {_metadata = newValue}
   }
   /// Returns true if `metadata` has been explicitly set.
-  var hasMetadata: Bool {return self._metadata != nil}
+  var hasMetadata: Bool {self._metadata != nil}
   /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
   mutating func clearMetadata() {self._metadata = nil}
 

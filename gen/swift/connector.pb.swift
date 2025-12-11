@@ -406,11 +406,11 @@ struct Border0_V1_Organization: Sendable {
   var subdomain: String = String()
 
   var certificates: SwiftProtobuf.Google_Protobuf_Struct {
-    get {return _certificates ?? SwiftProtobuf.Google_Protobuf_Struct()}
+    get {_certificates ?? SwiftProtobuf.Google_Protobuf_Struct()}
     set {_certificates = newValue}
   }
   /// Returns true if `certificates` has been explicitly set.
-  var hasCertificates: Bool {return self._certificates != nil}
+  var hasCertificates: Bool {self._certificates != nil}
   /// Clears the value of `certificates`. Subsequent reads from it will return its default value.
   mutating func clearCertificates() {self._certificates = nil}
 
@@ -461,11 +461,11 @@ struct Border0_V1_Init: Sendable {
   // methods supported on all messages.
 
   var connectorConfig: Border0_V1_ConnectorConfig {
-    get {return _connectorConfig ?? Border0_V1_ConnectorConfig()}
+    get {_connectorConfig ?? Border0_V1_ConnectorConfig()}
     set {_connectorConfig = newValue}
   }
   /// Returns true if `connectorConfig` has been explicitly set.
-  var hasConnectorConfig: Bool {return self._connectorConfig != nil}
+  var hasConnectorConfig: Bool {self._connectorConfig != nil}
   /// Clears the value of `connectorConfig`. Subsequent reads from it will return its default value.
   mutating func clearConnectorConfig() {self._connectorConfig = nil}
 
@@ -543,11 +543,11 @@ struct Border0_V1_Log: Sendable {
   var pluginID: String = String()
 
   var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_timestamp = newValue}
   }
   /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
+  var hasTimestamp: Bool {self._timestamp != nil}
   /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
   mutating func clearTimestamp() {self._timestamp = nil}
 
@@ -580,11 +580,11 @@ struct Border0_V1_ConnectorMetadata: Sendable {
   // methods supported on all messages.
 
   var data: SwiftProtobuf.Google_Protobuf_Struct {
-    get {return _data ?? SwiftProtobuf.Google_Protobuf_Struct()}
+    get {_data ?? SwiftProtobuf.Google_Protobuf_Struct()}
     set {_data = newValue}
   }
   /// Returns true if `data` has been explicitly set.
-  var hasData: Bool {return self._data != nil}
+  var hasData: Bool {self._data != nil}
   /// Clears the value of `data`. Subsequent reads from it will return its default value.
   mutating func clearData() {self._data = nil}
 
@@ -621,11 +621,11 @@ struct Border0_V1_PluginDiscoveryResults: Sendable {
   var requestID: String = String()
 
   var metadata: Border0_V1_PluginDiscoveryResultsMetadata {
-    get {return _metadata ?? Border0_V1_PluginDiscoveryResultsMetadata()}
+    get {_metadata ?? Border0_V1_PluginDiscoveryResultsMetadata()}
     set {_metadata = newValue}
   }
   /// Returns true if `metadata` has been explicitly set.
-  var hasMetadata: Bool {return self._metadata != nil}
+  var hasMetadata: Bool {self._metadata != nil}
   /// Clears the value of `metadata`. Subsequent reads from it will return its default value.
   mutating func clearMetadata() {self._metadata = nil}
 
@@ -650,20 +650,20 @@ struct Border0_V1_PluginDiscoveryResultsMetadata: Sendable {
   var discoveryID: String = String()
 
   var startedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _startedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_startedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_startedAt = newValue}
   }
   /// Returns true if `startedAt` has been explicitly set.
-  var hasStartedAt: Bool {return self._startedAt != nil}
+  var hasStartedAt: Bool {self._startedAt != nil}
   /// Clears the value of `startedAt`. Subsequent reads from it will return its default value.
   mutating func clearStartedAt() {self._startedAt = nil}
 
   var endedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _endedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_endedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_endedAt = newValue}
   }
   /// Returns true if `endedAt` has been explicitly set.
-  var hasEndedAt: Bool {return self._endedAt != nil}
+  var hasEndedAt: Bool {self._endedAt != nil}
   /// Clears the value of `endedAt`. Subsequent reads from it will return its default value.
   mutating func clearEndedAt() {self._endedAt = nil}
 
@@ -701,11 +701,11 @@ struct Border0_V1_SocketConfig: Sendable {
   var type: String = String()
 
   var config: SwiftProtobuf.Google_Protobuf_Struct {
-    get {return _config ?? SwiftProtobuf.Google_Protobuf_Struct()}
+    get {_config ?? SwiftProtobuf.Google_Protobuf_Struct()}
     set {_config = newValue}
   }
   /// Returns true if `config` has been explicitly set.
-  var hasConfig: Bool {return self._config != nil}
+  var hasConfig: Bool {self._config != nil}
   /// Clears the value of `config`. Subsequent reads from it will return its default value.
   mutating func clearConfig() {self._config = nil}
 
@@ -726,11 +726,11 @@ struct Border0_V1_ConnectorConfig: Sendable {
   var heartbeatInterval: Int32 = 0
 
   var organization: Border0_V1_Organization {
-    get {return _organization ?? Border0_V1_Organization()}
+    get {_organization ?? Border0_V1_Organization()}
     set {_organization = newValue}
   }
   /// Returns true if `organization` has been explicitly set.
-  var hasOrganization: Bool {return self._organization != nil}
+  var hasOrganization: Bool {self._organization != nil}
   /// Clears the value of `organization`. Subsequent reads from it will return its default value.
   mutating func clearOrganization() {self._organization = nil}
 
@@ -755,11 +755,11 @@ struct Border0_V1_PluginConfig: Sendable {
   var type: String = String()
 
   var config: SwiftProtobuf.Google_Protobuf_Struct {
-    get {return _config ?? SwiftProtobuf.Google_Protobuf_Struct()}
+    get {_config ?? SwiftProtobuf.Google_Protobuf_Struct()}
     set {_config = newValue}
   }
   /// Returns true if `config` has been explicitly set.
-  var hasConfig: Bool {return self._config != nil}
+  var hasConfig: Bool {self._config != nil}
   /// Clears the value of `config`. Subsequent reads from it will return its default value.
   mutating func clearConfig() {self._config = nil}
 
@@ -844,6 +844,9 @@ struct Border0_V1_AuthorizePeerRequest: Sendable {
   var ipAddress: String = String()
 
   var socketID: String = String()
+
+  /// optional, used instead of public_key for email-based authz if provided
+  var userEmail: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -936,99 +939,99 @@ struct Border0_V1_SessionRequest: @unchecked Sendable {
   // methods supported on all messages.
 
   var requestID: String {
-    get {return _storage._requestID}
+    get {_storage._requestID}
     set {_uniqueStorage()._requestID = newValue}
   }
 
   var startTime: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _storage._startTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_storage._startTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._startTime = newValue}
   }
   /// Returns true if `startTime` has been explicitly set.
-  var hasStartTime: Bool {return _storage._startTime != nil}
+  var hasStartTime: Bool {_storage._startTime != nil}
   /// Clears the value of `startTime`. Subsequent reads from it will return its default value.
   mutating func clearStartTime() {_uniqueStorage()._startTime = nil}
 
   var endTime: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _storage._endTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_storage._endTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._endTime = newValue}
   }
   /// Returns true if `endTime` has been explicitly set.
-  var hasEndTime: Bool {return _storage._endTime != nil}
+  var hasEndTime: Bool {_storage._endTime != nil}
   /// Clears the value of `endTime`. Subsequent reads from it will return its default value.
   mutating func clearEndTime() {_uniqueStorage()._endTime = nil}
 
   var lastSeen: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _storage._lastSeen ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    get {_storage._lastSeen ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._lastSeen = newValue}
   }
   /// Returns true if `lastSeen` has been explicitly set.
-  var hasLastSeen: Bool {return _storage._lastSeen != nil}
+  var hasLastSeen: Bool {_storage._lastSeen != nil}
   /// Clears the value of `lastSeen`. Subsequent reads from it will return its default value.
   mutating func clearLastSeen() {_uniqueStorage()._lastSeen = nil}
 
   var email: String {
-    get {return _storage._email}
+    get {_storage._email}
     set {_uniqueStorage()._email = newValue}
   }
 
   var logType: String {
-    get {return _storage._logType}
+    get {_storage._logType}
     set {_uniqueStorage()._logType = newValue}
   }
 
   var socketID: String {
-    get {return _storage._socketID}
+    get {_storage._socketID}
     set {_uniqueStorage()._socketID = newValue}
   }
 
   var serverName: String {
-    get {return _storage._serverName}
+    get {_storage._serverName}
     set {_uniqueStorage()._serverName = newValue}
   }
 
   var serverPort: String {
-    get {return _storage._serverPort}
+    get {_storage._serverPort}
     set {_uniqueStorage()._serverPort = newValue}
   }
 
   var clientIp: String {
-    get {return _storage._clientIp}
+    get {_storage._clientIp}
     set {_uniqueStorage()._clientIp = newValue}
   }
 
   var clientPort: String {
-    get {return _storage._clientPort}
+    get {_storage._clientPort}
     set {_uniqueStorage()._clientPort = newValue}
   }
 
   var sessionData: String {
-    get {return _storage._sessionData}
+    get {_storage._sessionData}
     set {_uniqueStorage()._sessionData = newValue}
   }
 
   var sessionKey: String {
-    get {return _storage._sessionKey}
+    get {_storage._sessionKey}
     set {_uniqueStorage()._sessionKey = newValue}
   }
 
   var result: String {
-    get {return _storage._result}
+    get {_storage._result}
     set {_uniqueStorage()._result = newValue}
   }
 
   var authInfo: String {
-    get {return _storage._authInfo}
+    get {_storage._authInfo}
     set {_uniqueStorage()._authInfo = newValue}
   }
 
   var metadata: Data {
-    get {return _storage._metadata}
+    get {_storage._metadata}
     set {_uniqueStorage()._metadata = newValue}
   }
 
   var entityUuid: String {
-    get {return _storage._entityUuid}
+    get {_storage._entityUuid}
     set {_uniqueStorage()._entityUuid = newValue}
   }
 
@@ -2741,7 +2744,7 @@ extension Border0_V1_AuthorizeRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
 
 extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthorizePeerRequest"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}protocol\0\u{3}public_key\0\u{3}ip_address\0\u{3}socket_id\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}protocol\0\u{3}public_key\0\u{3}ip_address\0\u{3}socket_id\0\u{3}user_email\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2754,6 +2757,7 @@ extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf.
       case 3: try { try decoder.decodeSingularStringField(value: &self.publicKey) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.ipAddress) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.socketID) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.userEmail) }()
       default: break
       }
     }
@@ -2775,6 +2779,9 @@ extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.socketID.isEmpty {
       try visitor.visitSingularStringField(value: self.socketID, fieldNumber: 5)
     }
+    if !self.userEmail.isEmpty {
+      try visitor.visitSingularStringField(value: self.userEmail, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2784,6 +2791,7 @@ extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.publicKey != rhs.publicKey {return false}
     if lhs.ipAddress != rhs.ipAddress {return false}
     if lhs.socketID != rhs.socketID {return false}
+    if lhs.userEmail != rhs.userEmail {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
