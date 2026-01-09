@@ -375,6 +375,12 @@ struct Border0_Device_V1_Service: @unchecked Sendable {
     set {_uniqueStorage()._dnsPatterns = newValue}
   }
 
+  /// if RDP upstream username and password are both set, this field will be true
+  var rdpProxyEnabled: Bool {
+    get {_storage._rdpProxyEnabled}
+    set {_uniqueStorage()._rdpProxyEnabled = newValue}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -871,7 +877,7 @@ extension Border0_Device_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtob
 
 extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0\u{3}database_settings\0\u{3}dns_patterns\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0\u{3}database_settings\0\u{3}dns_patterns\0\u{3}rdp_proxy_enabled\0")
 
   fileprivate class _StorageClass {
     var _networkID: String = String()
@@ -893,6 +899,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _displayName: String = String()
     var _databaseSettings: Border0_Device_V1_DatabaseSettings? = nil
     var _dnsPatterns: [String] = []
+    var _rdpProxyEnabled: Bool = false
 
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
@@ -922,6 +929,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       _displayName = source._displayName
       _databaseSettings = source._databaseSettings
       _dnsPatterns = source._dnsPatterns
+      _rdpProxyEnabled = source._rdpProxyEnabled
     }
   }
 
@@ -959,6 +967,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
         case 17: try { try decoder.decodeSingularStringField(value: &_storage._displayName) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._databaseSettings) }()
         case 19: try { try decoder.decodeRepeatedStringField(value: &_storage._dnsPatterns) }()
+        case 20: try { try decoder.decodeSingularBoolField(value: &_storage._rdpProxyEnabled) }()
         default: break
         }
       }
@@ -1028,6 +1037,9 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
       if !_storage._dnsPatterns.isEmpty {
         try visitor.visitRepeatedStringField(value: _storage._dnsPatterns, fieldNumber: 19)
       }
+      if _storage._rdpProxyEnabled != false {
+        try visitor.visitSingularBoolField(value: _storage._rdpProxyEnabled, fieldNumber: 20)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1056,6 +1068,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
         if _storage._displayName != rhs_storage._displayName {return false}
         if _storage._databaseSettings != rhs_storage._databaseSettings {return false}
         if _storage._dnsPatterns != rhs_storage._dnsPatterns {return false}
+        if _storage._rdpProxyEnabled != rhs_storage._rdpProxyEnabled {return false}
         return true
       }
       if !storagesAreEqual {return false}

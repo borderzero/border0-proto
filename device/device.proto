@@ -76,6 +76,7 @@ message Service {
   string display_name = 17;
   DatabaseSettings database_settings = 18;
   repeated string dns_patterns = 19; // DNS domain patterns to route through this service
+  bool rdp_proxy_enabled = 20;       // if RDP upstream username and password are both set, this field will be true
 }
 
 message ServiceBatch {
