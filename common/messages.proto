@@ -130,6 +130,7 @@ message Service {
   string display_name = 13;
   DatabaseSettings database_settings = 14;
   repeated string dns_patterns = 15; // DNS domain patterns to route through this service
+  bool rdp_proxy_enabled = 16;       // if RDP upstream username and password are both set, this field will be true
 }
 
 message IPAddressWithMetadata {
