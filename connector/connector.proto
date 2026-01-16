@@ -91,6 +91,11 @@ message Init {
   string self_ipv6 = 8;
   string network_resources_cidr_v4 = 9;
   string network_resources_cidr_v6 = 10;
+
+  // connector_id is the unique identifier assigned to this connector.
+  // This is particularly important for ephemeral connectors where the
+  // ID is assigned server-side during connector creation.
+  string connector_id = 11;
 }
 
 message UpdateConfig {
