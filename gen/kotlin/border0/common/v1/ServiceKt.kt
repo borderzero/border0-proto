@@ -544,32 +544,7 @@ public object ServiceKt {
     @kotlin.jvm.JvmName("clearDnsPatterns")
     public fun com.google.protobuf.kotlin.DslList<kotlin.String, DnsPatternsProxy>.clear() {
       _builder.clearDnsPatterns()
-    }
-    /**
-     * <pre>
-     * if RDP upstream username and password are both set, this field will be true
-     * </pre>
-     *
-     * <code>bool rdp_proxy_enabled = 16;</code>
-     */
-    public var rdpProxyEnabled: kotlin.Boolean
-      @JvmName("getRdpProxyEnabled")
-      get() = _builder.getRdpProxyEnabled()
-      @JvmName("setRdpProxyEnabled")
-      set(value) {
-        _builder.setRdpProxyEnabled(value)
-      }
-    /**
-     * <pre>
-     * if RDP upstream username and password are both set, this field will be true
-     * </pre>
-     *
-     * <code>bool rdp_proxy_enabled = 16;</code>
-     */
-    public fun clearRdpProxyEnabled() {
-      _builder.clearRdpProxyEnabled()
-    }
-  }
+    }}
 }
 @kotlin.jvm.JvmSynthetic
 public inline fun border0.common.v1.Messages.Service.copy(block: border0.common.v1.ServiceKt.Dsl.() -> kotlin.Unit): border0.common.v1.Messages.Service =
