@@ -10,7 +10,11 @@
 
 /// sets the .proto file syntax version
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -1130,6 +1134,9 @@ struct Border0_V1_UploadRecording: Sendable {
 
   /// type of the recording e.g. asciinema, log, etc...
   var recordingType: String = String()
+
+  /// optional: for file-based recordings (e.g., "init.mp4", "segment_000001.m4s", "manifest.json")
+  var filename: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3361,7 +3368,7 @@ extension Border0_V1_SshCertificateSignResponse: SwiftProtobuf.Message, SwiftPro
 
 extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".UploadRecording"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}recording_id\0\u{1}recording\0\u{3}recording_type\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}recording_id\0\u{1}recording\0\u{3}recording_type\0\u{1}filename\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3373,6 +3380,7 @@ extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._Mess
       case 2: try { try decoder.decodeSingularStringField(value: &self.recordingID) }()
       case 3: try { try decoder.decodeSingularBytesField(value: &self.recording) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.recordingType) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.filename) }()
       default: break
       }
     }
@@ -3391,6 +3399,9 @@ extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if !self.recordingType.isEmpty {
       try visitor.visitSingularStringField(value: self.recordingType, fieldNumber: 4)
     }
+    if !self.filename.isEmpty {
+      try visitor.visitSingularStringField(value: self.filename, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3399,6 +3410,7 @@ extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.recordingID != rhs.recordingID {return false}
     if lhs.recording != rhs.recording {return false}
     if lhs.recordingType != rhs.recordingType {return false}
+    if lhs.filename != rhs.filename {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

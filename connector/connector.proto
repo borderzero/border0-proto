@@ -287,6 +287,7 @@ message UploadRecording {
   string recording_id = 2;   // recording identifier (unique per-session)
   bytes recording = 3;       // actual recording bytes
   string recording_type = 4; // type of the recording e.g. asciinema, log, etc...
+  string filename = 5;       // optional: for file-based recordings (e.g., "init.mp4", "segment_000001.m4s", "manifest.json")
 }
 
 message CertificateSignRequest {

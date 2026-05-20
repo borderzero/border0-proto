@@ -121,6 +121,31 @@ public object UploadRecordingKt {
     public fun clearRecordingType() {
       _builder.clearRecordingType()
     }
+
+    /**
+     * <pre>
+     * optional: for file-based recordings (e.g., "init.mp4", "segment_000001.m4s", "manifest.json")
+     * </pre>
+     *
+     * <code>string filename = 5;</code>
+     */
+    public var filename: kotlin.String
+      @JvmName("getFilename")
+      get() = _builder.getFilename()
+      @JvmName("setFilename")
+      set(value) {
+        _builder.setFilename(value)
+      }
+    /**
+     * <pre>
+     * optional: for file-based recordings (e.g., "init.mp4", "segment_000001.m4s", "manifest.json")
+     * </pre>
+     *
+     * <code>string filename = 5;</code>
+     */
+    public fun clearFilename() {
+      _builder.clearFilename()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
