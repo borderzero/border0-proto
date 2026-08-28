@@ -34,6 +34,7 @@ message ControlStreamRequest {
     SessionRequest session = 16;
     border0.common.v1.StatsMessage stats = 17;
     Logs logs = 18;
+    RecordingUploadGrantRequest recording_upload_grant = 19;
   }
 }
 
@@ -55,6 +56,7 @@ message ControlStreamResponse {
     border0.common.v1.PeerOfflineMessage peer_offline = 14;
     SessionResponse session = 16;
     AllowedNetworks allowed_networks = 17;
+    RecordingUploadGrantResponse recording_upload_grant = 18;
   }
 }
 
@@ -280,6 +282,31 @@ message SshCertificateSignRequest {
 message SshCertificateSignResponse {
   string request_id = 1;
   bytes certificate = 2;
+}
+
+// RecordingUploadGrantRequest asks the control plane for permission to write
+// session recording parts straight to object storage, so that recording data
+// does not travel over this control stream at all.
+message RecordingUploadGrantRequest {
+  string request_id = 1;
+  string session_key = 2;    // session identifier (unique globally)
+  string recording_id = 3;   // recording identifier (unique per-session)
+  string recording_type = 4; // e.g. asciinema, log, ...
+}
+
+// RecordingUploadGrantResponse carries a prefix-scoped, time-bounded permission
+// to upload recording parts directly.
+//
+// One grant covers every part of a recording, so a connector only comes back
+// here when the grant nears expiry or is rejected.
+message RecordingUploadGrantResponse {
+  string request_id = 1;
+  string url = 2;                            // form POST target
+  map<string, string> fields = 3;            // signed policy form fields
+  string key_prefix = 4;                     // the only prefix writable with this grant
+  google.protobuf.Timestamp expires_at = 5;  // EFFECTIVE expiry, not the requested ttl
+  int64 max_part_bytes = 6;                  // per-part size ceiling in the policy
+  string error = 7;                          // set when the grant could not be issued
 }
 
 message UploadRecording {
