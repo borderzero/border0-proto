@@ -1,4 +1,4 @@
-FROM golang:1.24-alpine3.22
+FROM golang:1.27-alpine3.24
 
 RUN apk --no-cache update
 RUN apk --no-cache upgrade

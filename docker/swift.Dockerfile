@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 RUN apt-get update && apt-get install -y \
     curl \
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install swift, track versions in https://www.swift.org/download/
 # Note(@adriano): I have an M1 MacBook Pro (arm), so I need the aarch64 version. If you are on an intel machine, use the x86_64 version.
-RUN curl https://download.swift.org/swift-6.1-release/ubuntu2404-aarch64/swift-6.1-RELEASE/swift-6.1-RELEASE-ubuntu24.04-aarch64.tar.gz -o swift.tar.gz
+RUN curl -fL https://download.swift.org/swift-6.4.0-release/ubuntu2604-aarch64/swift-6.4.0-RELEASE/swift-6.4.0-RELEASE-ubuntu26.04-aarch64.tar.gz -o swift.tar.gz
 RUN tar xzf swift.tar.gz --directory / --strip-components=1 && rm swift.tar.gz
 
 WORKDIR /app
@@ -26,14 +26,16 @@ RUN git clone --recursive https://github.com/apple/swift-protobuf.git && \
     rm -rf swift-protobuf
 
 # Build protoc-gen-grpc-swift from source
-# Note(@adriano): Use the release/1.x branch... main is broken
-# for Ubuntu. See https://github.com/grpc/grpc-swift/issues/2092.
-RUN git clone -b release/1.x https://github.com/grpc/grpc-swift.git && \
-    cd grpc-swift && \
-    swift build -c release && \
-    cp .build/release/protoc-gen-grpc-swift /usr/local/bin/ && \
+# Note(@adriano): grpc-swift 1.x does not support Swift 6.4, so use the
+# grpc-swift-protobuf v2 code generator instead.
+# Install protoc-gen-grpc-swift-2 as protoc-gen-grpc-swift so our existing
+# --grpc-swift_out invocation continues to work.
+RUN git clone --branch 2.4.0 https://github.com/grpc/grpc-swift-protobuf.git && \
+    cd grpc-swift-protobuf && \
+    swift build -c release --product protoc-gen-grpc-swift-2 && \
+    cp .build/release/protoc-gen-grpc-swift-2 /usr/local/bin/protoc-gen-grpc-swift && \
     cd .. && \
-    rm -rf grpc-swift
+    rm -rf grpc-swift-protobuf
 
 # Need to download well-known protobuf types (e.g. timestamp, struct, ...)
 RUN git clone https://github.com/protocolbuffers/protobuf.git && \
@@ -53,4 +55,3 @@ ENTRYPOINT mkdir -p /app/gen/swift && protoc \
     --swift_out=/app/gen/swift \
     --grpc-swift_out=/app/gen/swift \
     /app/proto/*.proto
-

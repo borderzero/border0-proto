@@ -10,7 +10,11 @@
 
 /// sets the .proto file syntax version
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -18,12 +22,12 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-enum Border0_V1_Action: SwiftProtobuf.Enum, Swift.CaseIterable {
+nonisolated enum Border0_V1_Action: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case create // = 0
   case update // = 1
@@ -65,7 +69,7 @@ enum Border0_V1_Action: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-struct Border0_V1_ControlStreamRequest: Sendable {
+nonisolated struct Border0_V1_ControlStreamRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -210,7 +214,7 @@ struct Border0_V1_ControlStreamRequest: Sendable {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_RequestType: Equatable, Sendable {
+  nonisolated enum OneOf_RequestType: Equatable, Sendable {
     case config(Border0_V1_Config)
     case heartbeat(Border0_Common_V1_HeartbeatMessage)
     case pluginDiscoveryResults(Border0_V1_PluginDiscoveryResults)
@@ -234,7 +238,7 @@ struct Border0_V1_ControlStreamRequest: Sendable {
   init() {}
 }
 
-struct Border0_V1_ControlStreamResponse: Sendable {
+nonisolated struct Border0_V1_ControlStreamResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -371,7 +375,7 @@ struct Border0_V1_ControlStreamResponse: Sendable {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_RequestType: Equatable, Sendable {
+  nonisolated enum OneOf_RequestType: Equatable, Sendable {
     case init_p(Border0_V1_Init)
     case connectorConfig(Border0_V1_ConnectorConfig)
     case updateConfig(Border0_V1_UpdateConfig)
@@ -394,7 +398,7 @@ struct Border0_V1_ControlStreamResponse: Sendable {
   init() {}
 }
 
-struct Border0_V1_Organization: Sendable {
+nonisolated struct Border0_V1_Organization: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -421,7 +425,7 @@ struct Border0_V1_Organization: Sendable {
   fileprivate var _certificates: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
-struct Border0_V1_TunnelCertificateSignRequest: Sendable {
+nonisolated struct Border0_V1_TunnelCertificateSignRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -439,7 +443,7 @@ struct Border0_V1_TunnelCertificateSignRequest: Sendable {
   init() {}
 }
 
-struct Border0_V1_TunnelCertificateSignResponse: Sendable {
+nonisolated struct Border0_V1_TunnelCertificateSignResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -455,7 +459,7 @@ struct Border0_V1_TunnelCertificateSignResponse: Sendable {
   init() {}
 }
 
-struct Border0_V1_Init: Sendable {
+nonisolated struct Border0_V1_Init: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -495,7 +499,7 @@ struct Border0_V1_Init: Sendable {
   fileprivate var _connectorConfig: Border0_V1_ConnectorConfig? = nil
 }
 
-struct Border0_V1_UpdateConfig: Sendable {
+nonisolated struct Border0_V1_UpdateConfig: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -522,7 +526,7 @@ struct Border0_V1_UpdateConfig: Sendable {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_ConfigType: Equatable, Sendable {
+  nonisolated enum OneOf_ConfigType: Equatable, Sendable {
     case pluginConfig(Border0_V1_PluginConfig)
     case socketConfig(Border0_V1_SocketConfig)
 
@@ -531,7 +535,7 @@ struct Border0_V1_UpdateConfig: Sendable {
   init() {}
 }
 
-struct Border0_V1_Log: Sendable {
+nonisolated struct Border0_V1_Log: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -562,7 +566,7 @@ struct Border0_V1_Log: Sendable {
   fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct Border0_V1_Logs: Sendable {
+nonisolated struct Border0_V1_Logs: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -574,7 +578,7 @@ struct Border0_V1_Logs: Sendable {
   init() {}
 }
 
-struct Border0_V1_ConnectorMetadata: Sendable {
+nonisolated struct Border0_V1_ConnectorMetadata: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -595,7 +599,7 @@ struct Border0_V1_ConnectorMetadata: Sendable {
   fileprivate var _data: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
-struct Border0_V1_Config: Sendable {
+nonisolated struct Border0_V1_Config: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -611,7 +615,7 @@ struct Border0_V1_Config: Sendable {
   init() {}
 }
 
-struct Border0_V1_PluginDiscoveryResults: Sendable {
+nonisolated struct Border0_V1_PluginDiscoveryResults: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -642,7 +646,7 @@ struct Border0_V1_PluginDiscoveryResults: Sendable {
   fileprivate var _metadata: Border0_V1_PluginDiscoveryResultsMetadata? = nil
 }
 
-struct Border0_V1_PluginDiscoveryResultsMetadata: Sendable {
+nonisolated struct Border0_V1_PluginDiscoveryResultsMetadata: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -675,7 +679,7 @@ struct Border0_V1_PluginDiscoveryResultsMetadata: Sendable {
   fileprivate var _endedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct Border0_V1_Tag: Sendable {
+nonisolated struct Border0_V1_Tag: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -689,7 +693,7 @@ struct Border0_V1_Tag: Sendable {
   init() {}
 }
 
-struct Border0_V1_SocketConfig: Sendable {
+nonisolated struct Border0_V1_SocketConfig: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -716,7 +720,7 @@ struct Border0_V1_SocketConfig: Sendable {
   fileprivate var _config: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
-struct Border0_V1_ConnectorConfig: Sendable {
+nonisolated struct Border0_V1_ConnectorConfig: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -743,7 +747,7 @@ struct Border0_V1_ConnectorConfig: Sendable {
   fileprivate var _organization: Border0_V1_Organization? = nil
 }
 
-struct Border0_V1_PluginConfig: Sendable {
+nonisolated struct Border0_V1_PluginConfig: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -770,7 +774,7 @@ struct Border0_V1_PluginConfig: Sendable {
   fileprivate var _config: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
-struct Border0_V1_Discover: Sendable {
+nonisolated struct Border0_V1_Discover: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -784,7 +788,7 @@ struct Border0_V1_Discover: Sendable {
   init() {}
 }
 
-struct Border0_V1_Stop: Sendable {
+nonisolated struct Border0_V1_Stop: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -796,7 +800,7 @@ struct Border0_V1_Stop: Sendable {
   init() {}
 }
 
-struct Border0_V1_Disconnect: Sendable {
+nonisolated struct Border0_V1_Disconnect: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -808,7 +812,7 @@ struct Border0_V1_Disconnect: Sendable {
   init() {}
 }
 
-struct Border0_V1_AuthorizeRequest: Sendable {
+nonisolated struct Border0_V1_AuthorizeRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -830,7 +834,7 @@ struct Border0_V1_AuthorizeRequest: Sendable {
   init() {}
 }
 
-struct Border0_V1_AuthorizePeerRequest: Sendable {
+nonisolated struct Border0_V1_AuthorizePeerRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -853,7 +857,7 @@ struct Border0_V1_AuthorizePeerRequest: Sendable {
   init() {}
 }
 
-struct Border0_V1_actionList: Sendable {
+nonisolated struct Border0_V1_actionList: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -865,7 +869,7 @@ struct Border0_V1_actionList: Sendable {
   init() {}
 }
 
-struct Border0_V1_Permissions: Sendable {
+nonisolated struct Border0_V1_Permissions: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -877,7 +881,7 @@ struct Border0_V1_Permissions: Sendable {
   init() {}
 }
 
-struct Border0_V1_infoList: Sendable {
+nonisolated struct Border0_V1_infoList: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -889,7 +893,7 @@ struct Border0_V1_infoList: Sendable {
   init() {}
 }
 
-struct Border0_V1_AuthorizeResponse: Sendable {
+nonisolated struct Border0_V1_AuthorizeResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -913,7 +917,7 @@ struct Border0_V1_AuthorizeResponse: Sendable {
   init() {}
 }
 
-struct Border0_V1_SessionUpdateRequest: Sendable {
+nonisolated struct Border0_V1_SessionUpdateRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -933,7 +937,7 @@ struct Border0_V1_SessionUpdateRequest: Sendable {
   init() {}
 }
 
-struct Border0_V1_SessionRequest: @unchecked Sendable {
+nonisolated struct Border0_V1_SessionRequest: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1042,7 +1046,7 @@ struct Border0_V1_SessionRequest: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-struct Border0_V1_SessionResponse: Sendable {
+nonisolated struct Border0_V1_SessionResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1058,7 +1062,7 @@ struct Border0_V1_SessionResponse: Sendable {
   init() {}
 }
 
-struct Border0_V1_SessionEvent: Sendable {
+nonisolated struct Border0_V1_SessionEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1078,7 +1082,7 @@ struct Border0_V1_SessionEvent: Sendable {
   init() {}
 }
 
-struct Border0_V1_SshCertificateSignRequest: Sendable {
+nonisolated struct Border0_V1_SshCertificateSignRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1100,7 +1104,7 @@ struct Border0_V1_SshCertificateSignRequest: Sendable {
   init() {}
 }
 
-struct Border0_V1_SshCertificateSignResponse: Sendable {
+nonisolated struct Border0_V1_SshCertificateSignResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1114,7 +1118,7 @@ struct Border0_V1_SshCertificateSignResponse: Sendable {
   init() {}
 }
 
-struct Border0_V1_UploadRecording: Sendable {
+nonisolated struct Border0_V1_UploadRecording: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1136,7 +1140,7 @@ struct Border0_V1_UploadRecording: Sendable {
   init() {}
 }
 
-struct Border0_V1_CertificateSignRequest: Sendable {
+nonisolated struct Border0_V1_CertificateSignRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1150,7 +1154,7 @@ struct Border0_V1_CertificateSignRequest: Sendable {
   init() {}
 }
 
-struct Border0_V1_CertificateSignResponse: Sendable {
+nonisolated struct Border0_V1_CertificateSignResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1164,7 +1168,7 @@ struct Border0_V1_CertificateSignResponse: Sendable {
   init() {}
 }
 
-struct Border0_V1_AllowedNetworks: Sendable {
+nonisolated struct Border0_V1_AllowedNetworks: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1176,7 +1180,7 @@ struct Border0_V1_AllowedNetworks: Sendable {
   init() {}
 }
 
-struct Border0_V1_AllowedNetworksSocketConfig: Sendable {
+nonisolated struct Border0_V1_AllowedNetworksSocketConfig: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1197,7 +1201,7 @@ struct Border0_V1_AllowedNetworksSocketConfig: Sendable {
   init() {}
 }
 
-struct Border0_V1_AllowedNetworksSubnets: Sendable {
+nonisolated struct Border0_V1_AllowedNetworksSubnets: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1211,7 +1215,7 @@ struct Border0_V1_AllowedNetworksSubnets: Sendable {
 
 /// DNS patterns for a socket. Supports exact domains ("api.example.com") and wildcards ("*.example.com").
 /// Connectors use these patterns to resolve DNS queries and manage firewall rules automatically.
-struct Border0_V1_AllowedNetworksDnsPatterns: Sendable {
+nonisolated struct Border0_V1_AllowedNetworksDnsPatterns: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1226,13 +1230,13 @@ struct Border0_V1_AllowedNetworksDnsPatterns: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "border0.v1"
+fileprivate nonisolated let _protobuf_package = "border0.v1"
 
-extension Border0_V1_Action: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Action: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CREATE\0\u{1}UPDATE\0\u{1}DELETE\0\u{1}OTHER\0")
 }
 
-extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ControlStreamRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}config\0\u{1}heartbeat\0\u{3}plugin_discovery_results\0\u{4}\u{2}tunnel_certificate_sign_request\0\u{1}log\0\u{1}metadata\0\u{1}authorize\0\u{3}session_update\0\u{3}ssh_certificate_sign_request\0\u{3}upload_recording\0\u{3}Certificate_sign_request\0\u{3}session_event\0\u{3}discovery_details\0\u{3}authorize_peer\0\u{1}session\0\u{1}stats\0\u{1}logs\0")
 
@@ -1554,7 +1558,7 @@ extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ControlStreamResponse"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}init\0\u{3}connector_config\0\u{3}update_config\0\u{1}heartbeat\0\u{3}tunnel_certificate_sign_response\0\u{1}discover\0\u{1}stop\0\u{1}disconnect\0\u{1}authorize\0\u{3}ssh_certificate_sign_response\0\u{3}Certificate_sign_response\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{2}\u{2}session\0\u{3}allowed_networks\0")
 
@@ -1859,7 +1863,7 @@ extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Organization"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}subdomain\0\u{1}certificates\0")
 
@@ -1908,7 +1912,7 @@ extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TunnelCertificateSignRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}socket_id\0\u{3}public_key\0\u{3}is_v2\0")
 
@@ -1953,7 +1957,7 @@ extension Border0_V1_TunnelCertificateSignRequest: SwiftProtobuf.Message, SwiftP
   }
 }
 
-extension Border0_V1_TunnelCertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_TunnelCertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TunnelCertificateSignResponse"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}certificate\0\u{1}hostkey\0")
 
@@ -1993,7 +1997,7 @@ extension Border0_V1_TunnelCertificateSignResponse: SwiftProtobuf.Message, Swift
   }
 }
 
-extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Init"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}connector_config\0\u{1}sockets\0\u{1}plugins\0\u{3}device_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0")
 
@@ -2072,7 +2076,7 @@ extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 }
 
-extension Border0_V1_UpdateConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_UpdateConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".UpdateConfig"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}action\0\u{3}plugin_config\0\u{3}socket_config\0")
 
@@ -2144,7 +2148,7 @@ extension Border0_V1_UpdateConfig: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Border0_V1_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Log"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}connector_id\0\u{3}socket_id\0\u{3}plugin_id\0\u{1}timestamp\0\u{1}severity\0\u{1}message\0")
 
@@ -2203,7 +2207,7 @@ extension Border0_V1_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 }
 
-extension Border0_V1_Logs: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Logs: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Logs"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}logs\0")
 
@@ -2233,7 +2237,7 @@ extension Border0_V1_Logs: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 }
 
-extension Border0_V1_ConnectorMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_ConnectorMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ConnectorMetadata"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}data\0")
 
@@ -2267,7 +2271,7 @@ extension Border0_V1_ConnectorMetadata: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 }
 
-extension Border0_V1_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Config"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}connector\0\u{1}sockets\0\u{1}plugins\0")
 
@@ -2307,7 +2311,7 @@ extension Border0_V1_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 }
 
-extension Border0_V1_PluginDiscoveryResults: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_PluginDiscoveryResults: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PluginDiscoveryResults"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}plugin_id\0\u{3}request_id\0\u{1}metadata\0\u{1}resources\0\u{1}errors\0\u{1}warnings\0")
 
@@ -2366,7 +2370,7 @@ extension Border0_V1_PluginDiscoveryResults: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension Border0_V1_PluginDiscoveryResultsMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_PluginDiscoveryResultsMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PluginDiscoveryResultsMetadata"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}discovery_id\0\u{3}started_at\0\u{3}ended_at\0")
 
@@ -2410,7 +2414,7 @@ extension Border0_V1_PluginDiscoveryResultsMetadata: SwiftProtobuf.Message, Swif
   }
 }
 
-extension Border0_V1_Tag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Tag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Tag"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}value\0")
 
@@ -2445,7 +2449,7 @@ extension Border0_V1_Tag: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   }
 }
 
-extension Border0_V1_SocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_SocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SocketConfig"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}type\0\u{1}config\0")
 
@@ -2494,7 +2498,7 @@ extension Border0_V1_SocketConfig: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ConnectorConfig"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{3}heartbeat_interval\0\u{1}organization\0\u{3}private_network_enabled\0")
 
@@ -2543,7 +2547,7 @@ extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Border0_V1_PluginConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_PluginConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PluginConfig"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}type\0\u{1}config\0")
 
@@ -2592,7 +2596,7 @@ extension Border0_V1_PluginConfig: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Border0_V1_Discover: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Discover: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Discover"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}request_id\0")
 
@@ -2627,7 +2631,7 @@ extension Border0_V1_Discover: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Border0_V1_Stop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Stop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Stop"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reason\0")
 
@@ -2657,7 +2661,7 @@ extension Border0_V1_Stop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 }
 
-extension Border0_V1_Disconnect: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Disconnect: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Disconnect"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reason\0")
 
@@ -2687,7 +2691,7 @@ extension Border0_V1_Disconnect: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 }
 
-extension Border0_V1_AuthorizeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_AuthorizeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthorizeRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}protocol\0\u{3}user_email\0\u{3}ip_address\0\u{3}session_key\0\u{3}socket_id\0")
 
@@ -2742,7 +2746,7 @@ extension Border0_V1_AuthorizeRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
   }
 }
 
-extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthorizePeerRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}protocol\0\u{3}public_key\0\u{3}ip_address\0\u{3}socket_id\0\u{3}user_email\0")
 
@@ -2797,7 +2801,7 @@ extension Border0_V1_AuthorizePeerRequest: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-extension Border0_V1_actionList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_actionList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".actionList"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}values\0")
 
@@ -2827,7 +2831,7 @@ extension Border0_V1_actionList: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 }
 
-extension Border0_V1_Permissions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_Permissions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Permissions"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}permissions\0")
 
@@ -2857,7 +2861,7 @@ extension Border0_V1_Permissions: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
-extension Border0_V1_infoList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_infoList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".infoList"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}values\0")
 
@@ -2887,7 +2891,7 @@ extension Border0_V1_infoList: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthorizeResponse"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}allowed_actions\0\u{1}info\0\u{2}\u{2}permissions\0\u{1}email\0\u{3}entity_uuid\0\u{1}groups\0")
 
@@ -2947,7 +2951,7 @@ extension Border0_V1_AuthorizeResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 }
 
-extension Border0_V1_SessionUpdateRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_SessionUpdateRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionUpdateRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}socket_id\0\u{3}user_data\0\u{1}result\0\u{3}auth_info_failed\0")
 
@@ -2997,7 +3001,7 @@ extension Border0_V1_SessionUpdateRequest: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}start_time\0\u{3}end_time\0\u{3}last_seen\0\u{1}email\0\u{3}log_type\0\u{3}socket_id\0\u{3}server_name\0\u{3}server_port\0\u{3}client_ip\0\u{3}client_port\0\u{3}session_data\0\u{3}session_key\0\u{1}result\0\u{3}auth_info\0\u{1}metadata\0\u{3}entity_uuid\0")
 
@@ -3179,7 +3183,7 @@ extension Border0_V1_SessionRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 }
 
-extension Border0_V1_SessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_SessionResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionResponse"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}session_id\0\u{3}ssh_ticket\0")
 
@@ -3219,7 +3223,7 @@ extension Border0_V1_SessionResponse: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Border0_V1_SessionEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_SessionEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SessionEvent"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}socket_id\0\u{1}type\0\u{1}status\0\u{1}metadata\0")
 
@@ -3269,7 +3273,7 @@ extension Border0_V1_SessionEvent: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension Border0_V1_SshCertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_SshCertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SshCertificateSignRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}socket_id\0\u{3}session_key\0\u{3}user_email\0\u{3}public_key\0\u{1}ticket\0")
 
@@ -3324,7 +3328,7 @@ extension Border0_V1_SshCertificateSignRequest: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-extension Border0_V1_SshCertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_SshCertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SshCertificateSignResponse"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}certificate\0")
 
@@ -3359,7 +3363,7 @@ extension Border0_V1_SshCertificateSignResponse: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".UploadRecording"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}session_key\0\u{3}recording_id\0\u{1}recording\0\u{3}recording_type\0")
 
@@ -3404,7 +3408,7 @@ extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Border0_V1_CertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_CertificateSignRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".CertificateSignRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}certificate_signing_request\0")
 
@@ -3439,7 +3443,7 @@ extension Border0_V1_CertificateSignRequest: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension Border0_V1_CertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_CertificateSignResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".CertificateSignResponse"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}certificate\0")
 
@@ -3474,7 +3478,7 @@ extension Border0_V1_CertificateSignResponse: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-extension Border0_V1_AllowedNetworks: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_AllowedNetworks: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworks"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}devices\0")
 
@@ -3504,7 +3508,7 @@ extension Border0_V1_AllowedNetworks: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworksSocketConfig"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}sockets\0\u{3}dns_patterns\0\u{3}ipv4_address\0\u{3}ipv6_address\0")
 
@@ -3549,7 +3553,7 @@ extension Border0_V1_AllowedNetworksSocketConfig: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-extension Border0_V1_AllowedNetworksSubnets: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_AllowedNetworksSubnets: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworksSubnets"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}subnets\0")
 
@@ -3579,7 +3583,7 @@ extension Border0_V1_AllowedNetworksSubnets: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension Border0_V1_AllowedNetworksDnsPatterns: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_V1_AllowedNetworksDnsPatterns: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AllowedNetworksDnsPatterns"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}patterns\0")
 

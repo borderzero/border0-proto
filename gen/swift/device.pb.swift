@@ -10,7 +10,11 @@
 
 /// sets the .proto file syntax version
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -18,14 +22,14 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
 /// InfoType represents type of information
 /// requested by the client device.
-enum Border0_Device_V1_InfoType: SwiftProtobuf.Enum, Swift.CaseIterable {
+nonisolated enum Border0_Device_V1_InfoType: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unknown // = 0
   case orgDetails // = 1
@@ -60,7 +64,7 @@ enum Border0_Device_V1_InfoType: SwiftProtobuf.Enum, Swift.CaseIterable {
 }
 
 /// messages from devices to the server (api)
-struct Border0_Device_V1_DeviceToServerMessage: Sendable {
+nonisolated struct Border0_Device_V1_DeviceToServerMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -109,7 +113,7 @@ struct Border0_Device_V1_DeviceToServerMessage: Sendable {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Message: Equatable, Sendable {
+  nonisolated enum OneOf_Message: Equatable, Sendable {
     case authChallengeSolution(Border0_Device_V1_AuthChallengeSolutionMessage)
     case discoveryDetails(Border0_Common_V1_DiscoveryDetailsMessage)
     case heartbeat(Border0_Common_V1_HeartbeatMessage)
@@ -122,7 +126,7 @@ struct Border0_Device_V1_DeviceToServerMessage: Sendable {
 }
 
 /// messages from the server (api) to devices
-struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
+nonisolated struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -211,7 +215,7 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Message: Equatable, Sendable {
+  nonisolated enum OneOf_Message: Equatable, Sendable {
     case authChallenge(Border0_Device_V1_AuthChallengeMessage)
     case heartbeat(Border0_Common_V1_HeartbeatMessage)
     case networkState(Border0_Common_V1_NetworkStateMessage)
@@ -228,7 +232,7 @@ struct Border0_Device_V1_ServerToDeviceMessage: Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_AuthChallengeMessage: Sendable {
+nonisolated struct Border0_Device_V1_AuthChallengeMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -244,7 +248,7 @@ struct Border0_Device_V1_AuthChallengeMessage: Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_AuthChallengeSolutionMessage: Sendable {
+nonisolated struct Border0_Device_V1_AuthChallengeSolutionMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -258,7 +262,7 @@ struct Border0_Device_V1_AuthChallengeSolutionMessage: Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_DatabaseSettings: Sendable {
+nonisolated struct Border0_Device_V1_DatabaseSettings: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -270,7 +274,7 @@ struct Border0_Device_V1_DatabaseSettings: Sendable {
   init() {}
 }
 
-struct Border0_Device_V1_Service: @unchecked Sendable {
+nonisolated struct Border0_Device_V1_Service: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -382,7 +386,7 @@ struct Border0_Device_V1_Service: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-struct Border0_Device_V1_ServiceBatch: Sendable {
+nonisolated struct Border0_Device_V1_ServiceBatch: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -401,7 +405,7 @@ struct Border0_Device_V1_ServiceBatch: Sendable {
 /// InfoRequest is a generic request for information where
 /// the response from the GRPC server will be a message in
 /// accordance to the value of the info_type field.
-struct Border0_Device_V1_InfoRequest: Sendable {
+nonisolated struct Border0_Device_V1_InfoRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -417,7 +421,7 @@ struct Border0_Device_V1_InfoRequest: Sendable {
 
 /// OrgDetails is returned upon the client device requesting
 /// this data via an InfoRequest with info_type ORG_DETAILS.
-struct Border0_Device_V1_OrgDetails: Sendable {
+nonisolated struct Border0_Device_V1_OrgDetails: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -437,13 +441,13 @@ struct Border0_Device_V1_OrgDetails: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "border0.device.v1"
+fileprivate nonisolated let _protobuf_package = "border0.device.v1"
 
-extension Border0_Device_V1_InfoType: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_InfoType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN\0\u{1}ORG_DETAILS\0")
 }
 
-extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DeviceToServerMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge_solution\0\u{3}discovery_details\0\u{1}heartbeat\0\u{1}stats\0\u{3}info_request\0")
 
@@ -561,7 +565,7 @@ extension Border0_Device_V1_DeviceToServerMessage: SwiftProtobuf.Message, SwiftP
   }
 }
 
-extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ServerToDeviceMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}auth_challenge\0\u{1}heartbeat\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{1}disconnect\0\u{1}service\0\u{3}org_details\0\u{3}service_batch\0\u{3}dns_configuration\0")
 
@@ -764,7 +768,7 @@ extension Border0_Device_V1_ServerToDeviceMessage: SwiftProtobuf.Message, SwiftP
   }
 }
 
-extension Border0_Device_V1_AuthChallengeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_AuthChallengeMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthChallengeMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}serverPublicKey\0\u{1}challenge\0\u{1}challengeNonce\0")
 
@@ -804,7 +808,7 @@ extension Border0_Device_V1_AuthChallengeMessage: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AuthChallengeSolutionMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}solved\0\u{1}solvedNonce\0")
 
@@ -839,7 +843,7 @@ extension Border0_Device_V1_AuthChallengeSolutionMessage: SwiftProtobuf.Message,
   }
 }
 
-extension Border0_Device_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DatabaseSettings"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}database_name\0")
 
@@ -869,7 +873,7 @@ extension Border0_Device_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}peer_public_key\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{1}standalone\0\u{1}delete\0\u{3}display_name\0\u{3}database_settings\0\u{3}dns_patterns\0")
 
@@ -1065,7 +1069,7 @@ extension Border0_Device_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 }
 
-extension Border0_Device_V1_ServiceBatch: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_ServiceBatch: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ServiceBatch"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}services\0\u{3}total_services\0\u{3}batch_number\0")
 
@@ -1105,7 +1109,7 @@ extension Border0_Device_V1_ServiceBatch: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-extension Border0_Device_V1_InfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_InfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".InfoRequest"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}info_type\0")
 
@@ -1140,7 +1144,7 @@ extension Border0_Device_V1_InfoRequest: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-extension Border0_Device_V1_OrgDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Device_V1_OrgDetails: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".OrgDetails"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}name\0\u{1}uuid\0\u{3}ca_cert_pem\0")
 
