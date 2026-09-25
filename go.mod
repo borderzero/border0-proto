@@ -1,6 +1,6 @@
 module github.com/borderzero/border0-proto
 
-go 1.23
+go 1.26.3
 
 require (
 	google.golang.org/grpc v1.65.0

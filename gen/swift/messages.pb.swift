@@ -17,12 +17,12 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-enum Border0_Common_V1_IPAddressType: SwiftProtobuf.Enum, Swift.CaseIterable {
+nonisolated enum Border0_Common_V1_IPAddressType: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case ipv4 // = 0
   case ipv6 // = 1
@@ -56,7 +56,7 @@ enum Border0_Common_V1_IPAddressType: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-enum Border0_Common_V1_PeerType: SwiftProtobuf.Enum, Swift.CaseIterable {
+nonisolated enum Border0_Common_V1_PeerType: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unknown // = 0
   case device // = 1
@@ -94,7 +94,7 @@ enum Border0_Common_V1_PeerType: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-enum Border0_Common_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterable {
+nonisolated enum Border0_Common_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unknown // = 0
   case serverShutdown // = 1
@@ -132,7 +132,7 @@ enum Border0_Common_V1_DisconnectionReason: SwiftProtobuf.Enum, Swift.CaseIterab
 
 }
 
-struct Border0_Common_V1_DiscoveryDetailsMessage: Sendable {
+nonisolated struct Border0_Common_V1_DiscoveryDetailsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -157,7 +157,7 @@ struct Border0_Common_V1_DiscoveryDetailsMessage: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_HeartbeatMessage: Sendable {
+nonisolated struct Border0_Common_V1_HeartbeatMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -167,7 +167,7 @@ struct Border0_Common_V1_HeartbeatMessage: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_StatsMessage: Sendable {
+nonisolated struct Border0_Common_V1_StatsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -192,7 +192,7 @@ struct Border0_Common_V1_StatsMessage: Sendable {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_StatsMessageType: Equatable, Sendable {
+  nonisolated enum OneOf_StatsMessageType: Equatable, Sendable {
     case networkDeviceStats(Border0_Common_V1_NetworkDeviceStatsMessage)
     case socketsStats(Border0_Common_V1_SocketsStatsMessage)
 
@@ -201,7 +201,7 @@ struct Border0_Common_V1_StatsMessage: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_NetworkDeviceStatsMessage: Sendable {
+nonisolated struct Border0_Common_V1_NetworkDeviceStatsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -230,7 +230,7 @@ struct Border0_Common_V1_NetworkDeviceStatsMessage: Sendable {
   fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct Border0_Common_V1_SocketStatsMessage: Sendable {
+nonisolated struct Border0_Common_V1_SocketStatsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -261,7 +261,7 @@ struct Border0_Common_V1_SocketStatsMessage: Sendable {
   fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct Border0_Common_V1_SocketsStatsMessage: Sendable {
+nonisolated struct Border0_Common_V1_SocketsStatsMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -273,7 +273,7 @@ struct Border0_Common_V1_SocketsStatsMessage: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_PeerOnlineMessage: Sendable {
+nonisolated struct Border0_Common_V1_PeerOnlineMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -296,7 +296,7 @@ struct Border0_Common_V1_PeerOnlineMessage: Sendable {
   fileprivate var _peer: Border0_Common_V1_WireGuardPeer? = nil
 }
 
-struct Border0_Common_V1_PeerOfflineMessage: Sendable {
+nonisolated struct Border0_Common_V1_PeerOfflineMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -310,7 +310,7 @@ struct Border0_Common_V1_PeerOfflineMessage: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_SplitDNSRule: Sendable {
+nonisolated struct Border0_Common_V1_SplitDNSRule: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -326,7 +326,7 @@ struct Border0_Common_V1_SplitDNSRule: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_DNSConfigurationMessage: Sendable {
+nonisolated struct Border0_Common_V1_DNSConfigurationMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -345,7 +345,7 @@ struct Border0_Common_V1_DNSConfigurationMessage: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_NetworkStateMessage: Sendable {
+nonisolated struct Border0_Common_V1_NetworkStateMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -385,7 +385,7 @@ struct Border0_Common_V1_NetworkStateMessage: Sendable {
   fileprivate var _dnsConfiguration: Border0_Common_V1_DNSConfigurationMessage? = nil
 }
 
-struct Border0_Common_V1_WireGuardPeer: Sendable {
+nonisolated struct Border0_Common_V1_WireGuardPeer: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -442,7 +442,7 @@ struct Border0_Common_V1_WireGuardPeer: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_DatabaseSettings: Sendable {
+nonisolated struct Border0_Common_V1_DatabaseSettings: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -454,7 +454,7 @@ struct Border0_Common_V1_DatabaseSettings: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_Service: Sendable {
+nonisolated struct Border0_Common_V1_Service: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -505,7 +505,7 @@ struct Border0_Common_V1_Service: Sendable {
   fileprivate var _databaseSettings: Border0_Common_V1_DatabaseSettings? = nil
 }
 
-struct Border0_Common_V1_IPAddressWithMetadata: Sendable {
+nonisolated struct Border0_Common_V1_IPAddressWithMetadata: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -530,7 +530,7 @@ struct Border0_Common_V1_IPAddressWithMetadata: Sendable {
   fileprivate var _metadata: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
-struct Border0_Common_V1_WireGuardEndpointAddr: Sendable {
+nonisolated struct Border0_Common_V1_WireGuardEndpointAddr: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -555,7 +555,7 @@ struct Border0_Common_V1_WireGuardEndpointAddr: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_DisconnectMessage: Sendable {
+nonisolated struct Border0_Common_V1_DisconnectMessage: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -567,7 +567,7 @@ struct Border0_Common_V1_DisconnectMessage: Sendable {
   init() {}
 }
 
-struct Border0_Common_V1_Group: Sendable {
+nonisolated struct Border0_Common_V1_Group: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -587,21 +587,21 @@ struct Border0_Common_V1_Group: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "border0.common.v1"
+fileprivate nonisolated let _protobuf_package = "border0.common.v1"
 
-extension Border0_Common_V1_IPAddressType: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_IPAddressType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0IPV4\0\u{1}IPV6\0")
 }
 
-extension Border0_Common_V1_PeerType: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_PeerType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0PEER_TYPE_UNKNOWN\0\u{1}PEER_TYPE_DEVICE\0\u{1}PEER_TYPE_CONNECTOR\0")
 }
 
-extension Border0_Common_V1_DisconnectionReason: SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_DisconnectionReason: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0UNKNOWN\0\u{1}SERVER_SHUTDOWN\0\u{1}NEWER_CONNECTION\0")
 }
 
-extension Border0_Common_V1_DiscoveryDetailsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_DiscoveryDetailsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DiscoveryDetailsMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}discoverable\0\u{3}endpoint_public_udp4\0\u{3}endpoint_public_udp6\0\u{3}public_key\0\u{3}wg_ep_addrs\0")
 
@@ -651,7 +651,7 @@ extension Border0_Common_V1_DiscoveryDetailsMessage: SwiftProtobuf.Message, Swif
   }
 }
 
-extension Border0_Common_V1_HeartbeatMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_HeartbeatMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".HeartbeatMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -670,7 +670,7 @@ extension Border0_Common_V1_HeartbeatMessage: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".StatsMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_device_stats\0\u{3}sockets_stats\0")
 
@@ -737,7 +737,7 @@ extension Border0_Common_V1_StatsMessage: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".NetworkDeviceStatsMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{3}bytes_in\0\u{3}bytes_out\0\u{3}packets_in\0\u{3}packets_out\0")
 
@@ -791,7 +791,7 @@ extension Border0_Common_V1_NetworkDeviceStatsMessage: SwiftProtobuf.Message, Sw
   }
 }
 
-extension Border0_Common_V1_SocketStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_SocketStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SocketStatsMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}timestamp\0\u{3}bytes_in\0\u{3}bytes_out\0\u{3}packets_in\0\u{3}packets_out\0\u{3}socket_id\0")
 
@@ -850,7 +850,7 @@ extension Border0_Common_V1_SocketStatsMessage: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-extension Border0_Common_V1_SocketsStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_SocketsStatsMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SocketsStatsMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}socket_stats\0")
 
@@ -880,7 +880,7 @@ extension Border0_Common_V1_SocketsStatsMessage: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-extension Border0_Common_V1_PeerOnlineMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_PeerOnlineMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PeerOnlineMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{1}peer\0")
 
@@ -919,7 +919,7 @@ extension Border0_Common_V1_PeerOnlineMessage: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-extension Border0_Common_V1_PeerOfflineMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_PeerOfflineMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PeerOfflineMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{3}peer_public_key\0")
 
@@ -954,7 +954,7 @@ extension Border0_Common_V1_PeerOfflineMessage: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-extension Border0_Common_V1_SplitDNSRule: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_SplitDNSRule: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".SplitDNSRule"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}domain\0\u{3}dns_servers\0")
 
@@ -989,7 +989,7 @@ extension Border0_Common_V1_SplitDNSRule: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-extension Border0_Common_V1_DNSConfigurationMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_DNSConfigurationMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DNSConfigurationMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}dns_management_enabled\0\u{3}global_dns_servers\0\u{3}split_dns_rules\0")
 
@@ -1029,7 +1029,7 @@ extension Border0_Common_V1_DNSConfigurationMessage: SwiftProtobuf.Message, Swif
   }
 }
 
-extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".NetworkStateMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}network_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}online_peers\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0\u{3}standalone_services\0\u{3}dns_configuration\0")
 
@@ -1108,7 +1108,7 @@ extension Border0_Common_V1_NetworkStateMessage: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".WireGuardPeer"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}public_key\0\u{1}ipv4\0\u{1}ipv6\0\u{3}allowed_ips\0\u{3}persistent_keepalive_interval_seconds\0\u{3}public_udp4_endpoint\0\u{3}public_udp6_endpoint\0\u{1}type\0\u{1}services\0\u{1}name\0\u{3}wg_ep_addrs\0")
 
@@ -1188,7 +1188,7 @@ extension Border0_Common_V1_WireGuardPeer: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-extension Border0_Common_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DatabaseSettings"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}database_name\0")
 
@@ -1218,7 +1218,7 @@ extension Border0_Common_V1_DatabaseSettings: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Service"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{1}ipv4\0\u{1}ipv6\0\u{3}subnet_routes\0\u{3}dns_name\0\u{3}upstream_type\0\u{3}upstream_port\0\u{3}has_upstream_username\0\u{3}upstream_ssh_type\0\u{1}tags\0\u{3}public_ips\0\u{3}display_name\0\u{3}database_settings\0\u{3}dns_patterns\0")
 
@@ -1322,7 +1322,7 @@ extension Border0_Common_V1_Service: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 }
 
-extension Border0_Common_V1_IPAddressWithMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_IPAddressWithMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".IPAddressWithMetadata"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}ip_address\0\u{1}type\0\u{1}metadata\0")
 
@@ -1366,7 +1366,7 @@ extension Border0_Common_V1_IPAddressWithMetadata: SwiftProtobuf.Message, SwiftP
   }
 }
 
-extension Border0_Common_V1_WireGuardEndpointAddr: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_WireGuardEndpointAddr: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".WireGuardEndpointAddr"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}from_stun\0\u{3}iface_name\0\u{3}iface_cidr\0\u{3}ip_address\0\u{1}port\0")
 
@@ -1416,7 +1416,7 @@ extension Border0_Common_V1_WireGuardEndpointAddr: SwiftProtobuf.Message, SwiftP
   }
 }
 
-extension Border0_Common_V1_DisconnectMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_DisconnectMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".DisconnectMessage"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}reason\0")
 
@@ -1446,7 +1446,7 @@ extension Border0_Common_V1_DisconnectMessage: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-extension Border0_Common_V1_Group: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Border0_Common_V1_Group: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Group"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}uuid\0\u{1}name\0\u{1}type\0\u{1}prefix\0")
 
