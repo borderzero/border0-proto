@@ -34,6 +34,8 @@ message ControlStreamRequest {
     SessionRequest session = 16;
     border0.common.v1.StatsMessage stats = 17;
     Logs logs = 18;
+    MintRecordingUploadRequest mint_recording_upload = 19;
+    FinalizeRecordingUploadRequest finalize_recording_upload = 20;
   }
 }
 
@@ -55,6 +57,8 @@ message ControlStreamResponse {
     border0.common.v1.PeerOfflineMessage peer_offline = 14;
     SessionResponse session = 16;
     AllowedNetworks allowed_networks = 17;
+    MintRecordingUploadResponse mint_recording_upload = 18;
+    FinalizeRecordingUploadResponse finalize_recording_upload = 19;
   }
 }
 
@@ -158,11 +162,38 @@ message SocketConfig {
   google.protobuf.Struct config = 4;
 }
 
+// RecordingUploadStrategy tells the connector how to upload session recordings.
+// The zero value is CONTROL_PLANE so that older connectors (which ignore the
+// field) and older control planes (which never set it) both default to the
+// existing bytes-over-stream behavior.
+enum RecordingUploadStrategy {
+  // control_plane: stream recording bytes to the control plane over the control
+  // stream (the legacy/default behavior).
+  RECORDING_UPLOAD_STRATEGY_CONTROL_PLANE = 0;
+  // s3: upload recording bytes directly to S3 using presigned URLs minted by the
+  // control plane (bytes bypass the control plane).
+  RECORDING_UPLOAD_STRATEGY_S3 = 1;
+}
+
+// RecordingUploadConfig tells the connector how to upload session recordings. It
+// is a message (rather than a bare enum) so upload tuning knobs the connector
+// needs at startup can be added later without a proto migration. The destination
+// (bucket/key/path) is NOT here: it is delivered per-recording, baked into the
+// presigned request returned by MintRecordingUpload. A nil/zero-value config
+// means control-plane (legacy), keeping old connectors/control planes compatible.
+message RecordingUploadConfig {
+  RecordingUploadStrategy strategy = 1;
+  // future: int64 multipart_part_size = 2; int64 max_recording_bytes = 3; ...
+}
+
 message ConnectorConfig {
  string name = 1;
  int32 heartbeat_interval = 2;
  Organization organization = 3;
  bool private_network_enabled = 4;
+ // recording_upload tells the connector how to upload session recordings.
+ // Unset => control-plane (legacy). The control plane selects this per connector.
+ RecordingUploadConfig recording_upload = 5;
 }
 
 message PluginConfig {
@@ -287,6 +318,110 @@ message UploadRecording {
   string recording_id = 2;   // recording identifier (unique per-session)
   bytes recording = 3;       // actual recording bytes
   string recording_type = 4; // type of the recording e.g. asciinema, log, etc...
+}
+
+// RecordingUploadMode selects how a recording's bytes are uploaded directly to
+// the storage provider (bypassing the control plane's byte path).
+enum RecordingUploadMode {
+  RECORDING_UPLOAD_MODE_UNSPECIFIED = 0;
+  // single: one presigned request for a recording that fits in a single object.
+  RECORDING_UPLOAD_MODE_SINGLE = 1;
+  // multipart: a presigned request per part, assembled by the provider into one object.
+  RECORDING_UPLOAD_MODE_MULTIPART = 2;
+}
+
+// RecordingUploadOutcome is how a recording upload was finalized.
+enum RecordingUploadOutcome {
+  RECORDING_UPLOAD_OUTCOME_UNSPECIFIED = 0;
+  // completed: all bytes are in storage; finalize/assemble the object.
+  RECORDING_UPLOAD_OUTCOME_COMPLETED = 1;
+  // aborted: the recording ended without completing; discard any partial upload
+  // so orphaned parts are not retained/billed.
+  RECORDING_UPLOAD_OUTCOME_ABORTED = 2;
+}
+
+// PresignedHTTPRequest is a provider-agnostic, ready-to-execute HTTP request the
+// connector performs to upload bytes directly to storage. The connector fills the
+// request body with the recording bytes and sends it as-is; it does not need to
+// know which provider minted it.
+message PresignedHTTPRequest {
+  string method = 1;                  // e.g. "POST" (single) or "PUT" (multipart part)
+  string url = 2;                     // fully-qualified, presigned URL
+  map<string, string> headers = 3;    // headers that must be sent verbatim
+  // form_fields are multipart/form-data fields that must precede the file field
+  // (used by providers whose single-object upload is an HTTP POST form, e.g. S3
+  // presigned POST). Empty for simple PUT-style uploads.
+  map<string, string> form_fields = 4;
+}
+
+// MintRecordingUploadRequest asks the control plane to mint a short-lived, direct
+// storage upload target for a recording (or the next multipart part). It also
+// serves as the per-recording liveness/kill gate and, on the first call, causes
+// the control plane to create the (in-progress) recording metadata row.
+message MintRecordingUploadRequest {
+  string request_id = 1;     // correlation id for the response
+  string session_key = 2;    // session identifier (unique globally)
+  string recording_id = 3;   // recording identifier (unique per-session)
+  string recording_type = 4; // type of the recording e.g. asciinema, log, etc...
+  RecordingUploadMode mode = 5;
+  // upload_session_id is empty on the first mint; for multipart it is the opaque
+  // token returned by the first mint, echoed back so the control plane can presign
+  // against the same provider-side upload (e.g. an S3 multipart UploadId).
+  string upload_session_id = 6;
+  // part_number is 1-based; only meaningful for multipart mode.
+  int32 part_number = 7;
+}
+
+// MintRecordingUploadResponse carries the minted, provider-agnostic upload target.
+// If the control plane refuses direct uploads for this recording (e.g. killed
+// session), error is set and the connector falls back to the legacy path.
+message MintRecordingUploadResponse {
+  string request_id = 1;
+  RecordingUploadMode mode = 2;
+  string error = 3; // non-empty if minting was refused (e.g. killed session)
+
+  // the request the connector must execute to upload the bytes
+  PresignedHTTPRequest request = 4;
+
+  // opaque upload session token to carry forward on subsequent multipart mints
+  // and on finalize (e.g. an S3 multipart UploadId). Empty for single mode.
+  string upload_session_id = 5;
+  int32 part_number = 6; // echoed back for multipart
+
+  // effective expiry of the minted request (min of requested and signing-cred TTL)
+  google.protobuf.Timestamp expires_at = 7;
+  int64 max_content_length = 8; // hard size cap enforced by the presign
+}
+
+// UploadedPart identifies one uploaded multipart part and the opaque handle the
+// provider returned for it (e.g. an S3 ETag) so the control plane can assemble
+// the parts on finalize.
+message UploadedPart {
+  int32 part_number = 1;
+  string part_id = 2; // opaque provider handle, e.g. S3 ETag
+}
+
+// FinalizeRecordingUploadRequest finalizes a recording after its bytes are in
+// storage, either completing (assembling) it or aborting a partial upload. It
+// carries the sizes the connector observed so the control plane can emit telemetry
+// and enqueue downstream analysis without ever seeing the bytes.
+message FinalizeRecordingUploadRequest {
+  string request_id = 1;
+  string session_key = 2;
+  string recording_id = 3;
+  string recording_type = 4;
+  RecordingUploadMode mode = 5;
+  RecordingUploadOutcome outcome = 6;
+  string upload_session_id = 7;      // multipart only (opaque)
+  repeated UploadedPart parts = 8;   // multipart + completed only
+  int64 compressed_size = 9;         // total bytes uploaded
+  int64 uncompressed_size = 10;      // total decompressed bytes
+}
+
+message FinalizeRecordingUploadResponse {
+  string request_id = 1;
+  bool ok = 2;
+  string error = 3;
 }
 
 message CertificateSignRequest {

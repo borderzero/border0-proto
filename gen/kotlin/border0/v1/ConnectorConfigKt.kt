@@ -96,6 +96,45 @@ public object ConnectorConfigKt {
     public fun clearPrivateNetworkEnabled() {
       _builder.clearPrivateNetworkEnabled()
     }
+
+    /**
+     * <pre>
+     * recording_upload tells the connector how to upload session recordings.
+     * Unset =&gt; control-plane (legacy). The control plane selects this per connector.
+     * </pre>
+     *
+     * <code>.border0.v1.RecordingUploadConfig recording_upload = 5;</code>
+     */
+    public var recordingUpload: border0.v1.Connector.RecordingUploadConfig
+      @JvmName("getRecordingUpload")
+      get() = _builder.getRecordingUpload()
+      @JvmName("setRecordingUpload")
+      set(value) {
+        _builder.setRecordingUpload(value)
+      }
+    /**
+     * <pre>
+     * recording_upload tells the connector how to upload session recordings.
+     * Unset =&gt; control-plane (legacy). The control plane selects this per connector.
+     * </pre>
+     *
+     * <code>.border0.v1.RecordingUploadConfig recording_upload = 5;</code>
+     */
+    public fun clearRecordingUpload() {
+      _builder.clearRecordingUpload()
+    }
+    /**
+     * <pre>
+     * recording_upload tells the connector how to upload session recordings.
+     * Unset =&gt; control-plane (legacy). The control plane selects this per connector.
+     * </pre>
+     *
+     * <code>.border0.v1.RecordingUploadConfig recording_upload = 5;</code>
+     * @return Whether the recordingUpload field is set.
+     */
+    public fun hasRecordingUpload(): kotlin.Boolean {
+      return _builder.hasRecordingUpload()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
@@ -104,4 +143,7 @@ public inline fun border0.v1.Connector.ConnectorConfig.copy(block: border0.v1.Co
 
 public val border0.v1.Connector.ConnectorConfigOrBuilder.organizationOrNull: border0.v1.Connector.Organization?
   get() = if (hasOrganization()) getOrganization() else null
+
+public val border0.v1.Connector.ConnectorConfigOrBuilder.recordingUploadOrNull: border0.v1.Connector.RecordingUploadConfig?
+  get() = if (hasRecordingUpload()) getRecordingUpload() else null
 

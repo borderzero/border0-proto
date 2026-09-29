@@ -429,6 +429,54 @@ public object ControlStreamRequestKt {
     public fun hasLogs(): kotlin.Boolean {
       return _builder.hasLogs()
     }
+
+    /**
+     * <code>.border0.v1.MintRecordingUploadRequest mint_recording_upload = 19;</code>
+     */
+    public var mintRecordingUpload: border0.v1.Connector.MintRecordingUploadRequest
+      @JvmName("getMintRecordingUpload")
+      get() = _builder.getMintRecordingUpload()
+      @JvmName("setMintRecordingUpload")
+      set(value) {
+        _builder.setMintRecordingUpload(value)
+      }
+    /**
+     * <code>.border0.v1.MintRecordingUploadRequest mint_recording_upload = 19;</code>
+     */
+    public fun clearMintRecordingUpload() {
+      _builder.clearMintRecordingUpload()
+    }
+    /**
+     * <code>.border0.v1.MintRecordingUploadRequest mint_recording_upload = 19;</code>
+     * @return Whether the mintRecordingUpload field is set.
+     */
+    public fun hasMintRecordingUpload(): kotlin.Boolean {
+      return _builder.hasMintRecordingUpload()
+    }
+
+    /**
+     * <code>.border0.v1.FinalizeRecordingUploadRequest finalize_recording_upload = 20;</code>
+     */
+    public var finalizeRecordingUpload: border0.v1.Connector.FinalizeRecordingUploadRequest
+      @JvmName("getFinalizeRecordingUpload")
+      get() = _builder.getFinalizeRecordingUpload()
+      @JvmName("setFinalizeRecordingUpload")
+      set(value) {
+        _builder.setFinalizeRecordingUpload(value)
+      }
+    /**
+     * <code>.border0.v1.FinalizeRecordingUploadRequest finalize_recording_upload = 20;</code>
+     */
+    public fun clearFinalizeRecordingUpload() {
+      _builder.clearFinalizeRecordingUpload()
+    }
+    /**
+     * <code>.border0.v1.FinalizeRecordingUploadRequest finalize_recording_upload = 20;</code>
+     * @return Whether the finalizeRecordingUpload field is set.
+     */
+    public fun hasFinalizeRecordingUpload(): kotlin.Boolean {
+      return _builder.hasFinalizeRecordingUpload()
+    }
     public val requestTypeCase: border0.v1.Connector.ControlStreamRequest.RequestTypeCase
       @JvmName("getRequestTypeCase")
       get() = _builder.getRequestTypeCase()
@@ -492,4 +540,10 @@ public val border0.v1.Connector.ControlStreamRequestOrBuilder.statsOrNull: borde
 
 public val border0.v1.Connector.ControlStreamRequestOrBuilder.logsOrNull: border0.v1.Connector.Logs?
   get() = if (hasLogs()) getLogs() else null
+
+public val border0.v1.Connector.ControlStreamRequestOrBuilder.mintRecordingUploadOrNull: border0.v1.Connector.MintRecordingUploadRequest?
+  get() = if (hasMintRecordingUpload()) getMintRecordingUpload() else null
+
+public val border0.v1.Connector.ControlStreamRequestOrBuilder.finalizeRecordingUploadOrNull: border0.v1.Connector.FinalizeRecordingUploadRequest?
+  get() = if (hasFinalizeRecordingUpload()) getFinalizeRecordingUpload() else null
 

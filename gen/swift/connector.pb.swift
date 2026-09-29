@@ -69,6 +69,138 @@ nonisolated enum Border0_V1_Action: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// RecordingUploadStrategy tells the connector how to upload session recordings.
+/// The zero value is CONTROL_PLANE so that older connectors (which ignore the
+/// field) and older control planes (which never set it) both default to the
+/// existing bytes-over-stream behavior.
+nonisolated enum Border0_V1_RecordingUploadStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+
+  /// control_plane: stream recording bytes to the control plane over the control
+  /// stream (the legacy/default behavior).
+  case controlPlane // = 0
+
+  /// s3: upload recording bytes directly to S3 using presigned URLs minted by the
+  /// control plane (bytes bypass the control plane).
+  case s3 // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .controlPlane
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .controlPlane
+    case 1: self = .s3
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .controlPlane: return 0
+    case .s3: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [Border0_V1_RecordingUploadStrategy] = [
+    .controlPlane,
+    .s3,
+  ]
+
+}
+
+/// RecordingUploadMode selects how a recording's bytes are uploaded directly to
+/// the storage provider (bypassing the control plane's byte path).
+nonisolated enum Border0_V1_RecordingUploadMode: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case unspecified // = 0
+
+  /// single: one presigned request for a recording that fits in a single object.
+  case single // = 1
+
+  /// multipart: a presigned request per part, assembled by the provider into one object.
+  case multipart // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unspecified
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .single
+    case 2: self = .multipart
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .single: return 1
+    case .multipart: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [Border0_V1_RecordingUploadMode] = [
+    .unspecified,
+    .single,
+    .multipart,
+  ]
+
+}
+
+/// RecordingUploadOutcome is how a recording upload was finalized.
+nonisolated enum Border0_V1_RecordingUploadOutcome: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case unspecified // = 0
+
+  /// completed: all bytes are in storage; finalize/assemble the object.
+  case completed // = 1
+
+  /// aborted: the recording ended without completing; discard any partial upload
+  /// so orphaned parts are not retained/billed.
+  case aborted // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unspecified
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .completed
+    case 2: self = .aborted
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .completed: return 1
+    case .aborted: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [Border0_V1_RecordingUploadOutcome] = [
+    .unspecified,
+    .completed,
+    .aborted,
+  ]
+
+}
+
 nonisolated struct Border0_V1_ControlStreamRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -212,6 +344,22 @@ nonisolated struct Border0_V1_ControlStreamRequest: Sendable {
     set {requestType = .logs(newValue)}
   }
 
+  var mintRecordingUpload: Border0_V1_MintRecordingUploadRequest {
+    get {
+      if case .mintRecordingUpload(let v)? = requestType {return v}
+      return Border0_V1_MintRecordingUploadRequest()
+    }
+    set {requestType = .mintRecordingUpload(newValue)}
+  }
+
+  var finalizeRecordingUpload: Border0_V1_FinalizeRecordingUploadRequest {
+    get {
+      if case .finalizeRecordingUpload(let v)? = requestType {return v}
+      return Border0_V1_FinalizeRecordingUploadRequest()
+    }
+    set {requestType = .finalizeRecordingUpload(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   nonisolated enum OneOf_RequestType: Equatable, Sendable {
@@ -232,6 +380,8 @@ nonisolated struct Border0_V1_ControlStreamRequest: Sendable {
     case session(Border0_V1_SessionRequest)
     case stats(Border0_Common_V1_StatsMessage)
     case logs(Border0_V1_Logs)
+    case mintRecordingUpload(Border0_V1_MintRecordingUploadRequest)
+    case finalizeRecordingUpload(Border0_V1_FinalizeRecordingUploadRequest)
 
   }
 
@@ -373,6 +523,22 @@ nonisolated struct Border0_V1_ControlStreamResponse: Sendable {
     set {requestType = .allowedNetworks(newValue)}
   }
 
+  var mintRecordingUpload: Border0_V1_MintRecordingUploadResponse {
+    get {
+      if case .mintRecordingUpload(let v)? = requestType {return v}
+      return Border0_V1_MintRecordingUploadResponse()
+    }
+    set {requestType = .mintRecordingUpload(newValue)}
+  }
+
+  var finalizeRecordingUpload: Border0_V1_FinalizeRecordingUploadResponse {
+    get {
+      if case .finalizeRecordingUpload(let v)? = requestType {return v}
+      return Border0_V1_FinalizeRecordingUploadResponse()
+    }
+    set {requestType = .finalizeRecordingUpload(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   nonisolated enum OneOf_RequestType: Equatable, Sendable {
@@ -392,6 +558,8 @@ nonisolated struct Border0_V1_ControlStreamResponse: Sendable {
     case peerOffline(Border0_Common_V1_PeerOfflineMessage)
     case session(Border0_V1_SessionResponse)
     case allowedNetworks(Border0_V1_AllowedNetworks)
+    case mintRecordingUpload(Border0_V1_MintRecordingUploadResponse)
+    case finalizeRecordingUpload(Border0_V1_FinalizeRecordingUploadResponse)
 
   }
 
@@ -459,44 +627,71 @@ nonisolated struct Border0_V1_TunnelCertificateSignResponse: Sendable {
   init() {}
 }
 
-nonisolated struct Border0_V1_Init: Sendable {
+nonisolated struct Border0_V1_Init: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var connectorConfig: Border0_V1_ConnectorConfig {
-    get {_connectorConfig ?? Border0_V1_ConnectorConfig()}
-    set {_connectorConfig = newValue}
+    get {_storage._connectorConfig ?? Border0_V1_ConnectorConfig()}
+    set {_uniqueStorage()._connectorConfig = newValue}
   }
   /// Returns true if `connectorConfig` has been explicitly set.
-  var hasConnectorConfig: Bool {self._connectorConfig != nil}
+  var hasConnectorConfig: Bool {_storage._connectorConfig != nil}
   /// Clears the value of `connectorConfig`. Subsequent reads from it will return its default value.
-  mutating func clearConnectorConfig() {self._connectorConfig = nil}
+  mutating func clearConnectorConfig() {_uniqueStorage()._connectorConfig = nil}
 
-  var sockets: [Border0_V1_SocketConfig] = []
+  var sockets: [Border0_V1_SocketConfig] {
+    get {_storage._sockets}
+    set {_uniqueStorage()._sockets = newValue}
+  }
 
-  var plugins: [Border0_V1_PluginConfig] = []
+  var plugins: [Border0_V1_PluginConfig] {
+    get {_storage._plugins}
+    set {_uniqueStorage()._plugins = newValue}
+  }
 
   /// used only for connectors in "device mode"
-  var deviceID: String = String()
+  var deviceID: String {
+    get {_storage._deviceID}
+    set {_uniqueStorage()._deviceID = newValue}
+  }
 
-  var networkCidrV4: String = String()
+  var networkCidrV4: String {
+    get {_storage._networkCidrV4}
+    set {_uniqueStorage()._networkCidrV4 = newValue}
+  }
 
-  var networkCidrV6: String = String()
+  var networkCidrV6: String {
+    get {_storage._networkCidrV6}
+    set {_uniqueStorage()._networkCidrV6 = newValue}
+  }
 
-  var selfIpv4: String = String()
+  var selfIpv4: String {
+    get {_storage._selfIpv4}
+    set {_uniqueStorage()._selfIpv4 = newValue}
+  }
 
-  var selfIpv6: String = String()
+  var selfIpv6: String {
+    get {_storage._selfIpv6}
+    set {_uniqueStorage()._selfIpv6 = newValue}
+  }
 
-  var networkResourcesCidrV4: String = String()
+  var networkResourcesCidrV4: String {
+    get {_storage._networkResourcesCidrV4}
+    set {_uniqueStorage()._networkResourcesCidrV4 = newValue}
+  }
 
-  var networkResourcesCidrV6: String = String()
+  var networkResourcesCidrV6: String {
+    get {_storage._networkResourcesCidrV6}
+    set {_uniqueStorage()._networkResourcesCidrV6 = newValue}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _connectorConfig: Border0_V1_ConnectorConfig? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 nonisolated struct Border0_V1_UpdateConfig: Sendable {
@@ -720,6 +915,25 @@ nonisolated struct Border0_V1_SocketConfig: Sendable {
   fileprivate var _config: SwiftProtobuf.Google_Protobuf_Struct? = nil
 }
 
+/// RecordingUploadConfig tells the connector how to upload session recordings. It
+/// is a message (rather than a bare enum) so upload tuning knobs the connector
+/// needs at startup can be added later without a proto migration. The destination
+/// (bucket/key/path) is NOT here: it is delivered per-recording, baked into the
+/// presigned request returned by MintRecordingUpload. A nil/zero-value config
+/// means control-plane (legacy), keeping old connectors/control planes compatible.
+nonisolated struct Border0_V1_RecordingUploadConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// future: int64 multipart_part_size = 2; int64 max_recording_bytes = 3; ...
+  var strategy: Border0_V1_RecordingUploadStrategy = .controlPlane
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 nonisolated struct Border0_V1_ConnectorConfig: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -740,11 +954,23 @@ nonisolated struct Border0_V1_ConnectorConfig: Sendable {
 
   var privateNetworkEnabled: Bool = false
 
+  /// recording_upload tells the connector how to upload session recordings.
+  /// Unset => control-plane (legacy). The control plane selects this per connector.
+  var recordingUpload: Border0_V1_RecordingUploadConfig {
+    get {_recordingUpload ?? Border0_V1_RecordingUploadConfig()}
+    set {_recordingUpload = newValue}
+  }
+  /// Returns true if `recordingUpload` has been explicitly set.
+  var hasRecordingUpload: Bool {self._recordingUpload != nil}
+  /// Clears the value of `recordingUpload`. Subsequent reads from it will return its default value.
+  mutating func clearRecordingUpload() {self._recordingUpload = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _organization: Border0_V1_Organization? = nil
+  fileprivate var _recordingUpload: Border0_V1_RecordingUploadConfig? = nil
 }
 
 nonisolated struct Border0_V1_PluginConfig: Sendable {
@@ -1140,6 +1366,195 @@ nonisolated struct Border0_V1_UploadRecording: Sendable {
   init() {}
 }
 
+/// PresignedHTTPRequest is a provider-agnostic, ready-to-execute HTTP request the
+/// connector performs to upload bytes directly to storage. The connector fills the
+/// request body with the recording bytes and sends it as-is; it does not need to
+/// know which provider minted it.
+nonisolated struct Border0_V1_PresignedHTTPRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// e.g. "POST" (single) or "PUT" (multipart part)
+  var method: String = String()
+
+  /// fully-qualified, presigned URL
+  var url: String = String()
+
+  /// headers that must be sent verbatim
+  var headers: Dictionary<String,String> = [:]
+
+  /// form_fields are multipart/form-data fields that must precede the file field
+  /// (used by providers whose single-object upload is an HTTP POST form, e.g. S3
+  /// presigned POST). Empty for simple PUT-style uploads.
+  var formFields: Dictionary<String,String> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// MintRecordingUploadRequest asks the control plane to mint a short-lived, direct
+/// storage upload target for a recording (or the next multipart part). It also
+/// serves as the per-recording liveness/kill gate and, on the first call, causes
+/// the control plane to create the (in-progress) recording metadata row.
+nonisolated struct Border0_V1_MintRecordingUploadRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// correlation id for the response
+  var requestID: String = String()
+
+  /// session identifier (unique globally)
+  var sessionKey: String = String()
+
+  /// recording identifier (unique per-session)
+  var recordingID: String = String()
+
+  /// type of the recording e.g. asciinema, log, etc...
+  var recordingType: String = String()
+
+  var mode: Border0_V1_RecordingUploadMode = .unspecified
+
+  /// upload_session_id is empty on the first mint; for multipart it is the opaque
+  /// token returned by the first mint, echoed back so the control plane can presign
+  /// against the same provider-side upload (e.g. an S3 multipart UploadId).
+  var uploadSessionID: String = String()
+
+  /// part_number is 1-based; only meaningful for multipart mode.
+  var partNumber: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// MintRecordingUploadResponse carries the minted, provider-agnostic upload target.
+/// If the control plane refuses direct uploads for this recording (e.g. killed
+/// session), error is set and the connector falls back to the legacy path.
+nonisolated struct Border0_V1_MintRecordingUploadResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var requestID: String = String()
+
+  var mode: Border0_V1_RecordingUploadMode = .unspecified
+
+  /// non-empty if minting was refused (e.g. killed session)
+  var error: String = String()
+
+  /// the request the connector must execute to upload the bytes
+  var request: Border0_V1_PresignedHTTPRequest {
+    get {_request ?? Border0_V1_PresignedHTTPRequest()}
+    set {_request = newValue}
+  }
+  /// Returns true if `request` has been explicitly set.
+  var hasRequest: Bool {self._request != nil}
+  /// Clears the value of `request`. Subsequent reads from it will return its default value.
+  mutating func clearRequest() {self._request = nil}
+
+  /// opaque upload session token to carry forward on subsequent multipart mints
+  /// and on finalize (e.g. an S3 multipart UploadId). Empty for single mode.
+  var uploadSessionID: String = String()
+
+  /// echoed back for multipart
+  var partNumber: Int32 = 0
+
+  /// effective expiry of the minted request (min of requested and signing-cred TTL)
+  var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {_expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_expiresAt = newValue}
+  }
+  /// Returns true if `expiresAt` has been explicitly set.
+  var hasExpiresAt: Bool {self._expiresAt != nil}
+  /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
+  mutating func clearExpiresAt() {self._expiresAt = nil}
+
+  /// hard size cap enforced by the presign
+  var maxContentLength: Int64 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _request: Border0_V1_PresignedHTTPRequest? = nil
+  fileprivate var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+/// UploadedPart identifies one uploaded multipart part and the opaque handle the
+/// provider returned for it (e.g. an S3 ETag) so the control plane can assemble
+/// the parts on finalize.
+nonisolated struct Border0_V1_UploadedPart: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var partNumber: Int32 = 0
+
+  /// opaque provider handle, e.g. S3 ETag
+  var partID: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// FinalizeRecordingUploadRequest finalizes a recording after its bytes are in
+/// storage, either completing (assembling) it or aborting a partial upload. It
+/// carries the sizes the connector observed so the control plane can emit telemetry
+/// and enqueue downstream analysis without ever seeing the bytes.
+nonisolated struct Border0_V1_FinalizeRecordingUploadRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var requestID: String = String()
+
+  var sessionKey: String = String()
+
+  var recordingID: String = String()
+
+  var recordingType: String = String()
+
+  var mode: Border0_V1_RecordingUploadMode = .unspecified
+
+  var outcome: Border0_V1_RecordingUploadOutcome = .unspecified
+
+  /// multipart only (opaque)
+  var uploadSessionID: String = String()
+
+  /// multipart + completed only
+  var parts: [Border0_V1_UploadedPart] = []
+
+  /// total bytes uploaded
+  var compressedSize: Int64 = 0
+
+  /// total decompressed bytes
+  var uncompressedSize: Int64 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+nonisolated struct Border0_V1_FinalizeRecordingUploadResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var requestID: String = String()
+
+  var ok: Bool = false
+
+  var error: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 nonisolated struct Border0_V1_CertificateSignRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1236,9 +1651,21 @@ nonisolated extension Border0_V1_Action: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0CREATE\0\u{1}UPDATE\0\u{1}DELETE\0\u{1}OTHER\0")
 }
 
+nonisolated extension Border0_V1_RecordingUploadStrategy: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RECORDING_UPLOAD_STRATEGY_CONTROL_PLANE\0\u{1}RECORDING_UPLOAD_STRATEGY_S3\0")
+}
+
+nonisolated extension Border0_V1_RecordingUploadMode: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RECORDING_UPLOAD_MODE_UNSPECIFIED\0\u{1}RECORDING_UPLOAD_MODE_SINGLE\0\u{1}RECORDING_UPLOAD_MODE_MULTIPART\0")
+}
+
+nonisolated extension Border0_V1_RecordingUploadOutcome: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0RECORDING_UPLOAD_OUTCOME_UNSPECIFIED\0\u{1}RECORDING_UPLOAD_OUTCOME_COMPLETED\0\u{1}RECORDING_UPLOAD_OUTCOME_ABORTED\0")
+}
+
 nonisolated extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ControlStreamRequest"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}config\0\u{1}heartbeat\0\u{3}plugin_discovery_results\0\u{4}\u{2}tunnel_certificate_sign_request\0\u{1}log\0\u{1}metadata\0\u{1}authorize\0\u{3}session_update\0\u{3}ssh_certificate_sign_request\0\u{3}upload_recording\0\u{3}Certificate_sign_request\0\u{3}session_event\0\u{3}discovery_details\0\u{3}authorize_peer\0\u{1}session\0\u{1}stats\0\u{1}logs\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}config\0\u{1}heartbeat\0\u{3}plugin_discovery_results\0\u{4}\u{2}tunnel_certificate_sign_request\0\u{1}log\0\u{1}metadata\0\u{1}authorize\0\u{3}session_update\0\u{3}ssh_certificate_sign_request\0\u{3}upload_recording\0\u{3}Certificate_sign_request\0\u{3}session_event\0\u{3}discovery_details\0\u{3}authorize_peer\0\u{1}session\0\u{1}stats\0\u{1}logs\0\u{3}mint_recording_upload\0\u{3}finalize_recording_upload\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1467,6 +1894,32 @@ nonisolated extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, Sw
           self.requestType = .logs(v)
         }
       }()
+      case 19: try {
+        var v: Border0_V1_MintRecordingUploadRequest?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .mintRecordingUpload(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .mintRecordingUpload(v)
+        }
+      }()
+      case 20: try {
+        var v: Border0_V1_FinalizeRecordingUploadRequest?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .finalizeRecordingUpload(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .finalizeRecordingUpload(v)
+        }
+      }()
       default: break
       }
     }
@@ -1546,6 +1999,14 @@ nonisolated extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, Sw
       guard case .logs(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
     }()
+    case .mintRecordingUpload?: try {
+      guard case .mintRecordingUpload(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
+    }()
+    case .finalizeRecordingUpload?: try {
+      guard case .finalizeRecordingUpload(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1560,7 +2021,7 @@ nonisolated extension Border0_V1_ControlStreamRequest: SwiftProtobuf.Message, Sw
 
 nonisolated extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ControlStreamResponse"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}init\0\u{3}connector_config\0\u{3}update_config\0\u{1}heartbeat\0\u{3}tunnel_certificate_sign_response\0\u{1}discover\0\u{1}stop\0\u{1}disconnect\0\u{1}authorize\0\u{3}ssh_certificate_sign_response\0\u{3}Certificate_sign_response\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{2}\u{2}session\0\u{3}allowed_networks\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}init\0\u{3}connector_config\0\u{3}update_config\0\u{1}heartbeat\0\u{3}tunnel_certificate_sign_response\0\u{1}discover\0\u{1}stop\0\u{1}disconnect\0\u{1}authorize\0\u{3}ssh_certificate_sign_response\0\u{3}Certificate_sign_response\0\u{3}network_state\0\u{3}peer_online\0\u{3}peer_offline\0\u{2}\u{2}session\0\u{3}allowed_networks\0\u{3}mint_recording_upload\0\u{3}finalize_recording_upload\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1776,6 +2237,32 @@ nonisolated extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, S
           self.requestType = .allowedNetworks(v)
         }
       }()
+      case 18: try {
+        var v: Border0_V1_MintRecordingUploadResponse?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .mintRecordingUpload(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .mintRecordingUpload(v)
+        }
+      }()
+      case 19: try {
+        var v: Border0_V1_FinalizeRecordingUploadResponse?
+        var hadOneofValue = false
+        if let current = self.requestType {
+          hadOneofValue = true
+          if case .finalizeRecordingUpload(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.requestType = .finalizeRecordingUpload(v)
+        }
+      }()
       default: break
       }
     }
@@ -1850,6 +2337,14 @@ nonisolated extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, S
     case .allowedNetworks?: try {
       guard case .allowedNetworks(let v)? = self.requestType else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
+    case .mintRecordingUpload?: try {
+      guard case .mintRecordingUpload(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+    }()
+    case .finalizeRecordingUpload?: try {
+      guard case .finalizeRecordingUpload(let v)? = self.requestType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
     }()
     case nil: break
     }
@@ -2001,76 +2496,130 @@ nonisolated extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let protoMessageName: String = _protobuf_package + ".Init"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}connector_config\0\u{1}sockets\0\u{1}plugins\0\u{3}device_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0")
 
+  fileprivate class _StorageClass {
+    var _connectorConfig: Border0_V1_ConnectorConfig? = nil
+    var _sockets: [Border0_V1_SocketConfig] = []
+    var _plugins: [Border0_V1_PluginConfig] = []
+    var _deviceID: String = String()
+    var _networkCidrV4: String = String()
+    var _networkCidrV6: String = String()
+    var _selfIpv4: String = String()
+    var _selfIpv6: String = String()
+    var _networkResourcesCidrV4: String = String()
+    var _networkResourcesCidrV6: String = String()
+
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _connectorConfig = source._connectorConfig
+      _sockets = source._sockets
+      _plugins = source._plugins
+      _deviceID = source._deviceID
+      _networkCidrV4 = source._networkCidrV4
+      _networkCidrV6 = source._networkCidrV6
+      _selfIpv4 = source._selfIpv4
+      _selfIpv6 = source._selfIpv6
+      _networkResourcesCidrV4 = source._networkResourcesCidrV4
+      _networkResourcesCidrV6 = source._networkResourcesCidrV6
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._connectorConfig) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.sockets) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.plugins) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.deviceID) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.networkCidrV4) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.networkCidrV6) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.selfIpv4) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.selfIpv6) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV4) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV6) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._connectorConfig) }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._sockets) }()
+        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._plugins) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._deviceID) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._networkCidrV4) }()
+        case 6: try { try decoder.decodeSingularStringField(value: &_storage._networkCidrV6) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._selfIpv4) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._selfIpv6) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._networkResourcesCidrV4) }()
+        case 10: try { try decoder.decodeSingularStringField(value: &_storage._networkResourcesCidrV6) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._connectorConfig {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if !self.sockets.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sockets, fieldNumber: 2)
-    }
-    if !self.plugins.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.plugins, fieldNumber: 3)
-    }
-    if !self.deviceID.isEmpty {
-      try visitor.visitSingularStringField(value: self.deviceID, fieldNumber: 4)
-    }
-    if !self.networkCidrV4.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkCidrV4, fieldNumber: 5)
-    }
-    if !self.networkCidrV6.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkCidrV6, fieldNumber: 6)
-    }
-    if !self.selfIpv4.isEmpty {
-      try visitor.visitSingularStringField(value: self.selfIpv4, fieldNumber: 7)
-    }
-    if !self.selfIpv6.isEmpty {
-      try visitor.visitSingularStringField(value: self.selfIpv6, fieldNumber: 8)
-    }
-    if !self.networkResourcesCidrV4.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkResourcesCidrV4, fieldNumber: 9)
-    }
-    if !self.networkResourcesCidrV6.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkResourcesCidrV6, fieldNumber: 10)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._connectorConfig {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      if !_storage._sockets.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._sockets, fieldNumber: 2)
+      }
+      if !_storage._plugins.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._plugins, fieldNumber: 3)
+      }
+      if !_storage._deviceID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._deviceID, fieldNumber: 4)
+      }
+      if !_storage._networkCidrV4.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkCidrV4, fieldNumber: 5)
+      }
+      if !_storage._networkCidrV6.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkCidrV6, fieldNumber: 6)
+      }
+      if !_storage._selfIpv4.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._selfIpv4, fieldNumber: 7)
+      }
+      if !_storage._selfIpv6.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._selfIpv6, fieldNumber: 8)
+      }
+      if !_storage._networkResourcesCidrV4.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkResourcesCidrV4, fieldNumber: 9)
+      }
+      if !_storage._networkResourcesCidrV6.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkResourcesCidrV6, fieldNumber: 10)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Border0_V1_Init, rhs: Border0_V1_Init) -> Bool {
-    if lhs._connectorConfig != rhs._connectorConfig {return false}
-    if lhs.sockets != rhs.sockets {return false}
-    if lhs.plugins != rhs.plugins {return false}
-    if lhs.deviceID != rhs.deviceID {return false}
-    if lhs.networkCidrV4 != rhs.networkCidrV4 {return false}
-    if lhs.networkCidrV6 != rhs.networkCidrV6 {return false}
-    if lhs.selfIpv4 != rhs.selfIpv4 {return false}
-    if lhs.selfIpv6 != rhs.selfIpv6 {return false}
-    if lhs.networkResourcesCidrV4 != rhs.networkResourcesCidrV4 {return false}
-    if lhs.networkResourcesCidrV6 != rhs.networkResourcesCidrV6 {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._connectorConfig != rhs_storage._connectorConfig {return false}
+        if _storage._sockets != rhs_storage._sockets {return false}
+        if _storage._plugins != rhs_storage._plugins {return false}
+        if _storage._deviceID != rhs_storage._deviceID {return false}
+        if _storage._networkCidrV4 != rhs_storage._networkCidrV4 {return false}
+        if _storage._networkCidrV6 != rhs_storage._networkCidrV6 {return false}
+        if _storage._selfIpv4 != rhs_storage._selfIpv4 {return false}
+        if _storage._selfIpv6 != rhs_storage._selfIpv6 {return false}
+        if _storage._networkResourcesCidrV4 != rhs_storage._networkResourcesCidrV4 {return false}
+        if _storage._networkResourcesCidrV6 != rhs_storage._networkResourcesCidrV6 {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2498,9 +3047,39 @@ nonisolated extension Border0_V1_SocketConfig: SwiftProtobuf.Message, SwiftProto
   }
 }
 
+nonisolated extension Border0_V1_RecordingUploadConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".RecordingUploadConfig"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}strategy\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.strategy) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.strategy != .controlPlane {
+      try visitor.visitSingularEnumField(value: self.strategy, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_RecordingUploadConfig, rhs: Border0_V1_RecordingUploadConfig) -> Bool {
+    if lhs.strategy != rhs.strategy {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 nonisolated extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".ConnectorConfig"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{3}heartbeat_interval\0\u{1}organization\0\u{3}private_network_enabled\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{3}heartbeat_interval\0\u{1}organization\0\u{3}private_network_enabled\0\u{3}recording_upload\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2512,6 +3091,7 @@ nonisolated extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftPr
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.heartbeatInterval) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._organization) }()
       case 4: try { try decoder.decodeSingularBoolField(value: &self.privateNetworkEnabled) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._recordingUpload) }()
       default: break
       }
     }
@@ -2534,6 +3114,9 @@ nonisolated extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftPr
     if self.privateNetworkEnabled != false {
       try visitor.visitSingularBoolField(value: self.privateNetworkEnabled, fieldNumber: 4)
     }
+    try { if let v = self._recordingUpload {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2542,6 +3125,7 @@ nonisolated extension Border0_V1_ConnectorConfig: SwiftProtobuf.Message, SwiftPr
     if lhs.heartbeatInterval != rhs.heartbeatInterval {return false}
     if lhs._organization != rhs._organization {return false}
     if lhs.privateNetworkEnabled != rhs.privateNetworkEnabled {return false}
+    if lhs._recordingUpload != rhs._recordingUpload {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3403,6 +3987,330 @@ nonisolated extension Border0_V1_UploadRecording: SwiftProtobuf.Message, SwiftPr
     if lhs.recordingID != rhs.recordingID {return false}
     if lhs.recording != rhs.recording {return false}
     if lhs.recordingType != rhs.recordingType {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Border0_V1_PresignedHTTPRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".PresignedHTTPRequest"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}method\0\u{1}url\0\u{1}headers\0\u{3}form_fields\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.method) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.url) }()
+      case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.headers) }()
+      case 4: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.formFields) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.method.isEmpty {
+      try visitor.visitSingularStringField(value: self.method, fieldNumber: 1)
+    }
+    if !self.url.isEmpty {
+      try visitor.visitSingularStringField(value: self.url, fieldNumber: 2)
+    }
+    if !self.headers.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.headers, fieldNumber: 3)
+    }
+    if !self.formFields.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.formFields, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_PresignedHTTPRequest, rhs: Border0_V1_PresignedHTTPRequest) -> Bool {
+    if lhs.method != rhs.method {return false}
+    if lhs.url != rhs.url {return false}
+    if lhs.headers != rhs.headers {return false}
+    if lhs.formFields != rhs.formFields {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Border0_V1_MintRecordingUploadRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".MintRecordingUploadRequest"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}session_key\0\u{3}recording_id\0\u{3}recording_type\0\u{1}mode\0\u{3}upload_session_id\0\u{3}part_number\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.sessionKey) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.recordingID) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.recordingType) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.mode) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.uploadSessionID) }()
+      case 7: try { try decoder.decodeSingularInt32Field(value: &self.partNumber) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if !self.sessionKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionKey, fieldNumber: 2)
+    }
+    if !self.recordingID.isEmpty {
+      try visitor.visitSingularStringField(value: self.recordingID, fieldNumber: 3)
+    }
+    if !self.recordingType.isEmpty {
+      try visitor.visitSingularStringField(value: self.recordingType, fieldNumber: 4)
+    }
+    if self.mode != .unspecified {
+      try visitor.visitSingularEnumField(value: self.mode, fieldNumber: 5)
+    }
+    if !self.uploadSessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.uploadSessionID, fieldNumber: 6)
+    }
+    if self.partNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.partNumber, fieldNumber: 7)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_MintRecordingUploadRequest, rhs: Border0_V1_MintRecordingUploadRequest) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.sessionKey != rhs.sessionKey {return false}
+    if lhs.recordingID != rhs.recordingID {return false}
+    if lhs.recordingType != rhs.recordingType {return false}
+    if lhs.mode != rhs.mode {return false}
+    if lhs.uploadSessionID != rhs.uploadSessionID {return false}
+    if lhs.partNumber != rhs.partNumber {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Border0_V1_MintRecordingUploadResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".MintRecordingUploadResponse"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}mode\0\u{1}error\0\u{1}request\0\u{3}upload_session_id\0\u{3}part_number\0\u{3}expires_at\0\u{3}max_content_length\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.mode) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.error) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._request) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.uploadSessionID) }()
+      case 6: try { try decoder.decodeSingularInt32Field(value: &self.partNumber) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._expiresAt) }()
+      case 8: try { try decoder.decodeSingularInt64Field(value: &self.maxContentLength) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if self.mode != .unspecified {
+      try visitor.visitSingularEnumField(value: self.mode, fieldNumber: 2)
+    }
+    if !self.error.isEmpty {
+      try visitor.visitSingularStringField(value: self.error, fieldNumber: 3)
+    }
+    try { if let v = self._request {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    if !self.uploadSessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.uploadSessionID, fieldNumber: 5)
+    }
+    if self.partNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.partNumber, fieldNumber: 6)
+    }
+    try { if let v = self._expiresAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
+    if self.maxContentLength != 0 {
+      try visitor.visitSingularInt64Field(value: self.maxContentLength, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_MintRecordingUploadResponse, rhs: Border0_V1_MintRecordingUploadResponse) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.mode != rhs.mode {return false}
+    if lhs.error != rhs.error {return false}
+    if lhs._request != rhs._request {return false}
+    if lhs.uploadSessionID != rhs.uploadSessionID {return false}
+    if lhs.partNumber != rhs.partNumber {return false}
+    if lhs._expiresAt != rhs._expiresAt {return false}
+    if lhs.maxContentLength != rhs.maxContentLength {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Border0_V1_UploadedPart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".UploadedPart"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}part_number\0\u{3}part_id\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.partNumber) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.partID) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.partNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.partNumber, fieldNumber: 1)
+    }
+    if !self.partID.isEmpty {
+      try visitor.visitSingularStringField(value: self.partID, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_UploadedPart, rhs: Border0_V1_UploadedPart) -> Bool {
+    if lhs.partNumber != rhs.partNumber {return false}
+    if lhs.partID != rhs.partID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Border0_V1_FinalizeRecordingUploadRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".FinalizeRecordingUploadRequest"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{3}session_key\0\u{3}recording_id\0\u{3}recording_type\0\u{1}mode\0\u{1}outcome\0\u{3}upload_session_id\0\u{1}parts\0\u{3}compressed_size\0\u{3}uncompressed_size\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.sessionKey) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.recordingID) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.recordingType) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.mode) }()
+      case 6: try { try decoder.decodeSingularEnumField(value: &self.outcome) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.uploadSessionID) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.parts) }()
+      case 9: try { try decoder.decodeSingularInt64Field(value: &self.compressedSize) }()
+      case 10: try { try decoder.decodeSingularInt64Field(value: &self.uncompressedSize) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if !self.sessionKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.sessionKey, fieldNumber: 2)
+    }
+    if !self.recordingID.isEmpty {
+      try visitor.visitSingularStringField(value: self.recordingID, fieldNumber: 3)
+    }
+    if !self.recordingType.isEmpty {
+      try visitor.visitSingularStringField(value: self.recordingType, fieldNumber: 4)
+    }
+    if self.mode != .unspecified {
+      try visitor.visitSingularEnumField(value: self.mode, fieldNumber: 5)
+    }
+    if self.outcome != .unspecified {
+      try visitor.visitSingularEnumField(value: self.outcome, fieldNumber: 6)
+    }
+    if !self.uploadSessionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.uploadSessionID, fieldNumber: 7)
+    }
+    if !self.parts.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.parts, fieldNumber: 8)
+    }
+    if self.compressedSize != 0 {
+      try visitor.visitSingularInt64Field(value: self.compressedSize, fieldNumber: 9)
+    }
+    if self.uncompressedSize != 0 {
+      try visitor.visitSingularInt64Field(value: self.uncompressedSize, fieldNumber: 10)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_FinalizeRecordingUploadRequest, rhs: Border0_V1_FinalizeRecordingUploadRequest) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.sessionKey != rhs.sessionKey {return false}
+    if lhs.recordingID != rhs.recordingID {return false}
+    if lhs.recordingType != rhs.recordingType {return false}
+    if lhs.mode != rhs.mode {return false}
+    if lhs.outcome != rhs.outcome {return false}
+    if lhs.uploadSessionID != rhs.uploadSessionID {return false}
+    if lhs.parts != rhs.parts {return false}
+    if lhs.compressedSize != rhs.compressedSize {return false}
+    if lhs.uncompressedSize != rhs.uncompressedSize {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Border0_V1_FinalizeRecordingUploadResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".FinalizeRecordingUploadResponse"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}request_id\0\u{1}ok\0\u{1}error\0")
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requestID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.ok) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.error) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.requestID, fieldNumber: 1)
+    }
+    if self.ok != false {
+      try visitor.visitSingularBoolField(value: self.ok, fieldNumber: 2)
+    }
+    if !self.error.isEmpty {
+      try visitor.visitSingularStringField(value: self.error, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Border0_V1_FinalizeRecordingUploadResponse, rhs: Border0_V1_FinalizeRecordingUploadResponse) -> Bool {
+    if lhs.requestID != rhs.requestID {return false}
+    if lhs.ok != rhs.ok {return false}
+    if lhs.error != rhs.error {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
