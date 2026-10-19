@@ -63,6 +63,7 @@ message Organization {
   string name = 2;
   string subdomain = 3;
   google.protobuf.Struct certificates = 4;
+  string ts_milestone = 5;
 }
 
 message TunnelCertificateSignRequest {
