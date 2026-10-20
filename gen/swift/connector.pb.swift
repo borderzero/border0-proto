@@ -418,6 +418,8 @@ nonisolated struct Border0_V1_Organization: Sendable {
   /// Clears the value of `certificates`. Subsequent reads from it will return its default value.
   mutating func clearCertificates() {self._certificates = nil}
 
+  var tsMilestone: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -459,44 +461,71 @@ nonisolated struct Border0_V1_TunnelCertificateSignResponse: Sendable {
   init() {}
 }
 
-nonisolated struct Border0_V1_Init: Sendable {
+nonisolated struct Border0_V1_Init: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var connectorConfig: Border0_V1_ConnectorConfig {
-    get {_connectorConfig ?? Border0_V1_ConnectorConfig()}
-    set {_connectorConfig = newValue}
+    get {_storage._connectorConfig ?? Border0_V1_ConnectorConfig()}
+    set {_uniqueStorage()._connectorConfig = newValue}
   }
   /// Returns true if `connectorConfig` has been explicitly set.
-  var hasConnectorConfig: Bool {self._connectorConfig != nil}
+  var hasConnectorConfig: Bool {_storage._connectorConfig != nil}
   /// Clears the value of `connectorConfig`. Subsequent reads from it will return its default value.
-  mutating func clearConnectorConfig() {self._connectorConfig = nil}
+  mutating func clearConnectorConfig() {_uniqueStorage()._connectorConfig = nil}
 
-  var sockets: [Border0_V1_SocketConfig] = []
+  var sockets: [Border0_V1_SocketConfig] {
+    get {_storage._sockets}
+    set {_uniqueStorage()._sockets = newValue}
+  }
 
-  var plugins: [Border0_V1_PluginConfig] = []
+  var plugins: [Border0_V1_PluginConfig] {
+    get {_storage._plugins}
+    set {_uniqueStorage()._plugins = newValue}
+  }
 
   /// used only for connectors in "device mode"
-  var deviceID: String = String()
+  var deviceID: String {
+    get {_storage._deviceID}
+    set {_uniqueStorage()._deviceID = newValue}
+  }
 
-  var networkCidrV4: String = String()
+  var networkCidrV4: String {
+    get {_storage._networkCidrV4}
+    set {_uniqueStorage()._networkCidrV4 = newValue}
+  }
 
-  var networkCidrV6: String = String()
+  var networkCidrV6: String {
+    get {_storage._networkCidrV6}
+    set {_uniqueStorage()._networkCidrV6 = newValue}
+  }
 
-  var selfIpv4: String = String()
+  var selfIpv4: String {
+    get {_storage._selfIpv4}
+    set {_uniqueStorage()._selfIpv4 = newValue}
+  }
 
-  var selfIpv6: String = String()
+  var selfIpv6: String {
+    get {_storage._selfIpv6}
+    set {_uniqueStorage()._selfIpv6 = newValue}
+  }
 
-  var networkResourcesCidrV4: String = String()
+  var networkResourcesCidrV4: String {
+    get {_storage._networkResourcesCidrV4}
+    set {_uniqueStorage()._networkResourcesCidrV4 = newValue}
+  }
 
-  var networkResourcesCidrV6: String = String()
+  var networkResourcesCidrV6: String {
+    get {_storage._networkResourcesCidrV6}
+    set {_uniqueStorage()._networkResourcesCidrV6 = newValue}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _connectorConfig: Border0_V1_ConnectorConfig? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 nonisolated struct Border0_V1_UpdateConfig: Sendable {
@@ -1865,7 +1894,7 @@ nonisolated extension Border0_V1_ControlStreamResponse: SwiftProtobuf.Message, S
 
 nonisolated extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Organization"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}subdomain\0\u{1}certificates\0")
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}subdomain\0\u{1}certificates\0\u{3}ts_milestone\0")
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1877,6 +1906,7 @@ nonisolated extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProto
       case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.subdomain) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._certificates) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.tsMilestone) }()
       default: break
       }
     }
@@ -1899,6 +1929,9 @@ nonisolated extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProto
     try { if let v = self._certificates {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
+    if !self.tsMilestone.isEmpty {
+      try visitor.visitSingularStringField(value: self.tsMilestone, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1907,6 +1940,7 @@ nonisolated extension Border0_V1_Organization: SwiftProtobuf.Message, SwiftProto
     if lhs.name != rhs.name {return false}
     if lhs.subdomain != rhs.subdomain {return false}
     if lhs._certificates != rhs._certificates {return false}
+    if lhs.tsMilestone != rhs.tsMilestone {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2001,76 +2035,130 @@ nonisolated extension Border0_V1_Init: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let protoMessageName: String = _protobuf_package + ".Init"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}connector_config\0\u{1}sockets\0\u{1}plugins\0\u{3}device_id\0\u{3}network_cidr_v4\0\u{3}network_cidr_v6\0\u{3}self_ipv4\0\u{3}self_ipv6\0\u{3}network_resources_cidr_v4\0\u{3}network_resources_cidr_v6\0")
 
+  fileprivate class _StorageClass {
+    var _connectorConfig: Border0_V1_ConnectorConfig? = nil
+    var _sockets: [Border0_V1_SocketConfig] = []
+    var _plugins: [Border0_V1_PluginConfig] = []
+    var _deviceID: String = String()
+    var _networkCidrV4: String = String()
+    var _networkCidrV6: String = String()
+    var _selfIpv4: String = String()
+    var _selfIpv6: String = String()
+    var _networkResourcesCidrV4: String = String()
+    var _networkResourcesCidrV6: String = String()
+
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _connectorConfig = source._connectorConfig
+      _sockets = source._sockets
+      _plugins = source._plugins
+      _deviceID = source._deviceID
+      _networkCidrV4 = source._networkCidrV4
+      _networkCidrV6 = source._networkCidrV6
+      _selfIpv4 = source._selfIpv4
+      _selfIpv6 = source._selfIpv6
+      _networkResourcesCidrV4 = source._networkResourcesCidrV4
+      _networkResourcesCidrV6 = source._networkResourcesCidrV6
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._connectorConfig) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.sockets) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.plugins) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.deviceID) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.networkCidrV4) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.networkCidrV6) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.selfIpv4) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.selfIpv6) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV4) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.networkResourcesCidrV6) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._connectorConfig) }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._sockets) }()
+        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._plugins) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._deviceID) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._networkCidrV4) }()
+        case 6: try { try decoder.decodeSingularStringField(value: &_storage._networkCidrV6) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._selfIpv4) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._selfIpv6) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._networkResourcesCidrV4) }()
+        case 10: try { try decoder.decodeSingularStringField(value: &_storage._networkResourcesCidrV6) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._connectorConfig {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if !self.sockets.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sockets, fieldNumber: 2)
-    }
-    if !self.plugins.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.plugins, fieldNumber: 3)
-    }
-    if !self.deviceID.isEmpty {
-      try visitor.visitSingularStringField(value: self.deviceID, fieldNumber: 4)
-    }
-    if !self.networkCidrV4.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkCidrV4, fieldNumber: 5)
-    }
-    if !self.networkCidrV6.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkCidrV6, fieldNumber: 6)
-    }
-    if !self.selfIpv4.isEmpty {
-      try visitor.visitSingularStringField(value: self.selfIpv4, fieldNumber: 7)
-    }
-    if !self.selfIpv6.isEmpty {
-      try visitor.visitSingularStringField(value: self.selfIpv6, fieldNumber: 8)
-    }
-    if !self.networkResourcesCidrV4.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkResourcesCidrV4, fieldNumber: 9)
-    }
-    if !self.networkResourcesCidrV6.isEmpty {
-      try visitor.visitSingularStringField(value: self.networkResourcesCidrV6, fieldNumber: 10)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._connectorConfig {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      if !_storage._sockets.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._sockets, fieldNumber: 2)
+      }
+      if !_storage._plugins.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._plugins, fieldNumber: 3)
+      }
+      if !_storage._deviceID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._deviceID, fieldNumber: 4)
+      }
+      if !_storage._networkCidrV4.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkCidrV4, fieldNumber: 5)
+      }
+      if !_storage._networkCidrV6.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkCidrV6, fieldNumber: 6)
+      }
+      if !_storage._selfIpv4.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._selfIpv4, fieldNumber: 7)
+      }
+      if !_storage._selfIpv6.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._selfIpv6, fieldNumber: 8)
+      }
+      if !_storage._networkResourcesCidrV4.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkResourcesCidrV4, fieldNumber: 9)
+      }
+      if !_storage._networkResourcesCidrV6.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._networkResourcesCidrV6, fieldNumber: 10)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Border0_V1_Init, rhs: Border0_V1_Init) -> Bool {
-    if lhs._connectorConfig != rhs._connectorConfig {return false}
-    if lhs.sockets != rhs.sockets {return false}
-    if lhs.plugins != rhs.plugins {return false}
-    if lhs.deviceID != rhs.deviceID {return false}
-    if lhs.networkCidrV4 != rhs.networkCidrV4 {return false}
-    if lhs.networkCidrV6 != rhs.networkCidrV6 {return false}
-    if lhs.selfIpv4 != rhs.selfIpv4 {return false}
-    if lhs.selfIpv6 != rhs.selfIpv6 {return false}
-    if lhs.networkResourcesCidrV4 != rhs.networkResourcesCidrV4 {return false}
-    if lhs.networkResourcesCidrV6 != rhs.networkResourcesCidrV6 {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._connectorConfig != rhs_storage._connectorConfig {return false}
+        if _storage._sockets != rhs_storage._sockets {return false}
+        if _storage._plugins != rhs_storage._plugins {return false}
+        if _storage._deviceID != rhs_storage._deviceID {return false}
+        if _storage._networkCidrV4 != rhs_storage._networkCidrV4 {return false}
+        if _storage._networkCidrV6 != rhs_storage._networkCidrV6 {return false}
+        if _storage._selfIpv4 != rhs_storage._selfIpv4 {return false}
+        if _storage._selfIpv6 != rhs_storage._selfIpv6 {return false}
+        if _storage._networkResourcesCidrV4 != rhs_storage._networkResourcesCidrV4 {return false}
+        if _storage._networkResourcesCidrV6 != rhs_storage._networkResourcesCidrV6 {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
