@@ -96,6 +96,23 @@ public object OrganizationKt {
     public fun hasCertificates(): kotlin.Boolean {
       return _builder.hasCertificates()
     }
+
+    /**
+     * <code>string ts_milestone = 5;</code>
+     */
+    public var tsMilestone: kotlin.String
+      @JvmName("getTsMilestone")
+      get() = _builder.getTsMilestone()
+      @JvmName("setTsMilestone")
+      set(value) {
+        _builder.setTsMilestone(value)
+      }
+    /**
+     * <code>string ts_milestone = 5;</code>
+     */
+    public fun clearTsMilestone() {
+      _builder.clearTsMilestone()
+    }
   }
 }
 @kotlin.jvm.JvmSynthetic
